@@ -88,9 +88,10 @@ function Get-PortableMaven {
 function Invoke-MavenTest {
     param([string]$MavenCommand)
 
+    New-Item -ItemType Directory -Force -Path $m2Cache | Out-Null
     Push-Location $workDir
     try {
-        & $MavenCommand -B -ntp "-Dtest=$TestClass" test
+        & $MavenCommand -B -ntp "-Dmaven.repo.local=$m2Cache" "-Dtest=$TestClass" test
         if ($LASTEXITCODE -ne 0) {
             throw "Maven test execution failed."
         }
