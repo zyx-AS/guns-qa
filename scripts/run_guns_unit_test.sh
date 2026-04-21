@@ -59,7 +59,8 @@ fi
 echo "Running $GUNS_TEST_CLASS against $resolved_head"
 
 run_with_maven() {
-  (cd "$GUNS_WORK_DIR" && mvn -B -ntp "-Dtest=$GUNS_TEST_CLASS" test)
+  mkdir -p "$LOCAL_M2_CACHE"
+  (cd "$GUNS_WORK_DIR" && mvn -B -ntp "-Dmaven.repo.local=$LOCAL_M2_CACHE" "-Dtest=$GUNS_TEST_CLASS" test)
 }
 
 run_with_docker() {

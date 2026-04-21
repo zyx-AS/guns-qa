@@ -43,7 +43,14 @@ jobs:
         with:
           distribution: temurin
           java-version: "17"
-          cache: maven
+
+      - name: Restore Maven dependency cache
+        uses: actions/cache@v4
+        with:
+          path: .tmp/m2/repository
+          key: ${{ runner.os }}-guns-m2-${{ env.GUNS_REF }}
+          restore-keys: |
+            ${{ runner.os }}-guns-m2-
 
       - name: Run selected GUNS unit test
         shell: bash
