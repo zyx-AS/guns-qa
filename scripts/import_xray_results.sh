@@ -19,6 +19,7 @@ GITHUB_REPOSITORY="${GITHUB_REPOSITORY:-zyx-AS/guns-qa}"
 GITHUB_SHA="${GITHUB_SHA:-local-sha}"
 GITHUB_HEAD_REF="${GITHUB_HEAD_REF:-}"
 GITHUB_REF_NAME="${GITHUB_REF_NAME:-}"
+GITHUB_EVENT_PATH="${GITHUB_EVENT_PATH:-}"
 
 mkdir -p "$XRAY_ARTIFACT_DIR"
 
@@ -51,6 +52,7 @@ fi
 
 detect_issue_key() {
   local candidate
+  local event_key=""
   for candidate in \
     "$XRAY_JIRA_ISSUE_KEY" \
     "$GITHUB_HEAD_REF" \
@@ -60,6 +62,46 @@ detect_issue_key() {
       return 0
     fi
   done
+  if [[ -n "$GITHUB_EVENT_PATH" && -f "$GITHUB_EVENT_PATH" ]]; then
+    event_key="$(python3 - "$GITHUB_EVENT_PATH" <<'PY' || true
+import json
+import re
+import sys
+
+pattern = re.compile(r'([A-Z][A-Z0-9]+-\d+)')
+
+def emit_match(value):
+    if not value:
+        return False
+    match = pattern.search(str(value))
+    if match:
+        print(match.group(1))
+        return True
+    return False
+
+with open(sys.argv[1], "r", encoding="utf-8") as fh:
+    payload = json.load(fh)
+
+for candidate in (
+    payload.get("head_commit", {}).get("message"),
+    payload.get("pull_request", {}).get("title"),
+    payload.get("pull_request", {}).get("head", {}).get("ref"),
+):
+    if emit_match(candidate):
+        raise SystemExit(0)
+
+for commit in payload.get("commits", []):
+    if emit_match(commit.get("message")):
+        raise SystemExit(0)
+
+raise SystemExit(1)
+PY
+)"
+    if [[ -n "$event_key" ]]; then
+      echo "$event_key"
+      return 0
+    fi
+  fi
   return 1
 }
 
