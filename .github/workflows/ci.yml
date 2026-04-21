@@ -67,14 +67,19 @@ jobs:
 
       - name: Import JUnit results into Xray
         id: import_xray
-        if: always() && secrets.XRAY_CLIENT_ID != '' && secrets.XRAY_CLIENT_SECRET != ''
+        if: always()
         shell: bash
         env:
           XRAY_CLIENT_ID: ${{ secrets.XRAY_CLIENT_ID }}
           XRAY_CLIENT_SECRET: ${{ secrets.XRAY_CLIENT_SECRET }}
           GITHUB_HEAD_REF: ${{ github.head_ref }}
           GITHUB_REF_NAME: ${{ github.ref_name }}
-        run: bash scripts/import_xray_results.sh
+        run: |
+          if [[ -z "${XRAY_CLIENT_ID}" || -z "${XRAY_CLIENT_SECRET}" ]]; then
+            echo "Skipping Xray import because XRAY_CLIENT_ID / XRAY_CLIENT_SECRET are not configured."
+            exit 0
+          fi
+          bash scripts/import_xray_results.sh
 
       - name: Publish run summary
         if: always()
