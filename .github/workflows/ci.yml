@@ -1,29 +1,74 @@
-name: CI
+name: GUNS Unit Test
 
 on:
   push:
     branches:
       - main
   pull_request:
+  workflow_dispatch:
+    inputs:
+      guns_ref:
+        description: GUNS commit, tag, or branch to test
+        required: false
+        default: 84272f5a324e0d7890d241d7ae9afa7398da49fa
+      test_class:
+        description: Fully qualified JUnit test class to run
+        required: false
+        default: cn.stylefeng.guns.core.security.BlackWhiteInterceptorTest
+
+permissions:
+  contents: read
+
+concurrency:
+  group: guns-unit-test-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
+  guns-unit-test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      GUNS_REPO_URL: https://gitee.com/stylefeng/guns.git
+      GUNS_FALLBACK_REPO_URL: https://gitcode.com/javaguns/guns.git
+      GUNS_DEFAULT_BRANCH: master
+      GUNS_REF: ${{ github.event.inputs.guns_ref || '84272f5a324e0d7890d241d7ae9afa7398da49fa' }}
+      GUNS_TEST_CLASS: ${{ github.event.inputs.test_class || 'cn.stylefeng.guns.core.security.BlackWhiteInterceptorTest' }}
 
     steps:
-      - name: Checkout
+      - name: Checkout guns-qa
         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
         with:
-          python-version: "3.11"
+          distribution: temurin
+          java-version: "17"
+          cache: maven
 
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+      - name: Run selected GUNS unit test
+        shell: bash
+        run: bash scripts/run_guns_unit_test.sh
 
-      - name: Run tests
+      - name: Publish run summary
+        if: always()
+        shell: bash
         run: |
-          pytest -q
+          if [[ -f .artifacts/guns/run-metadata.txt ]]; then
+            cat .artifacts/guns/run-metadata.txt >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload surefire reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: guns-surefire-reports
+          path: .artifacts/guns/surefire-reports
+          if-no-files-found: warn
+
+      - name: Upload run metadata
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: guns-run-metadata
+          path: .artifacts/guns/run-metadata.txt
+          if-no-files-found: warn

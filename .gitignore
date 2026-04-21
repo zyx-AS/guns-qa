@@ -1,0 +1,3 @@
+.artifacts/
+.tmp/
+.pytest_cache/
