@@ -16,6 +16,9 @@ MAVEN_HOME_DIR="${MAVEN_HOME_DIR:-$ROOT_DIR/.tmp/tools/apache-maven-$MAVEN_VERSI
 mkdir -p "$(dirname "$GUNS_WORK_DIR")" "$GUNS_ARTIFACT_DIR"
 rm -rf "$GUNS_WORK_DIR"
 
+test_exit_code=0
+resolved_head=""
+
 clone_repo() {
   local repo_url
   for repo_url in "$GUNS_REPO_URL" "$GUNS_FALLBACK_REPO_URL"; do
@@ -96,13 +99,18 @@ run_with_portable_maven() {
   (cd "$GUNS_WORK_DIR" && "$MAVEN_HOME_DIR/bin/mvn" -B -ntp "-Dtest=$GUNS_TEST_CLASS" test)
 }
 
+set +e
 if command -v mvn >/dev/null 2>&1; then
   run_with_maven
+  test_exit_code=$?
 elif command -v docker >/dev/null 2>&1 && docker info >/dev/null 2>&1; then
   run_with_docker
+  test_exit_code=$?
 else
   run_with_portable_maven
+  test_exit_code=$?
 fi
+set -e
 
 rm -rf "$GUNS_ARTIFACT_DIR/surefire-reports"
 if [[ -d "$GUNS_WORK_DIR/target/surefire-reports" ]]; then
@@ -118,6 +126,12 @@ Resolved commit: $resolved_head
 Selected test: $GUNS_TEST_CLASS
 Workspace: $GUNS_WORK_DIR
 Artifacts: $GUNS_ARTIFACT_DIR
+Test exit code: $test_exit_code
 EOF
 
-echo "Run completed successfully."
+if [[ "$test_exit_code" -eq 0 ]]; then
+  echo "Run completed successfully."
+else
+  echo "Run completed with failures (exit code $test_exit_code)." >&2
+  exit "$test_exit_code"
+fi

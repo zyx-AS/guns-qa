@@ -15,6 +15,7 @@ $m2Cache = Join-Path $rootDir ".tmp\\m2\\repository"
 $mavenVersion = "3.9.9"
 $mavenHome = Join-Path $rootDir ".tmp\\tools\\apache-maven-$mavenVersion"
 $mavenArchive = Join-Path $rootDir ".tmp\\tools\\apache-maven-$mavenVersion-bin.zip"
+$testExitCode = 0
 
 New-Item -ItemType Directory -Force -Path (Split-Path -Parent $workDir), $artifactDir, $m2Cache | Out-Null
 if (Test-Path $workDir) {
@@ -91,10 +92,8 @@ function Invoke-MavenTest {
     New-Item -ItemType Directory -Force -Path $m2Cache | Out-Null
     Push-Location $workDir
     try {
-        & $MavenCommand -B -ntp "-Dmaven.repo.local=$m2Cache" "-Dtest=$TestClass" test
-        if ($LASTEXITCODE -ne 0) {
-            throw "Maven test execution failed."
-        }
+        & $MavenCommand -B -ntp "-Dmaven.repo.local=$m2Cache" "-Dtest=$TestClass" test | Out-Host
+        return [int]$LASTEXITCODE
     }
     finally {
         Pop-Location
@@ -110,7 +109,7 @@ if (Get-Command docker -ErrorAction SilentlyContinue) {
 }
 
 if (Get-Command mvn -ErrorAction SilentlyContinue) {
-    Invoke-MavenTest -MavenCommand "mvn"
+    $testExitCode = Invoke-MavenTest -MavenCommand "mvn"
 }
 elseif ($dockerReady) {
     & docker run --rm `
@@ -118,15 +117,13 @@ elseif ($dockerReady) {
         -v "${m2Cache}:/root/.m2/repository" `
         -w /workspace `
         maven:3.9.9-eclipse-temurin-17 `
-        mvn -B -ntp "-Dtest=$TestClass" test
+        mvn -B -ntp "-Dtest=$TestClass" test | Out-Host
 
-    if ($LASTEXITCODE -ne 0) {
-        throw "Docker-based Maven test execution failed."
-    }
+    $testExitCode = [int]$LASTEXITCODE
 }
 else {
     $portableMaven = Get-PortableMaven
-    Invoke-MavenTest -MavenCommand $portableMaven
+    $testExitCode = Invoke-MavenTest -MavenCommand $portableMaven
 }
 
 $surefireDir = Join-Path $workDir "target\\surefire-reports"
@@ -146,7 +143,13 @@ $metadata = @(
     "Selected test: $TestClass"
     "Workspace: $workDir"
     "Artifacts: $artifactDir"
+    "Test exit code: $testExitCode"
 )
 
 Set-Content -LiteralPath (Join-Path $artifactDir "run-metadata.txt") -Value $metadata -Encoding UTF8
-Write-Host "Run completed successfully."
+if ($testExitCode -eq 0) {
+    Write-Host "Run completed successfully."
+}
+else {
+    throw "Test execution failed with exit code $testExitCode."
+}
