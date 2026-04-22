@@ -5,122 +5,59 @@ from __future__ import annotations
 
 import argparse
 import json
-import os
-import re
-from typing import Any
+import sys
 
-ISSUE_KEY_PATTERN = re.compile(r"([A-Z][A-Z0-9]+-\d+)")
-EXECUTION_KEY_FIELDS = ("testExecutionKey", "executionKey", "xrayTestExecutionKey")
-TEST_CLASS_FIELDS = ("testClass", "gunsTestClass")
-
-
-def first_non_empty(*values: str | None) -> str:
-    for value in values:
-        if isinstance(value, str) and value.strip():
-            return value.strip()
-    return ""
-
-
-def find_issue_key(*candidates: str | None) -> str:
-    for candidate in candidates:
-        if not candidate:
-            continue
-        match = ISSUE_KEY_PATTERN.search(candidate)
-        if match:
-            return match.group(1)
-    return ""
+from guns_ci import (
+    EXECUTION_KEY_FIELDS,
+    GUNS_REF_FIELDS,
+    TEST_CLASS_FIELDS,
+    append_github_key_values,
+    find_issue_key,
+    find_issue_key_in_payload,
+    first_non_empty,
+    is_managed_issue,
+    load_mapping_entry,
+    mapped_value,
+    write_json,
+    write_text,
+)
 
 
-def find_issue_key_in_payload(event_path: str) -> str:
-    if not event_path or not os.path.isfile(event_path):
-        return ""
-
-    with open(event_path, "r", encoding="utf-8") as handle:
-        payload = json.load(handle)
-
-    direct_candidates = (
-        payload.get("head_commit", {}).get("message"),
-        payload.get("pull_request", {}).get("title"),
-        payload.get("pull_request", {}).get("head", {}).get("ref"),
-    )
-    issue_key = find_issue_key(*direct_candidates)
-    if issue_key:
-        return issue_key
-
-    for commit in payload.get("commits", []):
-        issue_key = find_issue_key(commit.get("message"))
-        if issue_key:
-            return issue_key
-
-    return ""
-
-
-def load_mapping(mapping_path: str, issue_key: str) -> dict[str, Any]:
-    if not issue_key or not mapping_path or not os.path.isfile(mapping_path):
-        return {}
-
-    with open(mapping_path, "r", encoding="utf-8") as handle:
-        data = json.load(handle)
-
-    entry = data.get(issue_key)
-    if isinstance(entry, dict):
-        return entry
-    if isinstance(entry, str) and entry.strip():
-        return {"testExecutionKey": entry.strip()}
-    return {}
-
-
-def mapped_value(entry: dict[str, Any], field_names: tuple[str, ...]) -> str:
-    for field_name in field_names:
-        value = entry.get(field_name)
-        if isinstance(value, str) and value.strip():
-            return value.strip()
-    return ""
-
-
-def write_env(env_path: str, values: dict[str, str]) -> None:
-    if not env_path:
-        return
-    with open(env_path, "a", encoding="utf-8") as handle:
-        for key, value in values.items():
-            handle.write(f"{key}={value}\n")
-
-
-def write_step_summary(
-    summary_path: str,
-    issue_key: str,
-    issue_key_source: str,
-    test_class: str,
-    test_class_source: str,
-    execution_key: str,
-    execution_key_source: str,
-) -> None:
+def write_step_summary(summary_path: str, context: dict[str, str]) -> None:
     if not summary_path:
         return
 
     lines = [
         "### Resolved test context",
-        f"- Jira issue: {issue_key or 'none'} ({issue_key_source})",
-        f"- Test class: {test_class} ({test_class_source})",
-        f"- Xray Test Execution: {execution_key or 'none'} ({execution_key_source})",
+        f"- Resolved Jira key: {context['issue_key'] or 'none'} ({context['issue_key_source']})",
+        f"- Resolved test class: {context['test_class'] or 'none'} ({context['test_class_source']})",
+        f"- Resolved execution key: {context['execution_key'] or 'none'} ({context['execution_key_source']})",
+        f"- Resolved GUNS ref: {context['guns_ref'] or 'none'} ({context['guns_ref_source']})",
+        f"- Import mode: {context['import_mode']}",
+        f"- Validation status: {context['validation_status']}",
+        f"- Validation message: {context['validation_message']}",
         "",
     ]
-    with open(summary_path, "a", encoding="utf-8") as handle:
-        handle.write("\n".join(lines))
+    write_text(summary_path, "\n".join(lines))
 
 
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--mapping-path", default="")
     parser.add_argument("--default-test-class", default="")
+    parser.add_argument("--default-guns-ref", default="")
     parser.add_argument("--input-test-class", default="")
+    parser.add_argument("--input-guns-ref", default="")
     parser.add_argument("--input-jira-issue-key", default="")
     parser.add_argument("--input-xray-test-execution-key", default="")
     parser.add_argument("--github-head-ref", default="")
     parser.add_argument("--github-ref-name", default="")
     parser.add_argument("--github-event-path", default="")
     parser.add_argument("--github-env", default="")
+    parser.add_argument("--github-output", default="")
     parser.add_argument("--github-step-summary", default="")
+    parser.add_argument("--context-json-path", default="")
+    parser.add_argument("--context-summary-path", default="")
     args = parser.parse_args()
 
     issue_key = first_non_empty(
@@ -140,54 +77,119 @@ def main() -> None:
     elif find_issue_key_in_payload(args.github_event_path):
         issue_key_source = "github-event-payload"
 
-    mapping_entry = load_mapping(args.mapping_path, issue_key)
-
+    mapping_entry = load_mapping_entry(args.mapping_path, issue_key)
+    managed_issue = is_managed_issue(issue_key)
     mapped_test_class = mapped_value(mapping_entry, TEST_CLASS_FIELDS)
     mapped_execution_key = mapped_value(mapping_entry, EXECUTION_KEY_FIELDS)
+    mapped_guns_ref = mapped_value(mapping_entry, GUNS_REF_FIELDS)
 
-    test_class = first_non_empty(
-        args.input_test_class,
-        mapped_test_class,
-        args.default_test_class,
-    )
-    execution_key = first_non_empty(
-        args.input_xray_test_execution_key,
-        mapped_execution_key,
-    )
+    validation_errors: list[str] = []
+    if managed_issue:
+        if not mapping_entry:
+            validation_errors.append(
+                f"Missing mapping entry for managed Jira issue {issue_key} in {args.mapping_path}."
+            )
+        if not mapped_test_class:
+            validation_errors.append(
+                f"Managed Jira issue {issue_key} must declare testClass in {args.mapping_path}."
+            )
+        if not mapped_execution_key:
+            validation_errors.append(
+                f"Managed Jira issue {issue_key} must declare testExecutionKey in {args.mapping_path}."
+            )
 
-    test_class_source = "default-test-class"
-    if first_non_empty(args.input_test_class):
-        test_class_source = "workflow-input"
-    elif mapped_test_class:
+    if managed_issue:
+        test_class = mapped_test_class
+        execution_key = mapped_execution_key
         test_class_source = "mapping-file"
-
-    execution_key_source = "none"
-    if first_non_empty(args.input_xray_test_execution_key):
-        execution_key_source = "workflow-input"
-    elif mapped_execution_key:
         execution_key_source = "mapping-file"
+    else:
+        test_class = first_non_empty(args.input_test_class, mapped_test_class, args.default_test_class)
+        execution_key = first_non_empty(args.input_xray_test_execution_key, mapped_execution_key)
+        test_class_source = "default-test-class"
+        if first_non_empty(args.input_test_class):
+            test_class_source = "workflow-input"
+        elif mapped_test_class:
+            test_class_source = "mapping-file"
+        execution_key_source = "none"
+        if first_non_empty(args.input_xray_test_execution_key):
+            execution_key_source = "workflow-input"
+        elif mapped_execution_key:
+            execution_key_source = "mapping-file"
+
+    guns_ref = first_non_empty(args.input_guns_ref, mapped_guns_ref, args.default_guns_ref)
+    guns_ref_source = "default-guns-ref"
+    if first_non_empty(args.input_guns_ref):
+        guns_ref_source = "workflow-input"
+    elif mapped_guns_ref:
+        guns_ref_source = "mapping-file"
+
+    import_mode = "skipped-no-jira-context"
+    if execution_key:
+        import_mode = "reuse-existing-execution"
+    elif issue_key:
+        import_mode = "create-new-execution"
+
+    validation_status = "success" if not validation_errors else "failure"
+    validation_message = "mapping entry ready" if not validation_errors else " ".join(validation_errors)
+
+    context = {
+        "issue_key": issue_key,
+        "issue_key_source": issue_key_source,
+        "test_class": test_class,
+        "test_class_source": test_class_source,
+        "execution_key": execution_key,
+        "execution_key_source": execution_key_source,
+        "guns_ref": guns_ref,
+        "guns_ref_source": guns_ref_source,
+        "import_mode": import_mode,
+        "validation_status": validation_status,
+        "validation_message": validation_message,
+        "managed_issue": "true" if managed_issue else "false",
+        "category": "context-resolution-succeeded" if not validation_errors else "context-resolution-failed",
+    }
 
     values = {
         "XRAY_JIRA_ISSUE_KEY": issue_key,
         "GUNS_TEST_CLASS": test_class,
         "XRAY_TEST_EXECUTION_KEY": execution_key,
+        "GUNS_REF": guns_ref,
         "GUNS_TEST_CONTEXT_ISSUE_KEY_SOURCE": issue_key_source,
         "GUNS_TEST_CONTEXT_TEST_CLASS_SOURCE": test_class_source,
         "GUNS_TEST_CONTEXT_EXECUTION_KEY_SOURCE": execution_key_source,
+        "GUNS_TEST_CONTEXT_GUNS_REF_SOURCE": guns_ref_source,
+        "GUNS_TEST_CONTEXT_VALIDATION_STATUS": validation_status,
+        "GUNS_TEST_CONTEXT_VALIDATION_MESSAGE": validation_message,
+        "GUNS_TEST_CONTEXT_MANAGED_ISSUE": context["managed_issue"],
+        "XRAY_IMPORT_MODE_RESOLVED": import_mode,
     }
 
-    write_env(args.github_env, values)
-    write_step_summary(
-        args.github_step_summary,
-        issue_key=issue_key,
-        issue_key_source=issue_key_source,
-        test_class=test_class,
-        test_class_source=test_class_source,
-        execution_key=execution_key,
-        execution_key_source=execution_key_source,
-    )
+    outputs = {
+        "jira_issue_key": issue_key,
+        "test_class": test_class,
+        "xray_test_execution_key": execution_key,
+        "guns_ref": guns_ref,
+        "validation_status": validation_status,
+        "validation_message": validation_message,
+        "category": context["category"],
+        "managed_issue": context["managed_issue"],
+        "resolved_import_mode": import_mode,
+    }
 
-    print(json.dumps(values, ensure_ascii=False, indent=2))
+    if args.context_json_path:
+        write_json(args.context_json_path, context)
+    if args.context_summary_path:
+        write_step_summary(args.context_summary_path, context)
+    if args.github_step_summary:
+        write_step_summary(args.github_step_summary, context)
+
+    append_github_key_values(args.github_env, values)
+    append_github_key_values(args.github_output, outputs)
+
+    print(json.dumps(context, ensure_ascii=False, indent=2))
+    if validation_errors:
+        print(validation_message, file=sys.stderr)
+        raise SystemExit(1)
 
 
 if __name__ == "__main__":
