@@ -24,7 +24,8 @@ By default it will:
 5. Copy the repo's test assets into the cloned GUNS workspace
 6. Run one real GUNS unit test:
    `cn.stylefeng.guns.core.security.BlackWhiteInterceptorTest`
-7. Upload surefire reports and run metadata as artifacts
+7. Import JUnit results into Xray when XRAY secrets are configured
+8. Upload surefire reports, run metadata, and Xray import summaries as artifacts
 
 The default pinned upstream revision is:
 
@@ -41,6 +42,21 @@ Example flow:
 3. Commit with a message like `GUNSQA-32 configure GUNS unit test workflow`
 4. Open a pull request with a title like `GUNSQA-32 configure GUNS unit test workflow`
 5. Check the Jira issue Development panel for branch, commit, PR, and workflow activity
+
+## Stable Xray Test Executions
+
+To avoid creating a brand-new standalone Jira/Xray Test Execution on every
+workflow run, this repo keeps stable mappings in
+`config/xray-test-executions.json`.
+
+The import script resolves the execution issue in this order:
+
+1. `workflow_dispatch` input `xray_test_execution_key`
+2. `config/xray-test-executions.json` mapping based on the detected Jira key
+3. Create a new Test Execution only when no reusable key is available
+
+Example: `GUNSQA-32` reuses `GUNSQA-41`, so repeated GitHub Actions runs update
+the same execution issue instead of adding a new Jira todo each time.
 
 ## Local Reproduction
 
