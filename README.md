@@ -57,6 +57,8 @@ The import script resolves the execution issue in this order:
 
 Example: `GUNSQA-32` reuses `GUNSQA-41`, so repeated GitHub Actions runs update
 the same execution issue instead of adding a new Jira todo each time.
+The workflow summary also records whether a run reused an existing execution
+or had to create a new one.
 
 ## Local Reproduction
 
