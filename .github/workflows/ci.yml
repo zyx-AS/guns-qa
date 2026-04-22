@@ -13,9 +13,9 @@ on:
         required: false
         default: 84272f5a324e0d7890d241d7ae9afa7398da49fa
       test_class:
-        description: Fully qualified JUnit test class to run
+        description: Optional fully qualified JUnit test class override
         required: false
-        default: cn.stylefeng.guns.core.security.BlackWhiteInterceptorTest
+        default: ""
       jira_issue_key:
         description: Optional Jira issue key for Xray execution naming
         required: false
@@ -41,11 +41,12 @@ jobs:
       GUNS_FALLBACK_REPO_URL: https://gitcode.com/javaguns/guns.git
       GUNS_DEFAULT_BRANCH: master
       GUNS_REF: ${{ github.event.inputs.guns_ref || '84272f5a324e0d7890d241d7ae9afa7398da49fa' }}
-      GUNS_TEST_CLASS: ${{ github.event.inputs.test_class || 'cn.stylefeng.guns.core.security.BlackWhiteInterceptorTest' }}
+      GUNS_DEFAULT_TEST_CLASS: cn.stylefeng.guns.core.security.BlackWhiteInterceptorTest
+      GUNS_TEST_CLASS: ""
       XRAY_BASE_URL: https://us.xray.cloud.getxray.app
       XRAY_PROJECT_KEY: GUNSQA
-      XRAY_JIRA_ISSUE_KEY: ${{ github.event.inputs.jira_issue_key }}
-      XRAY_TEST_EXECUTION_KEY: ${{ github.event.inputs.xray_test_execution_key }}
+      XRAY_JIRA_ISSUE_KEY: ""
+      XRAY_TEST_EXECUTION_KEY: ""
       XRAY_TEST_EXECUTION_MAP_PATH: config/xray-test-executions.json
 
     steps:
@@ -57,6 +58,25 @@ jobs:
         with:
           distribution: temurin
           java-version: "17"
+
+      - name: Resolve Jira-driven test context
+        shell: bash
+        env:
+          WORKFLOW_INPUT_TEST_CLASS: ${{ github.event.inputs.test_class || '' }}
+          WORKFLOW_INPUT_JIRA_ISSUE_KEY: ${{ github.event.inputs.jira_issue_key || '' }}
+          WORKFLOW_INPUT_XRAY_TEST_EXECUTION_KEY: ${{ github.event.inputs.xray_test_execution_key || '' }}
+        run: |
+          python3 scripts/resolve_guns_test_context.py \
+            --mapping-path "$XRAY_TEST_EXECUTION_MAP_PATH" \
+            --default-test-class "$GUNS_DEFAULT_TEST_CLASS" \
+            --input-test-class "$WORKFLOW_INPUT_TEST_CLASS" \
+            --input-jira-issue-key "$WORKFLOW_INPUT_JIRA_ISSUE_KEY" \
+            --input-xray-test-execution-key "$WORKFLOW_INPUT_XRAY_TEST_EXECUTION_KEY" \
+            --github-head-ref "${GITHUB_HEAD_REF:-}" \
+            --github-ref-name "${GITHUB_REF_NAME:-}" \
+            --github-event-path "${GITHUB_EVENT_PATH:-}" \
+            --github-env "$GITHUB_ENV" \
+            --github-step-summary "$GITHUB_STEP_SUMMARY"
 
       - name: Restore Maven dependency cache
         uses: actions/cache@v4

@@ -5,5 +5,10 @@
   "GUNSQA-32": {
     "testExecutionKey": "GUNSQA-41",
     "note": "Reuse the existing execution linked to the G32 runner workflow."
+  },
+  "GUNSQA-51": {
+    "testExecutionKey": "GUNSQA-50",
+    "testClass": "cn.stylefeng.roses.kernel.sys.modular.user.service.impl.SysUserServiceDetailTest",
+    "note": "Run UT-U-01 from the Test issue branch and reuse the stable unit-test execution."
   }
 }
