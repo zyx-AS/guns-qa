@@ -15,6 +15,14 @@ on:
         description: Fully qualified JUnit test class to run
         required: false
         default: cn.stylefeng.guns.core.security.BlackWhiteInterceptorTest
+      jira_issue_key:
+        description: Optional Jira issue key for Xray execution naming
+        required: false
+        default: ""
+      xray_test_execution_key:
+        description: Optional existing Xray Test Execution key to reuse
+        required: false
+        default: ""
 
 permissions:
   contents: read
@@ -33,6 +41,11 @@ jobs:
       GUNS_DEFAULT_BRANCH: master
       GUNS_REF: ${{ github.event.inputs.guns_ref || '84272f5a324e0d7890d241d7ae9afa7398da49fa' }}
       GUNS_TEST_CLASS: ${{ github.event.inputs.test_class || 'cn.stylefeng.guns.core.security.BlackWhiteInterceptorTest' }}
+      XRAY_BASE_URL: https://us.xray.cloud.getxray.app
+      XRAY_PROJECT_KEY: GUNSQA
+      XRAY_JIRA_ISSUE_KEY: ${{ github.event.inputs.jira_issue_key }}
+      XRAY_TEST_EXECUTION_KEY: ${{ github.event.inputs.xray_test_execution_key }}
+      XRAY_TEST_EXECUTION_MAP_PATH: config/xray-test-executions.json
 
     steps:
       - name: Checkout guns-qa
@@ -53,8 +66,26 @@ jobs:
             ${{ runner.os }}-guns-m2-
 
       - name: Run selected GUNS unit test
+        id: run_guns_test
+        continue-on-error: true
         shell: bash
         run: bash scripts/run_guns_unit_test.sh
+
+      - name: Import JUnit results into Xray
+        id: import_xray
+        if: always()
+        shell: bash
+        env:
+          XRAY_CLIENT_ID: ${{ secrets.XRAY_CLIENT_ID }}
+          XRAY_CLIENT_SECRET: ${{ secrets.XRAY_CLIENT_SECRET }}
+          GITHUB_HEAD_REF: ${{ github.head_ref }}
+          GITHUB_REF_NAME: ${{ github.ref_name }}
+        run: |
+          if [[ -z "${XRAY_CLIENT_ID}" || -z "${XRAY_CLIENT_SECRET}" ]]; then
+            echo "Skipping Xray import because XRAY_CLIENT_ID / XRAY_CLIENT_SECRET are not configured."
+            exit 0
+          fi
+          bash scripts/import_xray_results.sh
 
       - name: Publish run summary
         if: always()
@@ -62,6 +93,10 @@ jobs:
         run: |
           if [[ -f .artifacts/guns/run-metadata.txt ]]; then
             cat .artifacts/guns/run-metadata.txt >> "$GITHUB_STEP_SUMMARY"
+          fi
+          if [[ -f .artifacts/guns/xray-import-summary.txt ]]; then
+            printf '\n' >> "$GITHUB_STEP_SUMMARY"
+            cat .artifacts/guns/xray-import-summary.txt >> "$GITHUB_STEP_SUMMARY"
           fi
 
       - name: Upload surefire reports
@@ -79,3 +114,18 @@ jobs:
           name: guns-run-metadata
           path: .artifacts/guns/run-metadata.txt
           if-no-files-found: warn
+
+      - name: Upload Xray import artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: guns-xray-import
+          path: |
+            .artifacts/guns/xray-import-response.json
+            .artifacts/guns/xray-import-summary.txt
+          if-no-files-found: warn
+
+      - name: Fail job when GUNS unit test fails
+        if: steps.run_guns_test.outcome == 'failure'
+        shell: bash
+        run: exit 1
