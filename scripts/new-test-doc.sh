@@ -61,14 +61,10 @@ cat > "$target_file" <<EOF
 | 字段 | 内容 |
 | --- | --- |
 | 测试类型 | ${type_name} |
-| 测试编号 | \
-`${test_id}\` |
-| 对应代码 | \
-`${code_ref}\` |
-| Jira | \
-`${jira}\` |
-| GitHub 工作流 | \
-`${workflow}\` |
+| 测试编号 | \`${test_id}\` |
+| 对应代码 | \`${code_ref}\` |
+| Jira | \`${jira}\` |
+| GitHub 工作流 | \`${workflow}\` |
 
 ## 1. 测试目的
 说明本测试要验证的对象、规则或场景。
