@@ -1,12 +1,23 @@
 {
   "_meta": {
-    "description": "Map a source Jira issue to a stable Xray Test Execution so repeated workflow runs reuse one execution ticket instead of creating a new Jira item every time."
+    "description": "Map a managed Jira Test issue to its selected test class, stable Xray Test Execution, and optional pinned GUNS ref so GitHub Actions can resolve everything from one place.",
+    "requiredFieldsForManagedIssues": [
+      "testClass",
+      "testExecutionKey"
+    ],
+    "optionalFieldsForManagedIssues": [
+      "gunsRef",
+      "note"
+    ]
   },
   "GUNSQA-32": {
+    "gunsRef": "84272f5a324e0d7890d241d7ae9afa7398da49fa",
+    "testClass": "cn.stylefeng.guns.core.security.BlackWhiteInterceptorTest",
     "testExecutionKey": "GUNSQA-41",
     "note": "Reuse the existing execution linked to the G32 runner workflow."
   },
   "GUNSQA-51": {
+    "gunsRef": "84272f5a324e0d7890d241d7ae9afa7398da49fa",
     "testExecutionKey": "GUNSQA-50",
     "testClass": "cn.stylefeng.roses.kernel.sys.modular.user.service.impl.SysUserServiceDetailTest",
     "note": "Run UT-U-01 from the Test issue branch and reuse the stable unit-test execution."

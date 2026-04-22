@@ -60,8 +60,11 @@ jobs:
           java-version: "17"
 
       - name: Resolve Jira-driven test context
+        id: resolve_test_context
+        continue-on-error: true
         shell: bash
         env:
+          WORKFLOW_INPUT_GUNS_REF: ${{ github.event.inputs.guns_ref || '' }}
           WORKFLOW_INPUT_TEST_CLASS: ${{ github.event.inputs.test_class || '' }}
           WORKFLOW_INPUT_JIRA_ISSUE_KEY: ${{ github.event.inputs.jira_issue_key || '' }}
           WORKFLOW_INPUT_XRAY_TEST_EXECUTION_KEY: ${{ github.event.inputs.xray_test_execution_key || '' }}
@@ -69,6 +72,8 @@ jobs:
           python3 scripts/resolve_guns_test_context.py \
             --mapping-path "$XRAY_TEST_EXECUTION_MAP_PATH" \
             --default-test-class "$GUNS_DEFAULT_TEST_CLASS" \
+            --default-guns-ref "$GUNS_REF" \
+            --input-guns-ref "$WORKFLOW_INPUT_GUNS_REF" \
             --input-test-class "$WORKFLOW_INPUT_TEST_CLASS" \
             --input-jira-issue-key "$WORKFLOW_INPUT_JIRA_ISSUE_KEY" \
             --input-xray-test-execution-key "$WORKFLOW_INPUT_XRAY_TEST_EXECUTION_KEY" \
@@ -76,25 +81,56 @@ jobs:
             --github-ref-name "${GITHUB_REF_NAME:-}" \
             --github-event-path "${GITHUB_EVENT_PATH:-}" \
             --github-env "$GITHUB_ENV" \
-            --github-step-summary "$GITHUB_STEP_SUMMARY"
+            --github-output "$GITHUB_OUTPUT" \
+            --github-step-summary "$GITHUB_STEP_SUMMARY" \
+            --context-json-path ".artifacts/guns/context-result.json" \
+            --context-summary-path ".artifacts/guns/context-summary.txt"
 
       - name: Restore Maven dependency cache
+        if: steps.resolve_test_context.outcome == 'success'
         uses: actions/cache@v4
         with:
           path: .tmp/m2/repository
-          key: ${{ runner.os }}-guns-m2-${{ env.GUNS_REF }}
+          key: ${{ runner.os }}-guns-m2-${{ steps.resolve_test_context.outputs.guns_ref || env.GUNS_REF }}
           restore-keys: |
             ${{ runner.os }}-guns-m2-
 
       - name: Run selected GUNS unit test
         id: run_guns_test
+        if: steps.resolve_test_context.outcome == 'success'
         continue-on-error: true
         shell: bash
         run: bash scripts/run_guns_unit_test.sh
 
+      - name: Capture test run classification
+        id: capture_run_result
+        if: always() && steps.resolve_test_context.outcome == 'success'
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          result_path = Path(".artifacts/guns/run-result.json")
+          result = {
+              "status": "failure",
+              "category": "test-infrastructure-failed",
+              "failure_summary": "run-result.json was not produced",
+          }
+          if result_path.exists():
+              result = json.loads(result_path.read_text(encoding="utf-8"))
+
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as handle:
+              handle.write(f"status={result.get('status', 'failure')}\n")
+              handle.write(f"category={result.get('category', 'test-infrastructure-failed')}\n")
+              handle.write(f"message={str(result.get('failure_summary', '')).replace(chr(10), ' ')}\n")
+          PY
+
       - name: Import JUnit results into Xray
         id: import_xray
-        if: always()
+        if: always() && steps.resolve_test_context.outcome == 'success'
+        continue-on-error: true
         shell: bash
         env:
           XRAY_CLIENT_ID: ${{ secrets.XRAY_CLIENT_ID }}
@@ -102,22 +138,95 @@ jobs:
           GITHUB_HEAD_REF: ${{ github.head_ref }}
           GITHUB_REF_NAME: ${{ github.ref_name }}
         run: |
-          if [[ -z "${XRAY_CLIENT_ID}" || -z "${XRAY_CLIENT_SECRET}" ]]; then
-            echo "Skipping Xray import because XRAY_CLIENT_ID / XRAY_CLIENT_SECRET are not configured."
-            exit 0
-          fi
           bash scripts/import_xray_results.sh
+
+      - name: Capture Xray import classification
+        id: capture_xray_result
+        if: always()
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          result_path = Path(".artifacts/guns/xray-result.json")
+          result = {
+              "status": "skipped",
+              "category": "xray-import-skipped",
+              "message": "xray-result.json was not produced",
+              "execution_issue_key": "",
+              "import_mode": os.environ.get("XRAY_IMPORT_MODE_RESOLVED", "unknown"),
+          }
+          if result_path.exists():
+              result = json.loads(result_path.read_text(encoding="utf-8"))
+
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as handle:
+              handle.write(f"status={result.get('status', 'skipped')}\n")
+              handle.write(f"category={result.get('category', 'xray-import-skipped')}\n")
+              handle.write(f"message={str(result.get('message', '')).replace(chr(10), ' ')}\n")
+              handle.write(f"execution_issue_key={result.get('execution_issue_key', '')}\n")
+              handle.write(f"import_mode={result.get('import_mode', 'unknown')}\n")
+          PY
+
+      - name: Write Jira execution comments
+        id: jira_write_back
+        if: always() && steps.resolve_test_context.outcome == 'success'
+        continue-on-error: true
+        shell: bash
+        env:
+          JIRA_BASE_URL: https://jira20260410.atlassian.net
+          JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL }}
+          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+          GITHUB_HEAD_REF: ${{ github.head_ref }}
+          GITHUB_REF_NAME: ${{ github.ref_name }}
+        run: |
+          python3 scripts/post_jira_execution_comments.py
+
+      - name: Capture Jira write-back result
+        id: capture_jira_result
+        if: always()
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          result_path = Path(".artifacts/guns/jira-comment-result.json")
+          result = {
+              "status": "skipped",
+              "category": "jira-comment-skipped",
+              "message": "jira-comment-result.json was not produced",
+          }
+          if result_path.exists():
+              result = json.loads(result_path.read_text(encoding="utf-8"))
+
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as handle:
+              handle.write(f"status={result.get('status', 'skipped')}\n")
+              handle.write(f"category={result.get('category', 'jira-comment-skipped')}\n")
+              handle.write(f"message={str(result.get('message', '')).replace(chr(10), ' ')}\n")
+          PY
 
       - name: Publish run summary
         if: always()
         shell: bash
         run: |
+          for summary_file in \
+            .artifacts/guns/context-summary.txt \
+            .artifacts/guns/run-summary.txt \
+            .artifacts/guns/xray-import-summary.txt \
+            .artifacts/guns/jira-comment-summary.txt; do
+            if [[ -f "$summary_file" ]]; then
+              cat "$summary_file" >> "$GITHUB_STEP_SUMMARY"
+              printf '\n' >> "$GITHUB_STEP_SUMMARY"
+            fi
+          done
           if [[ -f .artifacts/guns/run-metadata.txt ]]; then
+            printf '### Raw run metadata\n' >> "$GITHUB_STEP_SUMMARY"
+            printf '```\n' >> "$GITHUB_STEP_SUMMARY"
             cat .artifacts/guns/run-metadata.txt >> "$GITHUB_STEP_SUMMARY"
-          fi
-          if [[ -f .artifacts/guns/xray-import-summary.txt ]]; then
-            printf '\n' >> "$GITHUB_STEP_SUMMARY"
-            cat .artifacts/guns/xray-import-summary.txt >> "$GITHUB_STEP_SUMMARY"
+            printf '\n```\n' >> "$GITHUB_STEP_SUMMARY"
           fi
 
       - name: Upload surefire reports
@@ -133,7 +242,12 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: guns-run-metadata
-          path: .artifacts/guns/run-metadata.txt
+          path: |
+            .artifacts/guns/context-result.json
+            .artifacts/guns/context-summary.txt
+            .artifacts/guns/run-metadata.txt
+            .artifacts/guns/run-result.json
+            .artifacts/guns/run-summary.txt
           if-no-files-found: warn
 
       - name: Upload Xray import artifacts
@@ -143,10 +257,45 @@ jobs:
           name: guns-xray-import
           path: |
             .artifacts/guns/xray-import-response.json
+            .artifacts/guns/xray-result.json
             .artifacts/guns/xray-import-summary.txt
           if-no-files-found: warn
 
-      - name: Fail job when GUNS unit test fails
-        if: steps.run_guns_test.outcome == 'failure'
+      - name: Upload Jira write-back artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: guns-jira-write-back
+          path: |
+            .artifacts/guns/jira-comment-result.json
+            .artifacts/guns/jira-comment-summary.txt
+          if-no-files-found: warn
+
+      - name: Fail job with classified status
+        if: always()
         shell: bash
-        run: exit 1
+        run: |
+          if [[ "${{ steps.resolve_test_context.outcome }}" != "success" ]]; then
+            echo "context resolution failed: ${{ steps.resolve_test_context.outputs.validation_message }}"
+            exit 1
+          fi
+
+          run_category="${{ steps.capture_run_result.outputs.category }}"
+          xray_category="${{ steps.capture_xray_result.outputs.category }}"
+
+          if [[ "$run_category" == "test-infrastructure-failed" ]]; then
+            echo "test infrastructure failed: ${{ steps.capture_run_result.outputs.message }}"
+            exit 1
+          fi
+
+          if [[ "$run_category" == "test-assertion-failed" ]]; then
+            echo "test assertion failed: ${{ steps.capture_run_result.outputs.message }}"
+            exit 1
+          fi
+
+          if [[ "$xray_category" == "xray-import-failed" ]]; then
+            echo "xray import failed: ${{ steps.capture_xray_result.outputs.message }}"
+            exit 1
+          fi
+
+          echo "workflow completed with classified status: run=$run_category xray=$xray_category jira=${{ steps.capture_jira_result.outputs.category }}"

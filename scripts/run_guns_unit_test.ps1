@@ -7,149 +7,16 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
-
-$rootDir = Split-Path -Parent $PSScriptRoot
-$workDir = Join-Path $rootDir ".tmp\\guns-src"
-$artifactDir = Join-Path $rootDir ".artifacts\\guns"
-$m2Cache = Join-Path $rootDir ".tmp\\m2\\repository"
-$mavenVersion = "3.9.9"
-$mavenHome = Join-Path $rootDir ".tmp\\tools\\apache-maven-$mavenVersion"
-$mavenArchive = Join-Path $rootDir ".tmp\\tools\\apache-maven-$mavenVersion-bin.zip"
-$testExitCode = 0
-
-New-Item -ItemType Directory -Force -Path (Split-Path -Parent $workDir), $artifactDir, $m2Cache | Out-Null
-if (Test-Path $workDir) {
-    Remove-Item -LiteralPath $workDir -Recurse -Force
+$pythonCommand = Get-Command python -ErrorAction SilentlyContinue
+if (-not $pythonCommand) {
+    throw "python is required to run scripts/run_guns_unit_test.py"
 }
 
-function Clone-GunsRepo {
-    param([string[]]$RepoUrls)
-
-    foreach ($repoUrl in $RepoUrls) {
-        if ([string]::IsNullOrWhiteSpace($repoUrl)) {
-            continue
-        }
-
-        Write-Host "Cloning GUNS from $repoUrl"
-        & git clone --depth 1 --branch $GunsDefaultBranch $repoUrl $workDir
-        if ($LASTEXITCODE -eq 0) {
-            return
-        }
-
-        if (Test-Path $workDir) {
-            Remove-Item -LiteralPath $workDir -Recurse -Force
-        }
-    }
-
-    throw "Unable to clone the GUNS repository."
-}
-
-Clone-GunsRepo -RepoUrls @($GunsRepoUrl, $GunsFallbackRepoUrl)
-
-$resolvedHead = (& git -C $workDir rev-parse HEAD).Trim()
-if ($GunsRef -ne $resolvedHead) {
-    & git -C $workDir fetch --depth 1 origin $GunsRef
-    if ($LASTEXITCODE -ne 0) {
-        throw "Failed to fetch GUNS ref $GunsRef"
-    }
-
-    & git -C $workDir checkout --detach FETCH_HEAD
-    if ($LASTEXITCODE -ne 0) {
-        throw "Failed to check out GUNS ref $GunsRef"
-    }
-
-    $resolvedHead = (& git -C $workDir rev-parse HEAD).Trim()
-}
-
-$testAssetsDir = Join-Path $rootDir "guns-tests"
-if (Test-Path $testAssetsDir) {
-    Write-Host "Copying test assets from guns-qa into the GUNS workspace"
-    Copy-Item -Path (Join-Path $testAssetsDir "*") -Destination $workDir -Recurse -Force
-}
-
-$expectedTestPath = Join-Path $workDir "src\\test\\java\\cn\\stylefeng\\guns\\core\\security\\BlackWhiteInterceptorTest.java"
-if (-not (Test-Path $expectedTestPath)) {
-    throw "Expected test asset was not copied into the GUNS workspace: $expectedTestPath"
-}
-
-function Get-PortableMaven {
-    $mavenCmd = Join-Path $mavenHome "bin\\mvn.cmd"
-    if (Test-Path $mavenCmd) {
-        return $mavenCmd
-    }
-
-    New-Item -ItemType Directory -Force -Path (Split-Path -Parent $mavenHome) | Out-Null
-    $archiveUrl = "https://archive.apache.org/dist/maven/maven-3/$mavenVersion/binaries/apache-maven-$mavenVersion-bin.zip"
-    Write-Host "Downloading portable Maven $mavenVersion"
-    Invoke-WebRequest -Uri $archiveUrl -OutFile $mavenArchive
-    Expand-Archive -LiteralPath $mavenArchive -DestinationPath (Split-Path -Parent $mavenHome) -Force
-    return $mavenCmd
-}
-
-function Invoke-MavenTest {
-    param([string]$MavenCommand)
-
-    New-Item -ItemType Directory -Force -Path $m2Cache | Out-Null
-    Push-Location $workDir
-    try {
-        & $MavenCommand -B -ntp "-Dmaven.repo.local=$m2Cache" "-Dtest=$TestClass" test | Out-Host
-        return [int]$LASTEXITCODE
-    }
-    finally {
-        Pop-Location
-    }
-}
-
-$dockerReady = $false
-if (Get-Command docker -ErrorAction SilentlyContinue) {
-    cmd /c "docker info >nul 2>nul"
-    if ($LASTEXITCODE -eq 0) {
-        $dockerReady = $true
-    }
-}
-
-if (Get-Command mvn -ErrorAction SilentlyContinue) {
-    $testExitCode = Invoke-MavenTest -MavenCommand "mvn"
-}
-elseif ($dockerReady) {
-    & docker run --rm `
-        -v "${workDir}:/workspace" `
-        -v "${m2Cache}:/root/.m2/repository" `
-        -w /workspace `
-        maven:3.9.9-eclipse-temurin-17 `
-        mvn -B -ntp "-Dtest=$TestClass" test | Out-Host
-
-    $testExitCode = [int]$LASTEXITCODE
-}
-else {
-    $portableMaven = Get-PortableMaven
-    $testExitCode = Invoke-MavenTest -MavenCommand $portableMaven
-}
-
-$surefireDir = Join-Path $workDir "target\\surefire-reports"
-if (Test-Path $surefireDir) {
-    $artifactReports = Join-Path $artifactDir "surefire-reports"
-    if (Test-Path $artifactReports) {
-        Remove-Item -LiteralPath $artifactReports -Recurse -Force
-    }
-    Copy-Item -LiteralPath $surefireDir -Destination $artifactDir -Recurse
-}
-
-$metadata = @(
-    "GUNS repo: $GunsRepoUrl"
-    "Fallback repo: $GunsFallbackRepoUrl"
-    "Pinned ref: $GunsRef"
-    "Resolved commit: $resolvedHead"
-    "Selected test: $TestClass"
-    "Workspace: $workDir"
-    "Artifacts: $artifactDir"
-    "Test exit code: $testExitCode"
-)
-
-Set-Content -LiteralPath (Join-Path $artifactDir "run-metadata.txt") -Value $metadata -Encoding UTF8
-if ($testExitCode -eq 0) {
-    Write-Host "Run completed successfully."
-}
-else {
-    throw "Test execution failed with exit code $testExitCode."
-}
+$runnerScript = Join-Path $PSScriptRoot "run_guns_unit_test.py"
+& $pythonCommand.Source $runnerScript `
+    --guns-repo-url $GunsRepoUrl `
+    --guns-fallback-repo-url $GunsFallbackRepoUrl `
+    --guns-default-branch $GunsDefaultBranch `
+    --guns-ref $GunsRef `
+    --test-class $TestClass
+exit $LASTEXITCODE
