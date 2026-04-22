@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - GUNSQA-*
   pull_request:
   workflow_dispatch:
     inputs:
@@ -17,6 +18,10 @@ on:
         default: cn.stylefeng.guns.core.security.BlackWhiteInterceptorTest
       jira_issue_key:
         description: Optional Jira issue key for Xray execution naming
+        required: false
+        default: ""
+      xray_test_execution_key:
+        description: Optional existing Xray Test Execution key to reuse
         required: false
         default: ""
 
@@ -40,6 +45,8 @@ jobs:
       XRAY_BASE_URL: https://us.xray.cloud.getxray.app
       XRAY_PROJECT_KEY: GUNSQA
       XRAY_JIRA_ISSUE_KEY: ${{ github.event.inputs.jira_issue_key }}
+      XRAY_TEST_EXECUTION_KEY: ${{ github.event.inputs.xray_test_execution_key }}
+      XRAY_TEST_EXECUTION_MAP_PATH: config/xray-test-executions.json
 
     steps:
       - name: Checkout guns-qa
