@@ -1,0 +1,9 @@
+{
+  "_meta": {
+    "description": "Map a source Jira issue to a stable Xray Test Execution so repeated workflow runs reuse one execution ticket instead of creating a new Jira item every time."
+  },
+  "GUNSQA-32": {
+    "testExecutionKey": "GUNSQA-41",
+    "note": "Reuse the existing execution linked to the G32 runner workflow."
+  }
+}
