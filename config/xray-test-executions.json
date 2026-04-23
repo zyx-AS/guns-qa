@@ -11,12 +11,6 @@
     ],
     "sourceTestRule": "The Jira issue key itself is treated as the Xray Test issue key. Do not let Xray auto-create method-named Test issues for managed runs."
   },
-  "GUNSQA-32": {
-    "gunsRef": "84272f5a324e0d7890d241d7ae9afa7398da49fa",
-    "testClass": "cn.stylefeng.guns.core.security.BlackWhiteInterceptorTest",
-    "testExecutionKey": "GUNSQA-41",
-    "note": "Reuse the existing execution linked to the G32 runner workflow."
-  },
   "GUNSQA-51": {
     "gunsRef": "84272f5a324e0d7890d241d7ae9afa7398da49fa",
     "testExecutionKey": "GUNSQA-50",
