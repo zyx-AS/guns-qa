@@ -67,7 +67,6 @@ def build_items(
     github_sha: str,
     github_run_url: str,
     run_category: str,
-    run_message: str,
     import_category: str,
     import_mode: str,
     execution_issue_key: str,
@@ -79,15 +78,13 @@ def build_items(
         f"Run: {github_run_url}",
         f"Commit: {github_sha}",
         f"Branch: {branch_name or 'none'}",
-        f"Execution: {execution_issue_key or 'none'}",
+        f"Execution key: {execution_issue_key or 'none'}",
         f"Xray: {import_category} ({import_mode})",
     ]
     if source_issue_key:
         items.append(f"Source Test: {source_issue_key}")
     if execution_issue_url:
         items.append(f"Execution URL: {execution_issue_url}")
-    if run_message and run_category != "success":
-        items.append(f"Failure summary: {run_message}")
     return items
 
 
@@ -152,7 +149,6 @@ def main() -> int:
         return 0
 
     run_category = str(run_result.get("category", "unknown"))
-    run_message = str(run_result.get("failure_summary", ""))
     import_category = str(xray_result.get("category", "unknown"))
     import_mode = str(xray_result.get("import_mode", "unknown"))
     comment_items = build_items(
@@ -160,7 +156,6 @@ def main() -> int:
         github_sha=github_sha,
         github_run_url=github_run_url,
         run_category=run_category,
-        run_message=run_message,
         import_category=import_category,
         import_mode=import_mode,
         execution_issue_key=execution_issue_key,
@@ -176,7 +171,7 @@ def main() -> int:
                 adf_document(
                     title="Automated execution evidence",
                     items=comment_items,
-                    footer="Keep human-readable defect analysis in a Jira Bug issue.",
+                    footer="Machine evidence only. Keep human-readable defect analysis in a Jira Bug issue.",
                 ),
             )
         )
@@ -187,7 +182,7 @@ def main() -> int:
                 adf_document(
                     title="Automated execution evidence",
                     items=comment_items,
-                    footer="This comment is the machine-written execution breadcrumb.",
+                    footer="Machine evidence only. Keep human-readable defect analysis in a Jira Bug issue.",
                 ),
             )
         )

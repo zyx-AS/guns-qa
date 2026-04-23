@@ -12,7 +12,8 @@ The standard path starts from `main`, then uses a Jira Test issue as the source 
 4. Create a branch from `main` named `GUNSQA-xx-...`.
 5. Add or update the Java test under `guns-tests/src/test/...`.
 6. Push the branch and let GitHub Actions resolve the Jira key, test class, and stable Xray Test Execution from the mapping file.
-7. Review the execution result in Jira/Xray. If the run reveals a defect, create a Jira `Bug` for the human-readable analysis.
+7. Let GitHub Actions sync every mapped Jira `Test` that shares the same stable `testExecutionKey` into the Xray `Tests` panel for that execution.
+8. Review the execution result in Jira/Xray. If the run reveals a defect, create a Jira `Bug` for the human-readable analysis.
 
 ## Source of truth
 
@@ -42,10 +43,11 @@ The Jira issue key itself is treated as the Xray `Test` issue key. The workflow 
 
 - Runs automatically for `GUNSQA-*` branches.
 - Resolves the Jira key and mapped test class before execution.
+- Syncs the mapped Jira `Test` members into the stable Xray `Test Execution` so the Xray `Tests` panel stays usable as the execution dashboard.
 - Fails fast if a managed Jira Test issue is missing required mapping fields.
 - Reuses the mapped stable Xray Test Execution instead of creating a new one.
 - Imports the result back into the existing Jira Test and Test Execution.
-- Posts short Jira comments as machine-written execution breadcrumbs.
+- Posts short Jira comments as machine-written execution breadcrumbs; readable failure analysis belongs in Jira `Bug` issues.
 
 ## Local reproduction
 

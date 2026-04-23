@@ -93,6 +93,45 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-guns-m2-
 
+      - name: Sync mapped Tests into stable Xray execution
+        id: sync_xray_execution
+        if: steps.resolve_test_context.outcome == 'success' && steps.resolve_test_context.outputs.managed_issue == 'true'
+        continue-on-error: true
+        shell: bash
+        env:
+          XRAY_CLIENT_ID: ${{ secrets.XRAY_CLIENT_ID }}
+          XRAY_CLIENT_SECRET: ${{ secrets.XRAY_CLIENT_SECRET }}
+          JIRA_BASE_URL: https://jira20260410.atlassian.net
+          JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL }}
+          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+        run: |
+          python3 scripts/sync_xray_execution_members.py
+
+      - name: Capture Xray execution sync result
+        id: capture_xray_sync_result
+        if: always()
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          result_path = Path(".artifacts/guns/xray-sync-result.json")
+          result = {
+              "status": "skipped",
+              "category": "xray-sync-skipped",
+              "message": "xray-sync-result.json was not produced",
+          }
+          if result_path.exists():
+              result = json.loads(result_path.read_text(encoding="utf-8"))
+
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as handle:
+              handle.write(f"status={result.get('status', 'skipped')}\n")
+              handle.write(f"category={result.get('category', 'xray-sync-skipped')}\n")
+              handle.write(f"message={str(result.get('message', '')).replace(chr(10), ' ')}\n")
+          PY
+
       - name: Run selected GUNS unit test
         id: run_guns_test
         if: steps.resolve_test_context.outcome == 'success'
@@ -213,6 +252,7 @@ jobs:
           for summary_file in \
             .artifacts/guns/context-summary.txt \
             .artifacts/guns/run-summary.txt \
+            .artifacts/guns/xray-sync-summary.txt \
             .artifacts/guns/xray-import-summary.txt \
             .artifacts/guns/jira-comment-summary.txt; do
             if [[ -f "$summary_file" ]]; then
@@ -254,6 +294,9 @@ jobs:
         with:
           name: guns-xray-import
           path: |
+            .artifacts/guns/xray-sync-response.json
+            .artifacts/guns/xray-sync-result.json
+            .artifacts/guns/xray-sync-summary.txt
             .artifacts/guns/xray-import-response.json
             .artifacts/guns/xray-result.json
             .artifacts/guns/xray-import-summary.txt
@@ -279,7 +322,18 @@ jobs:
           fi
 
           run_category="${{ steps.capture_run_result.outputs.category }}"
+          sync_category="${{ steps.capture_xray_sync_result.outputs.category }}"
           xray_category="${{ steps.capture_xray_result.outputs.category }}"
+
+          if [[ "${{ steps.resolve_test_context.outputs.managed_issue }}" == "true" && "$sync_category" == "xray-sync-failed" ]]; then
+            echo "xray execution member sync failed: ${{ steps.capture_xray_sync_result.outputs.message }}"
+            exit 1
+          fi
+
+          if [[ "${{ steps.resolve_test_context.outputs.managed_issue }}" == "true" && "$sync_category" == "xray-sync-skipped" ]]; then
+            echo "xray execution member sync skipped for managed issue: ${{ steps.capture_xray_sync_result.outputs.message }}"
+            exit 1
+          fi
 
           if [[ "$run_category" == "test-infrastructure-failed" ]]; then
             echo "test infrastructure failed: ${{ steps.capture_run_result.outputs.message }}"
@@ -301,4 +355,4 @@ jobs:
             exit 1
           fi
 
-          echo "workflow completed with classified status: run=$run_category xray=$xray_category jira=${{ steps.capture_jira_result.outputs.category }}"
+          echo "workflow completed with classified status: run=$run_category sync=$sync_category xray=$xray_category jira=${{ steps.capture_jira_result.outputs.category }}"

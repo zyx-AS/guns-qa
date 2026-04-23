@@ -53,20 +53,21 @@ def xray_status_for_run(run_category: str) -> str:
 
 
 def build_comment(
+    execution_issue_key: str,
+    source_issue_key: str,
     selected_test: str,
     github_run_url: str,
     github_sha: str,
     run_category: str,
-    failure_summary: str,
 ) -> str:
     lines = [
+        f"Execution key: {execution_issue_key}",
+        f"Source Test issue: {source_issue_key}",
         f"Selected test: {selected_test}",
         f"GitHub run: {github_run_url}",
         f"GitHub commit: {github_sha}",
         f"Result category: {run_category}",
     ]
-    if failure_summary:
-        lines.append(f"Failure summary: {failure_summary}")
     return "\n".join(lines)
 
 
@@ -86,11 +87,12 @@ def build_execution_payload(
                 "testKey": source_issue_key,
                 "status": xray_status_for_run(run_category),
                 "comment": build_comment(
+                    execution_issue_key=execution_issue_key,
+                    source_issue_key=source_issue_key,
                     selected_test=selected_test,
                     github_run_url=github_run_url,
                     github_sha=github_sha,
                     run_category=run_category,
-                    failure_summary=failure_summary,
                 ),
             }
         ],
