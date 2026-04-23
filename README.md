@@ -33,9 +33,12 @@ Each managed `GUNSQA-*` Test issue must define:
 Optional fields:
 
 - `gunsRef`
+- `coverageClasses`
 - `note`
 
 The Jira issue key itself is treated as the Xray `Test` issue key. The workflow does not fall back to a default test class, does not create a new Xray Test Execution automatically, and does not allow Xray to auto-create method-named Test issues for the managed path.
+
+Use `coverageClasses` when the test is validating code that lives in a dependency JAR instead of the `guns` root project itself. The JaCoCo summary will then be generated against those mapped target classes instead of the unrelated root bundle.
 
 ## GitHub Actions behavior
 

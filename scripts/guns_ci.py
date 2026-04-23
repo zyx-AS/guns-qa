@@ -13,6 +13,7 @@ ISSUE_KEY_PATTERN = re.compile(r"([A-Z][A-Z0-9]+-\d+)")
 EXECUTION_KEY_FIELDS = ("testExecutionKey", "executionKey", "xrayTestExecutionKey")
 TEST_CLASS_FIELDS = ("testClass", "gunsTestClass")
 GUNS_REF_FIELDS = ("gunsRef", "ref", "gunsCommit", "sourceRef")
+COVERAGE_CLASS_FIELDS = ("coverageClasses", "coverageClass", "jacocoClasses")
 MANAGED_ISSUE_PREFIXES = ("GUNSQA-",)
 
 
@@ -88,6 +89,18 @@ def mapped_value(entry: dict[str, Any], field_names: tuple[str, ...]) -> str:
         if isinstance(value, str) and value.strip():
             return value.strip()
     return ""
+
+
+def mapped_values(entry: dict[str, Any], field_names: tuple[str, ...]) -> list[str]:
+    for field_name in field_names:
+        value = entry.get(field_name)
+        if isinstance(value, str) and value.strip():
+            return [value.strip()]
+        if isinstance(value, list):
+            items = [str(item).strip() for item in value if str(item).strip()]
+            if items:
+                return items
+    return []
 
 
 def ensure_dir(path: str | Path) -> Path:

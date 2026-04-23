@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 import os
 import stat
 import shutil
@@ -23,6 +24,24 @@ JACOCO_MAVEN_PLUGIN_VERSION = "0.8.12"
 
 def env_default(name: str, fallback: str) -> str:
     return os.environ.get(name, fallback)
+
+
+def env_list(name: str) -> list[str]:
+    raw_value = os.environ.get(name, "").strip()
+    if not raw_value:
+        return []
+
+    try:
+        decoded = json.loads(raw_value)
+    except json.JSONDecodeError:
+        decoded = raw_value
+
+    if isinstance(decoded, list):
+        return [str(item).strip() for item in decoded if str(item).strip()]
+    if isinstance(decoded, str) and decoded.strip():
+        normalized = decoded.replace("\r", "\n").replace(";", ",").replace("\n", ",")
+        return [item.strip() for item in normalized.split(",") if item.strip()]
+    return []
 
 
 def parse_args() -> argparse.Namespace:
@@ -45,6 +64,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--guns-artifact-dir", default=env_default("GUNS_ARTIFACT_DIR", ""))
     parser.add_argument("--local-m2-cache", default=env_default("LOCAL_M2_CACHE", ""))
     parser.add_argument("--maven-version", default=env_default("MAVEN_VERSION", "3.9.9"))
+    parser.add_argument("--coverage-class", action="append", default=[])
     parser.add_argument("--root-dir", default="")
     return parser.parse_args()
 
@@ -152,6 +172,274 @@ def docker_ready() -> bool:
     )
 
 
+def class_entry_path(class_name: str) -> Path:
+    return Path(*class_name.split(".")).with_suffix(".class")
+
+
+def source_entry_path(class_name: str) -> Path:
+    return Path(*class_name.split(".")).with_suffix(".java")
+
+
+def list_has_files(path: Path) -> bool:
+    return path.is_file() or any(candidate.is_file() for candidate in path.rglob("*"))
+
+
+def copy_class_family_from_directory(source_root: Path, relative_class_path: Path, destination_root: Path) -> list[Path]:
+    package_dir = source_root / relative_class_path.parent
+    if not package_dir.is_dir():
+        return []
+
+    copied_files: list[Path] = []
+    stem = relative_class_path.stem
+    for candidate in package_dir.iterdir():
+        if not candidate.is_file() or candidate.suffix != ".class":
+            continue
+        if candidate.name != relative_class_path.name and not candidate.name.startswith(f"{stem}$"):
+            continue
+        target_path = destination_root / relative_class_path.parent / candidate.name
+        ensure_dir(target_path.parent)
+        shutil.copy2(candidate, target_path)
+        copied_files.append(target_path)
+    return copied_files
+
+
+def copy_source_from_directory(source_root: Path, relative_source_path: Path, destination_root: Path) -> bool:
+    source_path = source_root / relative_source_path
+    if not source_path.is_file():
+        return False
+
+    target_path = destination_root / relative_source_path
+    ensure_dir(target_path.parent)
+    shutil.copy2(source_path, target_path)
+    return True
+
+
+def extract_class_family_from_archive(
+    archive_path: Path, relative_class_path: Path, destination_root: Path
+) -> list[Path]:
+    if not archive_path.is_file():
+        return []
+
+    copied_files: list[Path] = []
+    entry_name = relative_class_path.as_posix()
+    entry_prefix = entry_name[: -len(".class")]
+    with zipfile.ZipFile(archive_path, "r") as archive:
+        for member in archive.infolist():
+            if member.is_dir():
+                continue
+            if member.filename != entry_name and not (
+                member.filename.startswith(f"{entry_prefix}$") and member.filename.endswith(".class")
+            ):
+                continue
+            target_path = destination_root / Path(member.filename)
+            ensure_dir(target_path.parent)
+            with archive.open(member, "r") as source_handle, target_path.open("wb") as target_handle:
+                shutil.copyfileobj(source_handle, target_handle)
+            copied_files.append(target_path)
+    return copied_files
+
+
+def extract_source_from_archive(archive_path: Path, relative_source_path: Path, destination_root: Path) -> bool:
+    if not archive_path.is_file():
+        return False
+
+    entry_name = relative_source_path.as_posix()
+    with zipfile.ZipFile(archive_path, "r") as archive:
+        try:
+            member = archive.getinfo(entry_name)
+        except KeyError:
+            return False
+        target_path = destination_root / relative_source_path
+        ensure_dir(target_path.parent)
+        with archive.open(member, "r") as source_handle, target_path.open("wb") as target_handle:
+            shutil.copyfileobj(source_handle, target_handle)
+    return True
+
+
+def archive_contains_member(archive_path: Path, member_name: str) -> bool:
+    if not archive_path.is_file():
+        return False
+    try:
+        with zipfile.ZipFile(archive_path, "r") as archive:
+            archive.getinfo(member_name)
+            return True
+    except (KeyError, FileNotFoundError, zipfile.BadZipFile):
+        return False
+
+
+def find_class_archive(local_m2_cache: Path, relative_class_path: Path) -> Path | None:
+    entry_name = relative_class_path.as_posix()
+    for archive_path in sorted(local_m2_cache.rglob("*.jar")):
+        archive_name = archive_path.name
+        if archive_name.endswith("-sources.jar") or archive_name.endswith("-javadoc.jar"):
+            continue
+        if archive_contains_member(archive_path, entry_name):
+            return archive_path
+    return None
+
+
+def find_source_archive(binary_archive_path: Path, relative_source_path: Path) -> Path | None:
+    expected_path = binary_archive_path.with_name(f"{binary_archive_path.stem}-sources.jar")
+    if archive_contains_member(expected_path, relative_source_path.as_posix()):
+        return expected_path
+
+    for archive_path in sorted(binary_archive_path.parent.glob("*-sources.jar")):
+        if archive_contains_member(archive_path, relative_source_path.as_posix()):
+            return archive_path
+    return None
+
+
+def ensure_jacoco_cli(root_dir: Path, version: str) -> Path:
+    tools_dir = root_dir / ".tmp" / "tools"
+    ensure_dir(tools_dir)
+    cli_jar_path = tools_dir / f"org.jacoco.cli-{version}-nodeps.jar"
+    if cli_jar_path.is_file():
+        return cli_jar_path
+
+    urls = [
+        f"https://repo.maven.apache.org/maven2/org/jacoco/org.jacoco.cli/{version}/org.jacoco.cli-{version}-nodeps.jar",
+        f"https://repo1.maven.org/maven2/org/jacoco/org.jacoco.cli/{version}/org.jacoco.cli-{version}-nodeps.jar",
+    ]
+    last_error = ""
+    for url in urls:
+        try:
+            print(f"Downloading JaCoCo CLI {version} from {url}")
+            urllib.request.urlretrieve(url, cli_jar_path)
+            return cli_jar_path
+        except Exception as exc:  # pragma: no cover - exercised by runtime download failures
+            last_error = f"{exc.__class__.__name__}: {exc}"
+    raise RuntimeError(f"Unable to download JaCoCo CLI {version}. {last_error}")
+
+
+def materialize_coverage_targets(
+    work_dir: Path,
+    local_m2_cache: Path,
+    coverage_classes: list[str],
+    classfiles_root: Path,
+    sourcefiles_root: Path,
+) -> list[str]:
+    ensure_dir(classfiles_root)
+    ensure_dir(sourcefiles_root)
+    resolved_targets: list[str] = []
+
+    for coverage_class in coverage_classes:
+        relative_class_path = class_entry_path(coverage_class)
+        relative_source_path = source_entry_path(coverage_class)
+
+        copied_from_project = copy_class_family_from_directory(
+            work_dir / "target" / "classes", relative_class_path, classfiles_root
+        )
+        if copied_from_project:
+            copy_source_from_directory(work_dir / "src" / "main" / "java", relative_source_path, sourcefiles_root)
+            resolved_targets.append(coverage_class)
+            continue
+
+        archive_path = find_class_archive(local_m2_cache, relative_class_path)
+        if archive_path is None:
+            raise RuntimeError(
+                f"Unable to find compiled class data for coverage target {coverage_class} in target/classes or {local_m2_cache}."
+            )
+
+        copied_from_archive = extract_class_family_from_archive(archive_path, relative_class_path, classfiles_root)
+        if not copied_from_archive:
+            raise RuntimeError(f"Unable to extract class files for coverage target {coverage_class} from {archive_path}.")
+
+        source_archive_path = find_source_archive(archive_path, relative_source_path)
+        if source_archive_path is not None:
+            extract_source_from_archive(source_archive_path, relative_source_path, sourcefiles_root)
+
+        resolved_targets.append(coverage_class)
+
+    return resolved_targets
+
+
+def generate_jacoco_report(
+    root_dir: Path,
+    work_dir: Path,
+    artifact_dir: Path,
+    local_m2_cache: Path,
+    coverage_classes: list[str],
+) -> dict[str, object]:
+    exec_path = work_dir / "target" / "jacoco.exec"
+    if not exec_path.is_file():
+        return {
+            "jacoco_status": "missing",
+            "jacoco_summary": "JaCoCo exec data was not produced.",
+            "jacoco_counters": {},
+            "jacoco_report_xml": str((artifact_dir / "jacoco-report" / "jacoco.xml")),
+            "jacoco_report_html": str((artifact_dir / "jacoco-report" / "index.html")),
+            "jacoco_targets": coverage_classes,
+            "jacoco_bundle_name": "",
+        }
+
+    report_dir = artifact_dir / "jacoco-report"
+    scope_classfiles_dir = artifact_dir / "jacoco-classfiles"
+    scope_sourcefiles_dir = artifact_dir / "jacoco-sourcefiles"
+    remove_tree(report_dir)
+    remove_tree(scope_classfiles_dir)
+    remove_tree(scope_sourcefiles_dir)
+    ensure_dir(report_dir)
+
+    source_paths: list[Path] = []
+    if coverage_classes:
+        # When the production class lives in a dependency JAR, report only the mapped target classes.
+        resolved_targets = materialize_coverage_targets(
+            work_dir=work_dir,
+            local_m2_cache=local_m2_cache,
+            coverage_classes=coverage_classes,
+            classfiles_root=scope_classfiles_dir,
+            sourcefiles_root=scope_sourcefiles_dir,
+        )
+        class_paths = [scope_classfiles_dir]
+        if list_has_files(scope_sourcefiles_dir):
+            source_paths.append(scope_sourcefiles_dir)
+        bundle_name = ", ".join(resolved_targets)
+    else:
+        classfiles_dir = work_dir / "target" / "classes"
+        if not list_has_files(classfiles_dir):
+            raise RuntimeError(f"JaCoCo report cannot be generated because {classfiles_dir} is missing.")
+        class_paths = [classfiles_dir]
+        source_dir = work_dir / "src" / "main" / "java"
+        if list_has_files(source_dir):
+            source_paths.append(source_dir)
+        resolved_targets = []
+        bundle_name = "guns"
+
+    cli_jar_path = ensure_jacoco_cli(root_dir, JACOCO_MAVEN_PLUGIN_VERSION)
+    xml_path = report_dir / "jacoco.xml"
+    csv_path = report_dir / "jacoco.csv"
+    command = ["java", "-jar", str(cli_jar_path), "report", str(exec_path)]
+    for class_path in class_paths:
+        command.extend(["--classfiles", str(class_path)])
+    for source_path in source_paths:
+        command.extend(["--sourcefiles", str(source_path)])
+    command.extend(
+        [
+            "--html",
+            str(report_dir),
+            "--xml",
+            str(xml_path),
+            "--csv",
+            str(csv_path),
+            "--name",
+            bundle_name,
+        ]
+    )
+
+    if run_command(command, cwd=root_dir) != 0:
+        raise RuntimeError("JaCoCo CLI report generation failed.")
+
+    return {
+        "jacoco_status": "generated",
+        "jacoco_summary": "",
+        "jacoco_counters": {},
+        "jacoco_report_xml": str(xml_path),
+        "jacoco_report_html": str(report_dir / "index.html"),
+        "jacoco_targets": resolved_targets,
+        "jacoco_bundle_name": bundle_name,
+    }
+
+
 def parse_surefire_reports(report_dir: Path) -> dict[str, object]:
     result: dict[str, object] = {
         "tests": 0,
@@ -255,6 +543,7 @@ def write_result_files(artifact_dir: Path, metadata: dict[str, object], result: 
             f"Pinned ref: {metadata['guns_ref']}",
             f"Resolved commit: {metadata['resolved_head']}",
             f"Selected test: {metadata['test_class']}",
+            f"Coverage targets: {', '.join(metadata['coverage_classes']) or 'project classes'}",
             f"Workspace: {metadata['work_dir']}",
             f"Artifacts: {metadata['artifact_dir']}",
             f"Execution method: {result['execution_method']}",
@@ -262,6 +551,8 @@ def write_result_files(artifact_dir: Path, metadata: dict[str, object], result: 
             f"Failure summary: {result['failure_summary']}",
             f"Test exit code: {result['test_exit_code']}",
             f"JaCoCo status: {result['jacoco_status']}",
+            f"JaCoCo bundle: {result['jacoco_bundle_name']}",
+            f"JaCoCo targets: {', '.join(result['jacoco_targets']) or 'project classes'}",
             f"JaCoCo summary: {result['jacoco_summary']}",
             f"JaCoCo report xml: {result['jacoco_report_xml']}",
             f"JaCoCo report html: {result['jacoco_report_html']}",
@@ -280,6 +571,8 @@ def write_result_files(artifact_dir: Path, metadata: dict[str, object], result: 
                 f"errors={result['errors']} skipped={result['skipped']}"
             ),
             f"- JaCoCo status: {result['jacoco_status']}",
+            f"- JaCoCo bundle: {result['jacoco_bundle_name'] or 'none'}",
+            f"- JaCoCo targets: {', '.join(result['jacoco_targets']) or 'project classes'}",
             f"- JaCoCo summary: {result['jacoco_summary']}",
             f"- Exit code: {result['test_exit_code']}",
             "",
@@ -302,6 +595,7 @@ def main() -> int:
     ensure_dir(artifact_dir)
     ensure_dir(local_m2_cache)
     remove_tree(work_dir)
+    coverage_classes = args.coverage_class or env_list("GUNS_COVERAGE_CLASSES")
 
     metadata: dict[str, object] = {
         "guns_repo_url": args.guns_repo_url,
@@ -309,6 +603,7 @@ def main() -> int:
         "guns_ref": args.guns_ref,
         "resolved_head": "",
         "test_class": args.test_class,
+        "coverage_classes": coverage_classes,
         "work_dir": str(work_dir),
         "artifact_dir": str(artifact_dir),
     }
@@ -331,6 +626,8 @@ def main() -> int:
         "jacoco_report_xml": "",
         "jacoco_report_html": "",
         "jacoco_counters": {},
+        "jacoco_targets": coverage_classes,
+        "jacoco_bundle_name": "",
     }
 
     try:
@@ -355,13 +652,10 @@ def main() -> int:
                 "-ntp",
                 f"-Dmaven.repo.local={local_m2_cache}",
                 "-Dmaven.test.failure.ignore=true",
+                "-Djacoco.destFile=target/jacoco.exec",
                 f"-Dtest={args.test_class}",
                 f"org.jacoco:jacoco-maven-plugin:{JACOCO_MAVEN_PLUGIN_VERSION}:prepare-agent",
                 "test",
-                f"org.jacoco:jacoco-maven-plugin:{JACOCO_MAVEN_PLUGIN_VERSION}:report",
-                "-Djacoco.destFile=target/jacoco.exec",
-                "-Djacoco.dataFile=target/jacoco.exec",
-                "-Djacoco.outputDirectory=target/site/jacoco",
             ]
         elif docker_ready():
             execution_method = "docker-maven"
@@ -380,13 +674,10 @@ def main() -> int:
                 "-B",
                 "-ntp",
                 "-Dmaven.test.failure.ignore=true",
+                "-Djacoco.destFile=target/jacoco.exec",
                 f"-Dtest={args.test_class}",
                 f"org.jacoco:jacoco-maven-plugin:{JACOCO_MAVEN_PLUGIN_VERSION}:prepare-agent",
                 "test",
-                f"org.jacoco:jacoco-maven-plugin:{JACOCO_MAVEN_PLUGIN_VERSION}:report",
-                "-Djacoco.destFile=target/jacoco.exec",
-                "-Djacoco.dataFile=target/jacoco.exec",
-                "-Djacoco.outputDirectory=target/site/jacoco",
             ]
         else:
             execution_method = "portable-maven"
@@ -395,13 +686,10 @@ def main() -> int:
                 "-ntp",
                 f"-Dmaven.repo.local={local_m2_cache}",
                 "-Dmaven.test.failure.ignore=true",
+                "-Djacoco.destFile=target/jacoco.exec",
                 f"-Dtest={args.test_class}",
                 f"org.jacoco:jacoco-maven-plugin:{JACOCO_MAVEN_PLUGIN_VERSION}:prepare-agent",
                 "test",
-                f"org.jacoco:jacoco-maven-plugin:{JACOCO_MAVEN_PLUGIN_VERSION}:report",
-                "-Djacoco.destFile=target/jacoco.exec",
-                "-Djacoco.dataFile=target/jacoco.exec",
-                "-Djacoco.outputDirectory=target/site/jacoco",
             ]
 
         result["execution_method"] = execution_method
@@ -415,15 +703,18 @@ def main() -> int:
         if surefire_dir.is_dir():
             shutil.copytree(surefire_dir, artifact_reports_dir, dirs_exist_ok=True)
 
-        jacoco_dir = work_dir / "target" / "site" / "jacoco"
-        artifact_jacoco_dir = artifact_dir / "jacoco-report"
-        remove_tree(artifact_jacoco_dir)
-        if jacoco_dir.is_dir():
-            shutil.copytree(jacoco_dir, artifact_jacoco_dir, dirs_exist_ok=True)
-
         report_stats = parse_surefire_reports(surefire_dir)
         result.update(report_stats)
-        result.update(parse_jacoco_report(jacoco_dir / "jacoco.xml"))
+        result.update(
+            generate_jacoco_report(
+                root_dir=root_dir,
+                work_dir=work_dir,
+                artifact_dir=artifact_dir,
+                local_m2_cache=local_m2_cache,
+                coverage_classes=coverage_classes,
+            )
+        )
+        result.update(parse_jacoco_report(Path(str(result["jacoco_report_xml"]))))
         if int(report_stats["tests"]) > 0 and (
             int(report_stats["failures"]) > 0 or int(report_stats["errors"]) > 0
         ):

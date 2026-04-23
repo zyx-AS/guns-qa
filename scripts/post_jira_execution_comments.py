@@ -73,6 +73,7 @@ def build_items(
     execution_issue_url: str,
     source_issue_key: str,
     jacoco_summary: str,
+    jacoco_targets: list[str],
     jacoco_artifact_url: str,
 ) -> list[str]:
     items = [
@@ -84,6 +85,8 @@ def build_items(
         f"Xray: {import_category} ({import_mode})",
         f"JaCoCo: {jacoco_summary or 'not collected'}",
     ]
+    if jacoco_targets:
+        items.append(f"JaCoCo targets: {', '.join(jacoco_targets)}")
     if jacoco_artifact_url:
         items.append(f"JaCoCo report: {jacoco_artifact_url}")
     if source_issue_key:
@@ -140,6 +143,9 @@ def main() -> int:
     execution_issue_key = str(xray_result.get("execution_issue_key", "")).strip()
     execution_issue_url = str(xray_result.get("execution_issue_url", "")).strip()
     jacoco_summary = str(run_result.get("jacoco_summary", "")).strip()
+    jacoco_targets = [
+        str(item).strip() for item in run_result.get("jacoco_targets", []) if str(item).strip()
+    ]
 
     result: dict[str, object] = {
         "status": "skipped",
@@ -169,6 +175,7 @@ def main() -> int:
         execution_issue_url=execution_issue_url,
         source_issue_key=source_issue_key,
         jacoco_summary=jacoco_summary,
+        jacoco_targets=jacoco_targets,
         jacoco_artifact_url=jacoco_artifact_url,
     )
 
