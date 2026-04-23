@@ -54,7 +54,7 @@ def post_comment(base_url: str, email: str, token: str, issue_key: str, body: di
         headers={
             "Authorization": f"Basic {auth_value}",
             "Accept": "application/json",
-            "Content-Type": "application/json",
+            "Content-Type": "application/json; charset=utf-8",
         },
         method="POST",
     )
@@ -72,6 +72,9 @@ def build_items(
     execution_issue_key: str,
     execution_issue_url: str,
     source_issue_key: str,
+    bug_issue_key: str,
+    bug_issue_url: str,
+    bug_mode: str,
     jacoco_summary: str,
     jacoco_targets: list[str],
     jacoco_artifact_url: str,
@@ -85,6 +88,10 @@ def build_items(
         f"Xray: {import_category} ({import_mode})",
         f"JaCoCo: {jacoco_summary or 'not collected'}",
     ]
+    if bug_issue_key:
+        items.append(f"Bug: {bug_issue_key} ({bug_mode or 'linked'})")
+    if bug_issue_url:
+        items.append(f"Bug URL: {bug_issue_url}")
     if jacoco_targets:
         items.append(f"JaCoCo targets: {', '.join(jacoco_targets)}")
     if jacoco_artifact_url:
@@ -123,6 +130,7 @@ def main() -> int:
     artifact_dir = Path(env_default("XRAY_ARTIFACT_DIR", str(root_dir / ".artifacts" / "guns")))
     run_result_path = artifact_dir / "run-result.json"
     xray_result_path = artifact_dir / "xray-result.json"
+    bug_result_path = artifact_dir / "jira-bug-result.json"
     summary_path = artifact_dir / "jira-comment-summary.txt"
     result_path = artifact_dir / "jira-comment-result.json"
 
@@ -138,10 +146,14 @@ def main() -> int:
 
     run_result = read_json(run_result_path, default={}) or {}
     xray_result = read_json(xray_result_path, default={}) or {}
+    bug_result = read_json(bug_result_path, default={}) or {}
     github_run_url = f"{github_server_url}/{github_repository}/actions/runs/{github_run_id}"
     source_issue_key = str(xray_result.get("source_issue_key", "")).strip()
     execution_issue_key = str(xray_result.get("execution_issue_key", "")).strip()
     execution_issue_url = str(xray_result.get("execution_issue_url", "")).strip()
+    bug_issue_key = str(bug_result.get("bug_issue_key", "")).strip()
+    bug_issue_url = str(bug_result.get("bug_issue_url", "")).strip()
+    bug_mode = str(bug_result.get("mode", "")).strip()
     jacoco_summary = str(run_result.get("jacoco_summary", "")).strip()
     jacoco_targets = [
         str(item).strip() for item in run_result.get("jacoco_targets", []) if str(item).strip()
@@ -174,6 +186,9 @@ def main() -> int:
         execution_issue_key=execution_issue_key,
         execution_issue_url=execution_issue_url,
         source_issue_key=source_issue_key,
+        bug_issue_key=bug_issue_key,
+        bug_issue_url=bug_issue_url,
+        bug_mode=bug_mode,
         jacoco_summary=jacoco_summary,
         jacoco_targets=jacoco_targets,
         jacoco_artifact_url=jacoco_artifact_url,

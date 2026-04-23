@@ -14,6 +14,7 @@ EXECUTION_KEY_FIELDS = ("testExecutionKey", "executionKey", "xrayTestExecutionKe
 TEST_CLASS_FIELDS = ("testClass", "gunsTestClass")
 GUNS_REF_FIELDS = ("gunsRef", "ref", "gunsCommit", "sourceRef")
 COVERAGE_CLASS_FIELDS = ("coverageClasses", "coverageClass", "jacocoClasses")
+BUG_KEY_FIELDS = ("bugKey", "jiraBugKey", "defectKey")
 MANAGED_ISSUE_PREFIXES = ("GUNSQA-",)
 
 
@@ -38,7 +39,7 @@ def find_issue_key_in_payload(event_path: str) -> str:
     if not event_path or not os.path.isfile(event_path):
         return ""
 
-    with open(event_path, "r", encoding="utf-8") as handle:
+    with open(event_path, "r", encoding="utf-8-sig") as handle:
         payload = json.load(handle)
 
     issue_key = find_issue_key(
@@ -65,7 +66,7 @@ def load_mapping(mapping_path: str) -> dict[str, Any]:
     if not mapping_path or not os.path.isfile(mapping_path):
         return {}
 
-    with open(mapping_path, "r", encoding="utf-8") as handle:
+    with open(mapping_path, "r", encoding="utf-8-sig") as handle:
         data = json.load(handle)
 
     return data if isinstance(data, dict) else {}
@@ -125,7 +126,7 @@ def read_json(path: str | Path, default: Any = None) -> Any:
     resolved = Path(path)
     if not resolved.exists():
         return default
-    with resolved.open("r", encoding="utf-8") as handle:
+    with resolved.open("r", encoding="utf-8-sig") as handle:
         return json.load(handle)
 
 
@@ -155,7 +156,7 @@ def parse_metadata_file(path: str | Path) -> dict[str, str]:
     if not resolved.exists():
         return values
 
-    for line in resolved.read_text(encoding="utf-8").splitlines():
+    for line in resolved.read_text(encoding="utf-8-sig").splitlines():
         if ": " not in line:
             continue
         key, value = line.split(": ", 1)
