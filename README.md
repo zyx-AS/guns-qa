@@ -76,7 +76,9 @@ bash scripts/run_guns_unit_test.sh --test-class fully.qualified.TestClass
 
 ## Known issue: Jira description garbling
 
-- Symptom: when a Jira/Xray issue description that contains Chinese text is updated through the wrong path, Jira may store the text as `?`, as happened on `GUNSQA-50`.
-- Cause: the unsafe path converts rich-text content through markdown or a non-UTF-8 write path instead of sending Jira ADF JSON as UTF-8.
-- Fix: update Jira descriptions through Jira REST API v3 with ADF JSON, send the payload as `application/json; charset=utf-8`, and read the field back after the write to verify the stored text.
-- Recommendation: for Chinese Jira descriptions, prefer the direct REST ADF update path and avoid any helper path that auto-converts the payload before write.
+- Symptom: Jira/Xray issue descriptions that contain Chinese text may be stored as `?`; this has affected `GUNSQA-50`, `GUNSQA-51`, and `GUNSQA-52`.
+- Root cause: the unsafe update path converts rich-text content through markdown or a non-UTF-8 body instead of sending Jira ADF JSON as UTF-8.
+- Safe update path: use Jira REST API v3, send ADF JSON directly, and set `Content-Type: application/json; charset=utf-8`.
+- Verification rule: after every description write, immediately call `GET /rest/api/3/issue/{key}?fields=description` and confirm the stored text is readable and does not contain `?`.
+- Operational rule: for Chinese Jira descriptions, avoid helper paths that auto-convert markdown or editor content before the write.
+- Recovery rule: if a description is already garbled, rewrite the full description with a clean UTF-8 ADF payload instead of patching the corrupted text incrementally.
