@@ -59,6 +59,7 @@ def build_comment(
     github_run_url: str,
     github_sha: str,
     run_category: str,
+    jacoco_summary: str,
 ) -> str:
     lines = [
         f"Execution key: {execution_issue_key}",
@@ -68,6 +69,8 @@ def build_comment(
         f"GitHub commit: {github_sha}",
         f"Result category: {run_category}",
     ]
+    if jacoco_summary:
+        lines.append(f"JaCoCo: {jacoco_summary}")
     return "\n".join(lines)
 
 
@@ -79,6 +82,7 @@ def build_execution_payload(
     github_sha: str,
     run_category: str,
     failure_summary: str,
+    jacoco_summary: str,
 ) -> dict[str, object]:
     return {
         "testExecutionKey": execution_issue_key,
@@ -93,6 +97,7 @@ def build_execution_payload(
                     github_run_url=github_run_url,
                     github_sha=github_sha,
                     run_category=run_category,
+                    jacoco_summary=jacoco_summary,
                 ),
             }
         ],
@@ -149,6 +154,7 @@ def main() -> int:
     run_result = read_json(run_result_path, default={}) or {}
     run_category = str(run_result.get("category", "unknown"))
     failure_summary = str(run_result.get("failure_summary", "")).strip()
+    jacoco_summary = str(run_result.get("jacoco_summary", "")).strip()
     source_issue_key = detect_issue_key(explicit_issue_key, github_head_ref, github_ref_name, github_event_path)
     github_run_url = f"{github_server_url}/{github_repository}/actions/runs/{github_run_id}"
 
@@ -217,6 +223,7 @@ def main() -> int:
             github_sha=github_sha,
             run_category=run_category,
             failure_summary=failure_summary,
+            jacoco_summary=jacoco_summary,
         )
 
         auth_payload = json.dumps({"client_id": xray_client_id, "client_secret": xray_client_secret}).encode("utf-8")

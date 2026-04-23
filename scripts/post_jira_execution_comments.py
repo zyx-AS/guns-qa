@@ -72,6 +72,8 @@ def build_items(
     execution_issue_key: str,
     execution_issue_url: str,
     source_issue_key: str,
+    jacoco_summary: str,
+    jacoco_artifact_url: str,
 ) -> list[str]:
     items = [
         f"Result: {run_category}",
@@ -80,7 +82,10 @@ def build_items(
         f"Branch: {branch_name or 'none'}",
         f"Execution key: {execution_issue_key or 'none'}",
         f"Xray: {import_category} ({import_mode})",
+        f"JaCoCo: {jacoco_summary or 'not collected'}",
     ]
+    if jacoco_artifact_url:
+        items.append(f"JaCoCo report: {jacoco_artifact_url}")
     if source_issue_key:
         items.append(f"Source Test: {source_issue_key}")
     if execution_issue_url:
@@ -126,6 +131,7 @@ def main() -> int:
     github_server_url = env_default("GITHUB_SERVER_URL", "https://github.com")
     github_repository = env_default("GITHUB_REPOSITORY", "zyx-AS/guns-qa")
     branch_name = env_default("GITHUB_HEAD_REF", "") or env_default("GITHUB_REF_NAME", "")
+    jacoco_artifact_url = env_default("JACOCO_ARTIFACT_URL", "").strip()
 
     run_result = read_json(run_result_path, default={}) or {}
     xray_result = read_json(xray_result_path, default={}) or {}
@@ -133,6 +139,7 @@ def main() -> int:
     source_issue_key = str(xray_result.get("source_issue_key", "")).strip()
     execution_issue_key = str(xray_result.get("execution_issue_key", "")).strip()
     execution_issue_url = str(xray_result.get("execution_issue_url", "")).strip()
+    jacoco_summary = str(run_result.get("jacoco_summary", "")).strip()
 
     result: dict[str, object] = {
         "status": "skipped",
@@ -161,6 +168,8 @@ def main() -> int:
         execution_issue_key=execution_issue_key,
         execution_issue_url=execution_issue_url,
         source_issue_key=source_issue_key,
+        jacoco_summary=jacoco_summary,
+        jacoco_artifact_url=jacoco_artifact_url,
     )
 
     comment_targets = []

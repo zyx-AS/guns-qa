@@ -47,6 +47,7 @@ The Jira issue key itself is treated as the Xray `Test` issue key. The workflow 
 - Fails fast if a managed Jira Test issue is missing required mapping fields.
 - Reuses the mapped stable Xray Test Execution instead of creating a new one.
 - Imports the result back into the existing Jira Test and Test Execution.
+- Uploads a JaCoCo HTML report artifact and includes the coverage summary in the machine-written execution evidence.
 - Posts short Jira comments as machine-written execution breadcrumbs; readable failure analysis belongs in Jira `Bug` issues.
 
 ## Local reproduction
