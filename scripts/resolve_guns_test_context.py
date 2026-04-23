@@ -8,6 +8,7 @@ import json
 import sys
 
 from guns_ci import (
+    COVERAGE_CLASS_FIELDS,
     EXECUTION_KEY_FIELDS,
     GUNS_REF_FIELDS,
     TEST_CLASS_FIELDS,
@@ -18,6 +19,7 @@ from guns_ci import (
     is_managed_issue,
     load_mapping_entry,
     mapped_value,
+    mapped_values,
     write_json,
     write_text,
 )
@@ -33,6 +35,10 @@ def write_step_summary(summary_path: str, context: dict[str, str]) -> None:
         f"- Resolved test class: {context['test_class'] or 'none'} ({context['test_class_source']})",
         f"- Resolved execution key: {context['execution_key'] or 'none'} ({context['execution_key_source']})",
         f"- Resolved GUNS ref: {context['guns_ref'] or 'none'} ({context['guns_ref_source']})",
+        (
+            f"- Resolved coverage classes: {', '.join(context['coverage_classes']) or 'none'} "
+            f"({context['coverage_classes_source']})"
+        ),
         f"- Import mode: {context['import_mode']}",
         f"- Validation status: {context['validation_status']}",
         f"- Validation message: {context['validation_message']}",
@@ -81,6 +87,7 @@ def main() -> None:
     mapped_test_class = mapped_value(mapping_entry, TEST_CLASS_FIELDS)
     mapped_execution_key = mapped_value(mapping_entry, EXECUTION_KEY_FIELDS)
     mapped_guns_ref = mapped_value(mapping_entry, GUNS_REF_FIELDS)
+    mapped_coverage_classes = mapped_values(mapping_entry, COVERAGE_CLASS_FIELDS)
 
     validation_errors: list[str] = []
     if managed_issue:
@@ -127,6 +134,9 @@ def main() -> None:
     elif mapped_guns_ref:
         guns_ref_source = "mapping-file"
 
+    coverage_classes = mapped_coverage_classes
+    coverage_classes_source = "mapping-file" if mapped_coverage_classes else "none"
+
     import_mode = "skipped-no-jira-context"
     if execution_key and issue_key:
         import_mode = "reuse-existing-execution"
@@ -147,6 +157,8 @@ def main() -> None:
         "execution_key_source": execution_key_source,
         "guns_ref": guns_ref,
         "guns_ref_source": guns_ref_source,
+        "coverage_classes": coverage_classes,
+        "coverage_classes_source": coverage_classes_source,
         "import_mode": import_mode,
         "validation_status": validation_status,
         "validation_message": validation_message,
@@ -166,6 +178,7 @@ def main() -> None:
         "GUNS_TEST_CONTEXT_VALIDATION_STATUS": validation_status,
         "GUNS_TEST_CONTEXT_VALIDATION_MESSAGE": validation_message,
         "GUNS_TEST_CONTEXT_MANAGED_ISSUE": context["managed_issue"],
+        "GUNS_COVERAGE_CLASSES": json.dumps(coverage_classes, ensure_ascii=False),
         "XRAY_IMPORT_MODE_RESOLVED": import_mode,
     }
 
@@ -174,6 +187,7 @@ def main() -> None:
         "test_class": test_class,
         "xray_test_execution_key": execution_key,
         "guns_ref": guns_ref,
+        "coverage_classes": json.dumps(coverage_classes, ensure_ascii=False),
         "validation_status": validation_status,
         "validation_message": validation_message,
         "category": context["category"],
