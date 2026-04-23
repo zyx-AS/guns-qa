@@ -239,6 +239,8 @@ jobs:
             .artifacts/guns/xray-import-response.json
             .artifacts/guns/xray-result.json
             .artifacts/guns/xray-import-summary.txt
+            .artifacts/guns/jira-bug-result.json
+            .artifacts/guns/jira-bug-summary.txt
           if-no-files-found: warn
 
       - name: Upload JaCoCo report
@@ -249,6 +251,51 @@ jobs:
           name: guns-jacoco-report
           path: .artifacts/guns/jacoco-report
           if-no-files-found: warn
+
+      - name: Create or reuse Jira Bug
+        id: jira_bug_automation
+        if: always() && steps.resolve_test_context.outcome == 'success'
+        continue-on-error: true
+        shell: bash
+        env:
+          JIRA_BASE_URL: https://jira20260410.atlassian.net
+          JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL }}
+          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+          GITHUB_HEAD_REF: ${{ github.head_ref }}
+          GITHUB_REF_NAME: ${{ github.ref_name }}
+        run: |
+          python3 scripts/create_or_reuse_jira_bug.py
+
+      - name: Capture Jira Bug result
+        id: capture_jira_bug_result
+        if: always()
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          result_path = Path(".artifacts/guns/jira-bug-result.json")
+          result = {
+              "status": "skipped",
+              "category": "jira-bug-skipped",
+              "message": "jira-bug-result.json was not produced",
+              "bug_issue_key": "",
+              "bug_issue_url": "",
+              "mode": "skipped",
+          }
+          if result_path.exists():
+              result = json.loads(result_path.read_text(encoding="utf-8"))
+
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as handle:
+              handle.write(f"status={result.get('status', 'skipped')}\n")
+              handle.write(f"category={result.get('category', 'jira-bug-skipped')}\n")
+              handle.write(f"message={str(result.get('message', '')).replace(chr(10), ' ')}\n")
+              handle.write(f"bug_issue_key={result.get('bug_issue_key', '')}\n")
+              handle.write(f"bug_issue_url={result.get('bug_issue_url', '')}\n")
+              handle.write(f"mode={result.get('mode', 'skipped')}\n")
+          PY
 
       - name: Write Jira execution comments
         id: jira_write_back
@@ -299,6 +346,7 @@ jobs:
             .artifacts/guns/run-summary.txt \
             .artifacts/guns/xray-sync-summary.txt \
             .artifacts/guns/xray-import-summary.txt \
+            .artifacts/guns/jira-bug-summary.txt \
             .artifacts/guns/jira-comment-summary.txt; do
             if [[ -f "$summary_file" ]]; then
               cat "$summary_file" >> "$GITHUB_STEP_SUMMARY"
@@ -334,6 +382,7 @@ jobs:
           run_category="${{ steps.capture_run_result.outputs.category }}"
           sync_category="${{ steps.capture_xray_sync_result.outputs.category }}"
           xray_category="${{ steps.capture_xray_result.outputs.category }}"
+          jira_bug_category="${{ steps.capture_jira_bug_result.outputs.category }}"
 
           if [[ "${{ steps.resolve_test_context.outputs.managed_issue }}" == "true" && "$sync_category" == "xray-sync-failed" ]]; then
             echo "xray execution member sync failed: ${{ steps.capture_xray_sync_result.outputs.message }}"
@@ -351,6 +400,10 @@ jobs:
           fi
 
           if [[ "$run_category" == "test-assertion-failed" ]]; then
+            if [[ "${{ steps.resolve_test_context.outputs.managed_issue }}" == "true" && "$jira_bug_category" != "jira-bug-succeeded" ]]; then
+              echo "test assertion failed and jira bug automation did not complete: ${{ steps.capture_jira_bug_result.outputs.message }}"
+              exit 1
+            fi
             echo "test assertion failed: ${{ steps.capture_run_result.outputs.message }}"
             exit 1
           fi
@@ -365,4 +418,4 @@ jobs:
             exit 1
           fi
 
-          echo "workflow completed with classified status: run=$run_category sync=$sync_category xray=$xray_category jira=${{ steps.capture_jira_result.outputs.category }}"
+          echo "workflow completed with classified status: run=$run_category sync=$sync_category xray=$xray_category jira_bug=$jira_bug_category jira=${{ steps.capture_jira_result.outputs.category }}"

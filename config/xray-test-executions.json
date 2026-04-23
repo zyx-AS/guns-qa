@@ -8,6 +8,7 @@
     "optionalFieldsForManagedIssues": [
       "gunsRef",
       "coverageClasses",
+      "bugKey",
       "note"
     ],
     "sourceTestRule": "The Jira issue key itself is treated as the Xray Test issue key. Do not let Xray auto-create method-named Test issues for managed runs."
@@ -15,6 +16,7 @@
   "GUNSQA-51": {
     "gunsRef": "84272f5a324e0d7890d241d7ae9afa7398da49fa",
     "testExecutionKey": "GUNSQA-50",
+    "bugKey": "GUNSQA-66",
     "testClass": "cn.stylefeng.roses.kernel.sys.modular.user.service.impl.SysUserServiceDetailTest",
     "coverageClasses": [
       "cn.stylefeng.roses.kernel.sys.modular.user.service.impl.SysUserServiceImpl"
@@ -24,6 +26,7 @@
   "GUNSQA-52": {
     "gunsRef": "84272f5a324e0d7890d241d7ae9afa7398da49fa",
     "testExecutionKey": "GUNSQA-50",
+    "bugKey": "GUNSQA-65",
     "testClass": "cn.stylefeng.roses.kernel.sys.modular.user.service.impl.SysUserServiceEditPasswordTrimRepeatTest",
     "coverageClasses": [
       "cn.stylefeng.roses.kernel.sys.modular.user.service.impl.SysUserServiceImpl"
@@ -33,6 +36,7 @@
   "GUNSQA-53": {
     "gunsRef": "84272f5a324e0d7890d241d7ae9afa7398da49fa",
     "testExecutionKey": "GUNSQA-50",
+    "bugKey": "GUNSQA-67",
     "testClass": "cn.stylefeng.roses.kernel.sys.modular.user.service.impl.SysUserServiceUpdateStatusMissingUserTest",
     "coverageClasses": [
       "cn.stylefeng.roses.kernel.sys.modular.user.service.impl.SysUserServiceImpl"
@@ -42,6 +46,7 @@
   "GUNSQA-54": {
     "gunsRef": "84272f5a324e0d7890d241d7ae9afa7398da49fa",
     "testExecutionKey": "GUNSQA-50",
+    "bugKey": "GUNSQA-68",
     "testClass": "cn.stylefeng.roses.kernel.sys.modular.role.service.impl.SysRoleServiceEditCrossCompanyRoleTest",
     "coverageClasses": [
       "cn.stylefeng.roses.kernel.sys.modular.role.service.impl.SysRoleServiceImpl"
@@ -51,6 +56,7 @@
   "GUNSQA-55": {
     "gunsRef": "84272f5a324e0d7890d241d7ae9afa7398da49fa",
     "testExecutionKey": "GUNSQA-50",
+    "bugKey": "GUNSQA-72",
     "testClass": "cn.stylefeng.roses.kernel.sys.modular.role.service.impl.SysRoleServiceEditSystemRoleProtectionTest",
     "coverageClasses": [
       "cn.stylefeng.roses.kernel.sys.modular.role.service.impl.SysRoleServiceImpl"
@@ -60,6 +66,7 @@
   "GUNSQA-56": {
     "gunsRef": "84272f5a324e0d7890d241d7ae9afa7398da49fa",
     "testExecutionKey": "GUNSQA-50",
+    "bugKey": "GUNSQA-73",
     "testClass": "cn.stylefeng.roses.kernel.sys.modular.role.service.impl.SysRoleServiceDetailCrossCompanyRoleTest",
     "coverageClasses": [
       "cn.stylefeng.roses.kernel.sys.modular.role.service.impl.SysRoleServiceImpl"
@@ -69,6 +76,7 @@
   "GUNSQA-57": {
     "gunsRef": "84272f5a324e0d7890d241d7ae9afa7398da49fa",
     "testExecutionKey": "GUNSQA-50",
+    "bugKey": "GUNSQA-69",
     "testClass": "cn.stylefeng.roses.kernel.file.modular.service.impl.SysFileInfoServiceUpdateFileStorageTest",
     "coverageClasses": [
       "cn.stylefeng.roses.kernel.file.modular.service.impl.SysFileInfoServiceImpl"
@@ -78,6 +86,7 @@
   "GUNSQA-58": {
     "gunsRef": "84272f5a324e0d7890d241d7ae9afa7398da49fa",
     "testExecutionKey": "GUNSQA-50",
+    "bugKey": "GUNSQA-70",
     "testClass": "cn.stylefeng.roses.kernel.file.modular.service.impl.SysFileInfoServicePackagingDownloadBucketIsolationTest",
     "coverageClasses": [
       "cn.stylefeng.roses.kernel.file.modular.service.impl.SysFileInfoServiceImpl"
@@ -87,6 +96,7 @@
   "GUNSQA-59": {
     "gunsRef": "84272f5a324e0d7890d241d7ae9afa7398da49fa",
     "testExecutionKey": "GUNSQA-50",
+    "bugKey": "GUNSQA-71",
     "testClass": "cn.stylefeng.roses.kernel.file.modular.service.impl.SysFileBusinessServiceBusinessScopeIsolationTest",
     "coverageClasses": [
       "cn.stylefeng.roses.kernel.file.modular.service.impl.SysFileBusinessServiceImpl"
