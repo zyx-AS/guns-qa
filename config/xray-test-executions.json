@@ -1,0 +1,33 @@
+{
+  "_meta": {
+    "description": "Single source of truth for the managed Jira-driven test flow. Each managed Jira Test issue maps to one Java test class, one stable Xray Test Execution, and an optional pinned GUNS ref.",
+    "requiredFieldsForManagedIssues": [
+      "testClass",
+      "testExecutionKey"
+    ],
+    "optionalFieldsForManagedIssues": [
+      "gunsRef",
+      "coverageClasses",
+      "note"
+    ],
+    "sourceTestRule": "The Jira issue key itself is treated as the Xray Test issue key. Do not let Xray auto-create method-named Test issues for managed runs."
+  },
+  "GUNSQA-51": {
+    "gunsRef": "84272f5a324e0d7890d241d7ae9afa7398da49fa",
+    "testExecutionKey": "GUNSQA-50",
+    "testClass": "cn.stylefeng.roses.kernel.sys.modular.user.service.impl.SysUserServiceDetailTest",
+    "coverageClasses": [
+      "cn.stylefeng.roses.kernel.sys.modular.user.service.impl.SysUserServiceImpl"
+    ],
+    "note": "Run UT-U-01 from the Test issue branch and reuse the stable unit-test execution."
+  },
+  "GUNSQA-52": {
+    "gunsRef": "84272f5a324e0d7890d241d7ae9afa7398da49fa",
+    "testExecutionKey": "GUNSQA-50",
+    "testClass": "cn.stylefeng.roses.kernel.sys.modular.user.service.impl.SysUserServiceEditPasswordTrimRepeatTest",
+    "coverageClasses": [
+      "cn.stylefeng.roses.kernel.sys.modular.user.service.impl.SysUserServiceImpl"
+    ],
+    "note": "Run UT-U-02 from the Test issue branch and reuse the stable unit-test execution."
+  }
+}
