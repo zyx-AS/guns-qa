@@ -354,6 +354,7 @@ def main() -> int:
                 "-B",
                 "-ntp",
                 f"-Dmaven.repo.local={local_m2_cache}",
+                "-Dmaven.test.failure.ignore=true",
                 f"-Dtest={args.test_class}",
                 f"org.jacoco:jacoco-maven-plugin:{JACOCO_MAVEN_PLUGIN_VERSION}:prepare-agent",
                 "test",
@@ -378,6 +379,7 @@ def main() -> int:
                 "mvn",
                 "-B",
                 "-ntp",
+                "-Dmaven.test.failure.ignore=true",
                 f"-Dtest={args.test_class}",
                 f"org.jacoco:jacoco-maven-plugin:{JACOCO_MAVEN_PLUGIN_VERSION}:prepare-agent",
                 "test",
@@ -392,6 +394,7 @@ def main() -> int:
                 "-B",
                 "-ntp",
                 f"-Dmaven.repo.local={local_m2_cache}",
+                "-Dmaven.test.failure.ignore=true",
                 f"-Dtest={args.test_class}",
                 f"org.jacoco:jacoco-maven-plugin:{JACOCO_MAVEN_PLUGIN_VERSION}:prepare-agent",
                 "test",
@@ -421,16 +424,16 @@ def main() -> int:
         report_stats = parse_surefire_reports(surefire_dir)
         result.update(report_stats)
         result.update(parse_jacoco_report(jacoco_dir / "jacoco.xml"))
-        if exit_code == 0:
-            result["status"] = "success"
-            result["category"] = "success"
-            result["failure_summary"] = ""
-        elif int(report_stats["tests"]) > 0 and (
+        if int(report_stats["tests"]) > 0 and (
             int(report_stats["failures"]) > 0 or int(report_stats["errors"]) > 0
         ):
             result["status"] = "failure"
             result["category"] = "test-assertion-failed"
             result["failure_summary"] = str(report_stats["failure_summary"] or "JUnit assertions failed.")
+        elif exit_code == 0:
+            result["status"] = "success"
+            result["category"] = "success"
+            result["failure_summary"] = ""
         else:
             result["status"] = "failure"
             result["category"] = "test-infrastructure-failed"
