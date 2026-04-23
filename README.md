@@ -47,6 +47,7 @@ The Jira issue key itself is treated as the Xray `Test` issue key. The workflow 
 - Fails fast if a managed Jira Test issue is missing required mapping fields.
 - Reuses the mapped stable Xray Test Execution instead of creating a new one.
 - Imports the result back into the existing Jira Test and Test Execution.
+- Uploads a JaCoCo HTML report artifact and includes the coverage summary in the machine-written execution evidence.
 - Posts short Jira comments as machine-written execution breadcrumbs; readable failure analysis belongs in Jira `Bug` issues.
 
 ## Local reproduction
@@ -69,3 +70,10 @@ bash scripts/run_guns_unit_test.sh --test-class fully.qualified.TestClass
 
 - `GUNSQA-51` -> `SysUserServiceDetailTest` -> stable execution `GUNSQA-50`
 - `GUNSQA-52` -> `SysUserServiceEditPasswordTrimRepeatTest` -> stable execution `GUNSQA-50`
+
+## Known issue: Jira description garbling
+
+- Symptom: when a Jira/Xray issue description that contains Chinese text is updated through the wrong path, Jira may store the text as `?`, as happened on `GUNSQA-50`.
+- Cause: the unsafe path converts rich-text content through markdown or a non-UTF-8 write path instead of sending Jira ADF JSON as UTF-8.
+- Fix: update Jira descriptions through Jira REST API v3 with ADF JSON, send the payload as `application/json; charset=utf-8`, and read the field back after the write to verify the stored text.
+- Recommendation: for Chinese Jira descriptions, prefer the direct REST ADF update path and avoid any helper path that auto-converts the payload before write.
