@@ -206,6 +206,50 @@ jobs:
               handle.write(f"import_mode={result.get('import_mode', 'unknown')}\n")
           PY
 
+      - name: Upload surefire reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: guns-surefire-reports
+          path: .artifacts/guns/surefire-reports
+          if-no-files-found: warn
+
+      - name: Upload run metadata
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: guns-run-metadata
+          path: |
+            .artifacts/guns/context-result.json
+            .artifacts/guns/context-summary.txt
+            .artifacts/guns/run-metadata.txt
+            .artifacts/guns/run-result.json
+            .artifacts/guns/run-summary.txt
+          if-no-files-found: warn
+
+      - name: Upload Xray import artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: guns-xray-import
+          path: |
+            .artifacts/guns/xray-sync-response.json
+            .artifacts/guns/xray-sync-result.json
+            .artifacts/guns/xray-sync-summary.txt
+            .artifacts/guns/xray-import-response.json
+            .artifacts/guns/xray-result.json
+            .artifacts/guns/xray-import-summary.txt
+          if-no-files-found: warn
+
+      - name: Upload JaCoCo report
+        id: upload_jacoco_report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: guns-jacoco-report
+          path: .artifacts/guns/jacoco-report
+          if-no-files-found: warn
+
       - name: Write Jira execution comments
         id: jira_write_back
         if: always() && steps.resolve_test_context.outcome == 'success'
@@ -217,6 +261,7 @@ jobs:
           JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
           GITHUB_HEAD_REF: ${{ github.head_ref }}
           GITHUB_REF_NAME: ${{ github.ref_name }}
+          JACOCO_ARTIFACT_URL: ${{ steps.upload_jacoco_report.outputs.artifact-url }}
         run: |
           python3 scripts/post_jira_execution_comments.py
 
@@ -266,41 +311,6 @@ jobs:
             cat .artifacts/guns/run-metadata.txt >> "$GITHUB_STEP_SUMMARY"
             printf '\n```\n' >> "$GITHUB_STEP_SUMMARY"
           fi
-
-      - name: Upload surefire reports
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: guns-surefire-reports
-          path: .artifacts/guns/surefire-reports
-          if-no-files-found: warn
-
-      - name: Upload run metadata
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: guns-run-metadata
-          path: |
-            .artifacts/guns/context-result.json
-            .artifacts/guns/context-summary.txt
-            .artifacts/guns/run-metadata.txt
-            .artifacts/guns/run-result.json
-            .artifacts/guns/run-summary.txt
-          if-no-files-found: warn
-
-      - name: Upload Xray import artifacts
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: guns-xray-import
-          path: |
-            .artifacts/guns/xray-sync-response.json
-            .artifacts/guns/xray-sync-result.json
-            .artifacts/guns/xray-sync-summary.txt
-            .artifacts/guns/xray-import-response.json
-            .artifacts/guns/xray-result.json
-            .artifacts/guns/xray-import-summary.txt
-          if-no-files-found: warn
 
       - name: Upload Jira write-back artifacts
         if: always()
