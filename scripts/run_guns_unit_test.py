@@ -18,6 +18,8 @@ from pathlib import Path
 
 from guns_ci import ensure_dir, write_json, write_text
 
+JACOCO_MAVEN_PLUGIN_VERSION = "0.8.12"
+
 
 def env_default(name: str, fallback: str) -> str:
     return os.environ.get(name, fallback)
@@ -194,6 +196,57 @@ def parse_surefire_reports(report_dir: Path) -> dict[str, object]:
     return result
 
 
+def format_ratio(covered: int, missed: int) -> str:
+    total = covered + missed
+    if total <= 0:
+        return "n/a"
+    return f"{(covered / total) * 100:.2f}%"
+
+
+def parse_jacoco_report(report_path: Path) -> dict[str, object]:
+    result: dict[str, object] = {
+        "jacoco_status": "missing",
+        "jacoco_summary": "JaCoCo report was not produced.",
+        "jacoco_counters": {},
+        "jacoco_report_xml": str(report_path),
+        "jacoco_report_html": str(report_path.with_name("index.html")),
+    }
+
+    if not report_path.is_file():
+        return result
+
+    try:
+        root = element_tree.parse(report_path).getroot()
+        counters: dict[str, dict[str, object]] = {}
+        for counter in root.findall("counter"):
+            counter_type = str(counter.attrib.get("type", "")).lower()
+            covered = int(counter.attrib.get("covered", 0))
+            missed = int(counter.attrib.get("missed", 0))
+            counters[counter_type] = {
+                "covered": covered,
+                "missed": missed,
+                "total": covered + missed,
+                "ratio": format_ratio(covered, missed),
+            }
+
+        def counter_ratio(counter_type: str) -> str:
+            counter = counters.get(counter_type, {})
+            return str(counter.get("ratio", "n/a"))
+
+        result["jacoco_status"] = "collected"
+        result["jacoco_counters"] = counters
+        result["jacoco_summary"] = (
+            f"line {counter_ratio('line')}, "
+            f"branch {counter_ratio('branch')}, "
+            f"method {counter_ratio('method')}"
+        )
+    except Exception as exc:  # pragma: no cover - exercised by malformed reports
+        result["jacoco_status"] = "parse-failed"
+        result["jacoco_summary"] = f"JaCoCo report parsing failed: {exc.__class__.__name__}: {exc}"
+
+    return result
+
+
 def write_result_files(artifact_dir: Path, metadata: dict[str, object], result: dict[str, object]) -> None:
     metadata_text = "\n".join(
         [
@@ -208,6 +261,10 @@ def write_result_files(artifact_dir: Path, metadata: dict[str, object], result: 
             f"Result category: {result['category']}",
             f"Failure summary: {result['failure_summary']}",
             f"Test exit code: {result['test_exit_code']}",
+            f"JaCoCo status: {result['jacoco_status']}",
+            f"JaCoCo summary: {result['jacoco_summary']}",
+            f"JaCoCo report xml: {result['jacoco_report_xml']}",
+            f"JaCoCo report html: {result['jacoco_report_html']}",
         ]
     )
     run_summary = "\n".join(
@@ -222,6 +279,8 @@ def write_result_files(artifact_dir: Path, metadata: dict[str, object], result: 
                 f"- JUnit totals: tests={result['tests']} failures={result['failures']} "
                 f"errors={result['errors']} skipped={result['skipped']}"
             ),
+            f"- JaCoCo status: {result['jacoco_status']}",
+            f"- JaCoCo summary: {result['jacoco_summary']}",
             f"- Exit code: {result['test_exit_code']}",
             "",
         ]
@@ -267,6 +326,11 @@ def main() -> int:
         "selected_test": args.test_class,
         "resolved_commit": "",
         "pinned_ref": args.guns_ref,
+        "jacoco_status": "not-collected",
+        "jacoco_summary": "JaCoCo collection has not run.",
+        "jacoco_report_xml": "",
+        "jacoco_report_html": "",
+        "jacoco_counters": {},
     }
 
     try:
@@ -291,7 +355,12 @@ def main() -> int:
                 "-ntp",
                 f"-Dmaven.repo.local={local_m2_cache}",
                 f"-Dtest={args.test_class}",
+                f"org.jacoco:jacoco-maven-plugin:{JACOCO_MAVEN_PLUGIN_VERSION}:prepare-agent",
                 "test",
+                f"org.jacoco:jacoco-maven-plugin:{JACOCO_MAVEN_PLUGIN_VERSION}:report",
+                "-Djacoco.destFile=target/jacoco.exec",
+                "-Djacoco.dataFile=target/jacoco.exec",
+                "-Djacoco.outputDirectory=target/site/jacoco",
             ]
         elif docker_ready():
             execution_method = "docker-maven"
@@ -310,7 +379,12 @@ def main() -> int:
                 "-B",
                 "-ntp",
                 f"-Dtest={args.test_class}",
+                f"org.jacoco:jacoco-maven-plugin:{JACOCO_MAVEN_PLUGIN_VERSION}:prepare-agent",
                 "test",
+                f"org.jacoco:jacoco-maven-plugin:{JACOCO_MAVEN_PLUGIN_VERSION}:report",
+                "-Djacoco.destFile=target/jacoco.exec",
+                "-Djacoco.dataFile=target/jacoco.exec",
+                "-Djacoco.outputDirectory=target/site/jacoco",
             ]
         else:
             execution_method = "portable-maven"
@@ -319,7 +393,12 @@ def main() -> int:
                 "-ntp",
                 f"-Dmaven.repo.local={local_m2_cache}",
                 f"-Dtest={args.test_class}",
+                f"org.jacoco:jacoco-maven-plugin:{JACOCO_MAVEN_PLUGIN_VERSION}:prepare-agent",
                 "test",
+                f"org.jacoco:jacoco-maven-plugin:{JACOCO_MAVEN_PLUGIN_VERSION}:report",
+                "-Djacoco.destFile=target/jacoco.exec",
+                "-Djacoco.dataFile=target/jacoco.exec",
+                "-Djacoco.outputDirectory=target/site/jacoco",
             ]
 
         result["execution_method"] = execution_method
@@ -333,8 +412,15 @@ def main() -> int:
         if surefire_dir.is_dir():
             shutil.copytree(surefire_dir, artifact_reports_dir, dirs_exist_ok=True)
 
+        jacoco_dir = work_dir / "target" / "site" / "jacoco"
+        artifact_jacoco_dir = artifact_dir / "jacoco-report"
+        remove_tree(artifact_jacoco_dir)
+        if jacoco_dir.is_dir():
+            shutil.copytree(jacoco_dir, artifact_jacoco_dir, dirs_exist_ok=True)
+
         report_stats = parse_surefire_reports(surefire_dir)
         result.update(report_stats)
+        result.update(parse_jacoco_report(jacoco_dir / "jacoco.xml"))
         if exit_code == 0:
             result["status"] = "success"
             result["category"] = "success"
