@@ -37,7 +37,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--test-class",
-        default=env_default("GUNS_TEST_CLASS", "cn.stylefeng.guns.core.security.BlackWhiteInterceptorTest"),
+        default=env_default("GUNS_TEST_CLASS", ""),
     )
     parser.add_argument("--guns-work-dir", default=env_default("GUNS_WORK_DIR", ""))
     parser.add_argument("--guns-artifact-dir", default=env_default("GUNS_ARTIFACT_DIR", ""))
@@ -270,6 +270,9 @@ def main() -> int:
     }
 
     try:
+        if not args.test_class.strip():
+            raise RuntimeError("GUNS test class is required. Set GUNS_TEST_CLASS or pass --test-class.")
+
         clone_repo(work_dir, [args.guns_repo_url, args.guns_fallback_repo_url], args.guns_default_branch)
         resolved_head = resolve_head(work_dir, args.guns_ref)
         metadata["resolved_head"] = resolved_head

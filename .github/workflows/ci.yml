@@ -3,7 +3,6 @@ name: GUNS Unit Test
 on:
   push:
     branches:
-      - main
       - GUNSQA-*
   pull_request:
   workflow_dispatch:
@@ -13,15 +12,15 @@ on:
         required: false
         default: 84272f5a324e0d7890d241d7ae9afa7398da49fa
       test_class:
-        description: Optional fully qualified JUnit test class override
+        description: Optional fully qualified JUnit test class for unmanaged manual runs
         required: false
         default: ""
       jira_issue_key:
-        description: Optional Jira issue key for Xray execution naming
+        description: Optional Jira Test issue key for unmanaged manual runs
         required: false
         default: ""
       xray_test_execution_key:
-        description: Optional existing Xray Test Execution key to reuse
+        description: Optional existing Xray Test Execution key for unmanaged manual runs
         required: false
         default: ""
 
@@ -34,6 +33,7 @@ concurrency:
 
 jobs:
   guns-unit-test:
+    if: github.event_name == 'workflow_dispatch' || startsWith(github.ref_name, 'GUNSQA-') || startsWith(github.head_ref, 'GUNSQA-')
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     env:
@@ -41,7 +41,6 @@ jobs:
       GUNS_FALLBACK_REPO_URL: https://gitcode.com/javaguns/guns.git
       GUNS_DEFAULT_BRANCH: master
       GUNS_REF: ${{ github.event.inputs.guns_ref || '84272f5a324e0d7890d241d7ae9afa7398da49fa' }}
-      GUNS_DEFAULT_TEST_CLASS: cn.stylefeng.guns.core.security.BlackWhiteInterceptorTest
       GUNS_TEST_CLASS: ""
       XRAY_BASE_URL: https://us.xray.cloud.getxray.app
       XRAY_PROJECT_KEY: GUNSQA
@@ -71,7 +70,6 @@ jobs:
         run: |
           python3 scripts/resolve_guns_test_context.py \
             --mapping-path "$XRAY_TEST_EXECUTION_MAP_PATH" \
-            --default-test-class "$GUNS_DEFAULT_TEST_CLASS" \
             --default-guns-ref "$GUNS_REF" \
             --input-guns-ref "$WORKFLOW_INPUT_GUNS_REF" \
             --input-test-class "$WORKFLOW_INPUT_TEST_CLASS" \
@@ -127,7 +125,7 @@ jobs:
               handle.write(f"message={str(result.get('failure_summary', '')).replace(chr(10), ' ')}\n")
           PY
 
-      - name: Import JUnit results into Xray
+      - name: Import managed test result into Xray
         id: import_xray
         if: always() && steps.resolve_test_context.outcome == 'success'
         continue-on-error: true
@@ -295,6 +293,11 @@ jobs:
 
           if [[ "$xray_category" == "xray-import-failed" ]]; then
             echo "xray import failed: ${{ steps.capture_xray_result.outputs.message }}"
+            exit 1
+          fi
+
+          if [[ "${{ steps.resolve_test_context.outputs.managed_issue }}" == "true" && "$xray_category" == "xray-import-skipped" ]]; then
+            echo "xray import skipped for managed issue: ${{ steps.capture_xray_result.outputs.message }}"
             exit 1
           fi
 

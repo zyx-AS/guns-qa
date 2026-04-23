@@ -2,10 +2,9 @@
 
 When adding or updating tests in this repository:
 
-- Always create or update a matching teacher-readable README under `guns-tests/docs/<type>/<test-id>/README.md`.
-- Valid documentation categories are `unit`, `integration`, `system`, and `performance`.
-- Use the canonical template in `docs/testing/test-readme-template.md`.
-- Review the examples in `docs/testing/examples/` before writing a new README.
-- Prefer scaffolding with `scripts/new-test-doc.ps1` or `scripts/new-test-doc.sh`.
-- Keep the README concise and readable for teachers. Summarize the result in natural language instead of pasting raw XML or long logs.
-- Update `guns-tests/docs/README.md` and the relevant category index when a new documented test is added.
+- Treat Jira `Test` issues as the design source of truth.
+- Update `config/xray-test-executions.json` whenever a managed `GUNSQA-*` test is added or renamed.
+- Add Java test assets under `guns-tests/src/test/java/...`.
+- Do not add per-case README files under `guns-tests/docs/`.
+- Do not rely on a default test class or a newly created Xray Test Execution.
+- Keep Jira comments short and machine-oriented. Put readable defect analysis in a Jira `Bug`.

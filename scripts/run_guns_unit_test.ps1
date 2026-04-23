@@ -3,7 +3,7 @@ param(
     [string]$GunsFallbackRepoUrl = "https://gitcode.com/javaguns/guns.git",
     [string]$GunsDefaultBranch = "master",
     [string]$GunsRef = "84272f5a324e0d7890d241d7ae9afa7398da49fa",
-    [string]$TestClass = "cn.stylefeng.guns.core.security.BlackWhiteInterceptorTest"
+    [string]$TestClass = ""
 )
 
 $ErrorActionPreference = "Stop"

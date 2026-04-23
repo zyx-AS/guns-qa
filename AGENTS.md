@@ -1,46 +1,18 @@
 # Repository Instructions
 
-## Testing Documentation
+## Standard test workflow
 
-- Every new test case added under `guns-tests/src/test/` must have a matching teacher-readable README under `guns-tests/docs/<type>/<test-id>/README.md`.
-- Valid documentation categories are `unit`, `integration`, `system`, and `performance`.
-- Numbering conventions are fixed across the repository:
-  - `UT-模块-序号`
-  - `IT-链路-序号`
-  - `ST-场景-序号`
-  - `PT-场景-序号`
-- The canonical template lives in `docs/testing/test-readme-template.md`.
-- Reference examples live in `docs/testing/examples/`.
-- Use `scripts/new-test-doc.ps1` or `scripts/new-test-doc.sh` to scaffold a new test README before filling in project-specific details.
+- Jira `Test` issues replace per-case README files.
+- `config/xray-test-executions.json` is the only automation mapping file.
+- Every managed `GUNSQA-*` Test issue must declare `testClass` and `testExecutionKey`.
+- Branch names for managed test work should start with the Jira key, for example `GUNSQA-52-password-trim`.
+- Do not rely on a default test class. The workflow now requires an explicit mapped or manual `testClass`.
+- Do not create ad-hoc Xray Test Executions for the managed flow. Reuse the mapped stable execution.
+- Do not reintroduce `guns-tests/docs/**` per-case documentation. Put test design in Jira and execution evidence in Jira/Xray.
 
-## Required README Structure
+## Repo change rules
 
-Every case README under `guns-tests/docs/<type>/<test-id>/README.md` must contain:
-
-1. A metadata table with these rows:
-   - `测试类型`
-   - `测试编号`
-   - `对应代码`
-   - `Jira`
-   - `GitHub 工作流`
-2. These section headings in order:
-   - `## 1. 测试目的`
-   - `## 2. 测试方法与设计依据`
-   - `## 3. 前置条件`
-   - `## 4. 测试步骤`
-   - `## 5. 预期结果`
-   - `## 6. 实际结果`
-   - `## 7. 结论`
-   - `## 8. 测试过程中的差异情况`
-
-## Writing Rules
-
-- Keep the README teacher-readable. Summarize the result in natural language instead of pasting raw XML, full logs, or long stack traces into the正文.
-- Put raw execution evidence in GitHub Actions artifacts or Jira attachments, then reference them in the README.
-- Update `guns-tests/docs/README.md` and the corresponding category index when adding or removing a documented test case.
-- If a test file is renamed or moved, update the `对应代码` row in the README in the same change.
-
-## Validation
-
-- The workflow `.github/workflows/validate-test-docs.yml` validates test documentation structure.
-- Commits that add or change tests should keep the documentation check green before merge.
+- Store Java test assets under `guns-tests/src/test/java/...`.
+- Update `config/xray-test-executions.json` in the same change when adding or renaming a managed Jira Test issue.
+- Keep Jira Test issue keys business-readable. Do not create or preserve method-named placeholder Test issues.
+- If an automated run reveals a product defect, capture the readable analysis in a Jira `Bug`, not in a long machine-written comment.

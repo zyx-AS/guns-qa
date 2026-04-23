@@ -44,7 +44,6 @@ def write_step_summary(summary_path: str, context: dict[str, str]) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--mapping-path", default="")
-    parser.add_argument("--default-test-class", default="")
     parser.add_argument("--default-guns-ref", default="")
     parser.add_argument("--input-test-class", default="")
     parser.add_argument("--input-guns-ref", default="")
@@ -97,6 +96,10 @@ def main() -> None:
             validation_errors.append(
                 f"Managed Jira issue {issue_key} must declare testExecutionKey in {args.mapping_path}."
             )
+    elif not first_non_empty(args.input_test_class, mapped_test_class):
+        validation_errors.append(
+            "Non-managed runs must provide test_class explicitly; the workflow no longer falls back to a default test."
+        )
 
     if managed_issue:
         test_class = mapped_test_class
@@ -104,9 +107,9 @@ def main() -> None:
         test_class_source = "mapping-file"
         execution_key_source = "mapping-file"
     else:
-        test_class = first_non_empty(args.input_test_class, mapped_test_class, args.default_test_class)
+        test_class = first_non_empty(args.input_test_class, mapped_test_class)
         execution_key = first_non_empty(args.input_xray_test_execution_key, mapped_execution_key)
-        test_class_source = "default-test-class"
+        test_class_source = "none"
         if first_non_empty(args.input_test_class):
             test_class_source = "workflow-input"
         elif mapped_test_class:
@@ -125,10 +128,12 @@ def main() -> None:
         guns_ref_source = "mapping-file"
 
     import_mode = "skipped-no-jira-context"
-    if execution_key:
+    if execution_key and issue_key:
         import_mode = "reuse-existing-execution"
     elif issue_key:
-        import_mode = "create-new-execution"
+        import_mode = "skipped-missing-execution-key"
+    elif execution_key:
+        import_mode = "skipped-no-source-test-issue"
 
     validation_status = "success" if not validation_errors else "failure"
     validation_message = "mapping entry ready" if not validation_errors else " ".join(validation_errors)

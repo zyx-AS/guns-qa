@@ -63,8 +63,6 @@ def post_comment(base_url: str, email: str, token: str, issue_key: str, body: di
 
 
 def build_items(
-    source_issue_key: str,
-    execution_issue_key: str,
     branch_name: str,
     github_sha: str,
     github_run_url: str,
@@ -72,20 +70,29 @@ def build_items(
     run_message: str,
     import_category: str,
     import_mode: str,
+    execution_issue_key: str,
     execution_issue_url: str,
+    source_issue_key: str,
 ) -> list[str]:
-    return [
-        f"Source Test issue: {source_issue_key or 'none'}",
-        f"Execution issue: {execution_issue_key or 'none'}",
-        f"Branch: {branch_name or 'none'}",
+    items = [
+        f"Result: {run_category}",
+        f"Run: {github_run_url}",
         f"Commit: {github_sha}",
-        f"GitHub run: {github_run_url}",
-        f"Test result: {run_category}",
-        f"Failure summary: {run_message or 'none'}",
-        f"Xray import result: {import_category}",
-        f"Xray import mode: {import_mode}",
-        f"Execution issue url: {execution_issue_url or 'none'}",
+        f"Branch: {branch_name or 'none'}",
+        f"Execution: {execution_issue_key or 'none'}",
+        f"Xray: {import_category} ({import_mode})",
     ]
+    if source_issue_key:
+        items.append(f"Source Test: {source_issue_key}")
+    if execution_issue_url:
+        items.append(f"Execution URL: {execution_issue_url}")
+    if run_message and run_category != "success":
+        items.append(f"Failure summary: {run_message}")
+    return items
+
+
+def should_comment_source_issue(run_category: str, import_category: str) -> bool:
+    return run_category != "success" or import_category != "xray-import-succeeded"
 
 
 def summary_text(result: dict[str, object]) -> str:
@@ -144,35 +151,32 @@ def main() -> int:
         print(str(result["message"]))
         return 0
 
-    if not jira_user_email or not jira_api_token:
-        result["message"] = "Skipping Jira write-back because JIRA_USER_EMAIL / JIRA_API_TOKEN are not configured."
-        write_text(summary_path, summary_text(result))
-        write_json(result_path, result)
-        print(str(result["message"]))
-        return 0
-
+    run_category = str(run_result.get("category", "unknown"))
+    run_message = str(run_result.get("failure_summary", ""))
+    import_category = str(xray_result.get("category", "unknown"))
+    import_mode = str(xray_result.get("import_mode", "unknown"))
     comment_items = build_items(
-        source_issue_key=source_issue_key,
-        execution_issue_key=execution_issue_key,
         branch_name=branch_name,
         github_sha=github_sha,
         github_run_url=github_run_url,
-        run_category=str(run_result.get("category", "unknown")),
-        run_message=str(run_result.get("failure_summary", "")),
-        import_category=str(xray_result.get("category", "unknown")),
-        import_mode=str(xray_result.get("import_mode", "unknown")),
+        run_category=run_category,
+        run_message=run_message,
+        import_category=import_category,
+        import_mode=import_mode,
+        execution_issue_key=execution_issue_key,
         execution_issue_url=execution_issue_url,
+        source_issue_key=source_issue_key,
     )
 
     comment_targets = []
-    if source_issue_key:
+    if source_issue_key and should_comment_source_issue(run_category, import_category):
         comment_targets.append(
             (
                 source_issue_key,
                 adf_document(
-                    title="Automated GUNS unit test execution summary",
+                    title="Automated execution evidence",
                     items=comment_items,
-                    footer="This comment was posted automatically by the guns-qa workflow.",
+                    footer="Keep human-readable defect analysis in a Jira Bug issue.",
                 ),
             )
         )
@@ -181,9 +185,9 @@ def main() -> int:
             (
                 execution_issue_key,
                 adf_document(
-                    title="Automated Xray execution update",
+                    title="Automated execution evidence",
                     items=comment_items,
-                    footer="This comment was posted automatically by the guns-qa workflow.",
+                    footer="This comment is the machine-written execution breadcrumb.",
                 ),
             )
         )
@@ -193,6 +197,13 @@ def main() -> int:
         result["category"] = "jira-comment-dry-run"
         result["message"] = "Dry run completed without posting Jira comments."
         result["comments"] = [{"issue_key": issue_key, "comment_id": "dry-run"} for issue_key, _ in comment_targets]
+        write_text(summary_path, summary_text(result))
+        write_json(result_path, result)
+        print(str(result["message"]))
+        return 0
+
+    if not jira_user_email or not jira_api_token:
+        result["message"] = "Skipping Jira write-back because JIRA_USER_EMAIL / JIRA_API_TOKEN are not configured."
         write_text(summary_path, summary_text(result))
         write_json(result_path, result)
         print(str(result["message"]))
