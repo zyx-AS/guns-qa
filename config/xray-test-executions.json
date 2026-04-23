@@ -29,5 +29,68 @@
       "cn.stylefeng.roses.kernel.sys.modular.user.service.impl.SysUserServiceImpl"
     ],
     "note": "Run UT-U-02 from the Test issue branch and reuse the stable unit-test execution."
+  },
+  "GUNSQA-53": {
+    "gunsRef": "84272f5a324e0d7890d241d7ae9afa7398da49fa",
+    "testExecutionKey": "GUNSQA-50",
+    "testClass": "cn.stylefeng.roses.kernel.sys.modular.user.service.impl.SysUserServiceUpdateStatusMissingUserTest",
+    "coverageClasses": [
+      "cn.stylefeng.roses.kernel.sys.modular.user.service.impl.SysUserServiceImpl"
+    ],
+    "note": "Run UT-U-03 from the Test issue branch and reuse the stable unit-test execution."
+  },
+  "GUNSQA-54": {
+    "gunsRef": "84272f5a324e0d7890d241d7ae9afa7398da49fa",
+    "testExecutionKey": "GUNSQA-50",
+    "testClass": "cn.stylefeng.roses.kernel.sys.modular.role.service.impl.SysRoleServiceEditCrossCompanyRoleTest",
+    "coverageClasses": [
+      "cn.stylefeng.roses.kernel.sys.modular.role.service.impl.SysRoleServiceImpl"
+    ],
+    "note": "Run UT-R-01 from the Test issue branch and reuse the stable unit-test execution."
+  },
+  "GUNSQA-55": {
+    "gunsRef": "84272f5a324e0d7890d241d7ae9afa7398da49fa",
+    "testExecutionKey": "GUNSQA-50",
+    "testClass": "cn.stylefeng.roses.kernel.sys.modular.role.service.impl.SysRoleServiceEditSystemRoleProtectionTest",
+    "coverageClasses": [
+      "cn.stylefeng.roses.kernel.sys.modular.role.service.impl.SysRoleServiceImpl"
+    ],
+    "note": "Run UT-R-02 from the Test issue branch and reuse the stable unit-test execution."
+  },
+  "GUNSQA-56": {
+    "gunsRef": "84272f5a324e0d7890d241d7ae9afa7398da49fa",
+    "testExecutionKey": "GUNSQA-50",
+    "testClass": "cn.stylefeng.roses.kernel.sys.modular.role.service.impl.SysRoleServiceDetailCrossCompanyRoleTest",
+    "coverageClasses": [
+      "cn.stylefeng.roses.kernel.sys.modular.role.service.impl.SysRoleServiceImpl"
+    ],
+    "note": "Run UT-R-03 from the Test issue branch and reuse the stable unit-test execution."
+  },
+  "GUNSQA-57": {
+    "gunsRef": "84272f5a324e0d7890d241d7ae9afa7398da49fa",
+    "testExecutionKey": "GUNSQA-50",
+    "testClass": "cn.stylefeng.roses.kernel.file.modular.service.impl.SysFileInfoServiceUpdateFileStorageTest",
+    "coverageClasses": [
+      "cn.stylefeng.roses.kernel.file.modular.service.impl.SysFileInfoServiceImpl"
+    ],
+    "note": "Run UT-F-01 from the Test issue branch and reuse the stable unit-test execution."
+  },
+  "GUNSQA-58": {
+    "gunsRef": "84272f5a324e0d7890d241d7ae9afa7398da49fa",
+    "testExecutionKey": "GUNSQA-50",
+    "testClass": "cn.stylefeng.roses.kernel.file.modular.service.impl.SysFileInfoServicePackagingDownloadBucketIsolationTest",
+    "coverageClasses": [
+      "cn.stylefeng.roses.kernel.file.modular.service.impl.SysFileInfoServiceImpl"
+    ],
+    "note": "Run UT-F-02 from the Test issue branch and reuse the stable unit-test execution."
+  },
+  "GUNSQA-59": {
+    "gunsRef": "84272f5a324e0d7890d241d7ae9afa7398da49fa",
+    "testExecutionKey": "GUNSQA-50",
+    "testClass": "cn.stylefeng.roses.kernel.file.modular.service.impl.SysFileBusinessServiceBusinessScopeIsolationTest",
+    "coverageClasses": [
+      "cn.stylefeng.roses.kernel.file.modular.service.impl.SysFileBusinessServiceImpl"
+    ],
+    "note": "Run UT-F-03 from the Test issue branch and reuse the stable unit-test execution."
   }
 }
