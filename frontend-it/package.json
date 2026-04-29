@@ -1,0 +1,17 @@
+{
+  "name": "guns-frontend-it",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Jira-driven frontend integration tests for GUNS",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.54.1",
+    "@types/node": "^22.15.17",
+    "typescript": "^5.8.3",
+    "tsx": "^4.19.2"
+  }
+}
