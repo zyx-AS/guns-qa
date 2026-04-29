@@ -102,5 +102,65 @@
       "cn.stylefeng.roses.kernel.file.modular.service.impl.SysFileBusinessServiceImpl"
     ],
     "note": "Run UT-F-03 from the Test issue branch and reuse the stable unit-test execution."
+  },
+  "GUNSQA-79": {
+    "gunsRef": "2a12947733945d5c06197d99ecaa77d7f2b0aeba",
+    "testExecutionKey": "GUNSQA-89",
+    "testClass": "cn.stylefeng.guns.integration.FrontendIntegrationContractsTest",
+    "note": "Run IT-R-01 role edit permission contract against the GitHub stylefeng/Guns source."
+  },
+  "GUNSQA-80": {
+    "gunsRef": "2a12947733945d5c06197d99ecaa77d7f2b0aeba",
+    "testExecutionKey": "GUNSQA-89",
+    "testClass": "cn.stylefeng.guns.integration.FrontendIntegrationContractsTest",
+    "note": "Run IT-R-02 role delete permission contract against the GitHub stylefeng/Guns source."
+  },
+  "GUNSQA-81": {
+    "gunsRef": "2a12947733945d5c06197d99ecaa77d7f2b0aeba",
+    "testExecutionKey": "GUNSQA-89",
+    "testClass": "cn.stylefeng.guns.integration.FrontendIntegrationContractsTest",
+    "note": "Run IT-U-01 user certificate preview contract against the GitHub stylefeng/Guns source."
+  },
+  "GUNSQA-82": {
+    "gunsRef": "2a12947733945d5c06197d99ecaa77d7f2b0aeba",
+    "testExecutionKey": "GUNSQA-89",
+    "testClass": "cn.stylefeng.guns.integration.FrontendIntegrationContractsTest",
+    "note": "Run IT-R-03 role company selector empty selection contract against the GitHub stylefeng/Guns source."
+  },
+  "GUNSQA-83": {
+    "gunsRef": "2a12947733945d5c06197d99ecaa77d7f2b0aeba",
+    "testExecutionKey": "GUNSQA-89",
+    "testClass": "cn.stylefeng.guns.integration.FrontendIntegrationContractsTest",
+    "note": "Run IT-U-02 user role search API parameter contract against the GitHub stylefeng/Guns source."
+  },
+  "GUNSQA-84": {
+    "gunsRef": "2a12947733945d5c06197d99ecaa77d7f2b0aeba",
+    "testExecutionKey": "GUNSQA-89",
+    "testClass": "cn.stylefeng.guns.integration.FrontendIntegrationContractsTest",
+    "note": "Run IT-F-01 file upload Authorization refresh contract against the GitHub stylefeng/Guns source."
+  },
+  "GUNSQA-85": {
+    "gunsRef": "2a12947733945d5c06197d99ecaa77d7f2b0aeba",
+    "testExecutionKey": "GUNSQA-89",
+    "testClass": "cn.stylefeng.guns.integration.FrontendIntegrationContractsTest",
+    "note": "Run IT-U-03 user detail certificate preview router contract against the GitHub stylefeng/Guns source."
+  },
+  "GUNSQA-86": {
+    "gunsRef": "2a12947733945d5c06197d99ecaa77d7f2b0aeba",
+    "testExecutionKey": "GUNSQA-89",
+    "testClass": "cn.stylefeng.guns.integration.FrontendIntegrationContractsTest",
+    "note": "Run IT-U-04 user import Excel input contract against the GitHub stylefeng/Guns source."
+  },
+  "GUNSQA-87": {
+    "gunsRef": "2a12947733945d5c06197d99ecaa77d7f2b0aeba",
+    "testExecutionKey": "GUNSQA-89",
+    "testClass": "cn.stylefeng.guns.integration.FrontendIntegrationContractsTest",
+    "note": "Run IT-F-02 file download token exposure contract against the GitHub stylefeng/Guns source."
+  },
+  "GUNSQA-88": {
+    "gunsRef": "2a12947733945d5c06197d99ecaa77d7f2b0aeba",
+    "testExecutionKey": "GUNSQA-89",
+    "testClass": "cn.stylefeng.guns.integration.FrontendIntegrationContractsTest",
+    "note": "Run IT-F-03 file upload response handling contract against the GitHub stylefeng/Guns source."
   }
 }

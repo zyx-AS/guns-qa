@@ -37,8 +37,8 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     env:
-      GUNS_REPO_URL: https://gitee.com/stylefeng/guns.git
-      GUNS_FALLBACK_REPO_URL: https://gitcode.com/javaguns/guns.git
+      GUNS_REPO_URL: https://github.com/stylefeng/Guns.git
+      GUNS_FALLBACK_REPO_URL: https://gitee.com/stylefeng/guns.git
       GUNS_DEFAULT_BRANCH: master
       GUNS_REF: ${{ github.event.inputs.guns_ref || '84272f5a324e0d7890d241d7ae9afa7398da49fa' }}
       GUNS_TEST_CLASS: ""
