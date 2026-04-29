@@ -162,5 +162,23 @@
     "testExecutionKey": "GUNSQA-89",
     "testClass": "cn.stylefeng.guns.integration.FrontendIntegrationContractsTest",
     "note": "Run IT-F-03 file upload response handling contract against the GitHub stylefeng/Guns source."
+  },
+  "GUNSQA-90": {
+    "gunsRef": "84272f5a324e0d7890d241d7ae9afa7398da49fa",
+    "testExecutionKey": "GUNSQA-89",
+    "testClass": "cn.stylefeng.guns.integration.UserStatusToggleIntegrationContractTest",
+    "note": "Run IT-U-NEW-05 user status rollback integration contract against the GitCode javaguns/guns source."
+  },
+  "GUNSQA-91": {
+    "gunsRef": "84272f5a324e0d7890d241d7ae9afa7398da49fa",
+    "testExecutionKey": "GUNSQA-89",
+    "testClass": "cn.stylefeng.guns.integration.UserRoleAssignmentDeleteIntegrationContractTest",
+    "note": "Run IT-U-NEW-06 user role assignment delete guard contract against the GitCode javaguns/guns source."
+  },
+  "GUNSQA-92": {
+    "gunsRef": "84272f5a324e0d7890d241d7ae9afa7398da49fa",
+    "testExecutionKey": "GUNSQA-89",
+    "testClass": "cn.stylefeng.guns.integration.FileUploadFailureResponseIntegrationContractTest",
+    "note": "Run IT-F-NEW-05 file upload failure response handling contract against the GitCode javaguns/guns source."
   }
 }
