@@ -36,7 +36,7 @@ jobs:
       XRAY_BASE_URL: https://us.xray.cloud.getxray.app
       XRAY_JIRA_ISSUE_KEY: ""
       XRAY_TEST_EXECUTION_KEY: ""
-      XRAY_TEST_EXECUTION_MAP_PATH: frontend-it/config/xray-test-executions.json
+      XRAY_TEST_EXECUTION_MAP_PATH: config/xray-test-executions.json
       PLAYWRIGHT_JUNIT_OUTPUT: .artifacts/guns/playwright/junit.xml
       PLAYWRIGHT_HTML_OUTPUT: .artifacts/guns/playwright/html-report
       TEST_CLASS_SELECTOR: ""
