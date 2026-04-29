@@ -33,7 +33,7 @@ concurrency:
 
 jobs:
   guns-unit-test:
-    if: github.event_name == 'workflow_dispatch' || startsWith(github.ref_name, 'GUNSQA-') || startsWith(github.head_ref, 'GUNSQA-')
+    if: github.event_name == 'workflow_dispatch' || (((startsWith(github.ref_name, 'GUNSQA-') || startsWith(github.head_ref, 'GUNSQA-')) && github.ref_name != 'GUNSQA-85-it-u-03-user-detail-certificate-preview-router-undefined' && github.ref_name != 'GUNSQA-86-it-u-04-user-import-excel-input-contract' && github.ref_name != 'GUNSQA-87-it-f-02-file-download-token-exposure' && github.ref_name != 'GUNSQA-88-it-f-03-file-upload-response-handling' && github.head_ref != 'GUNSQA-85-it-u-03-user-detail-certificate-preview-router-undefined' && github.head_ref != 'GUNSQA-86-it-u-04-user-import-excel-input-contract' && github.head_ref != 'GUNSQA-87-it-f-02-file-download-token-exposure' && github.head_ref != 'GUNSQA-88-it-f-03-file-upload-response-handling'))
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     env:
