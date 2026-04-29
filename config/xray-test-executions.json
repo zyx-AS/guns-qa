@@ -104,16 +104,16 @@
     "note": "Run UT-F-03 from the Test issue branch and reuse the stable unit-test execution."
   },
   "GUNSQA-79": {
-    "gunsRef": "2a12947733945d5c06197d99ecaa77d7f2b0aeba",
+    "gunsRef": "84272f5a324e0d7890d241d7ae9afa7398da49fa",
     "testExecutionKey": "GUNSQA-89",
-    "testClass": "cn.stylefeng.guns.integration.FrontendIntegrationContractsTest",
-    "note": "Run IT-R-01 role edit permission contract against the GitHub stylefeng/Guns source."
+    "testClass": "cn.stylefeng.guns.integration.RoleEditPermissionIntegrationContractTest",
+    "note": "Run IT-R-01 role edit permission contract against the GitCode javaguns/guns source."
   },
   "GUNSQA-80": {
-    "gunsRef": "2a12947733945d5c06197d99ecaa77d7f2b0aeba",
+    "gunsRef": "84272f5a324e0d7890d241d7ae9afa7398da49fa",
     "testExecutionKey": "GUNSQA-89",
-    "testClass": "cn.stylefeng.guns.integration.FrontendIntegrationContractsTest",
-    "note": "Run IT-R-02 role delete permission contract against the GitHub stylefeng/Guns source."
+    "testClass": "cn.stylefeng.guns.integration.RoleDeletePermissionIntegrationContractTest",
+    "note": "Run IT-R-02 role delete permission contract against the GitCode javaguns/guns source."
   },
   "GUNSQA-81": {
     "gunsRef": "2a12947733945d5c06197d99ecaa77d7f2b0aeba",
@@ -122,10 +122,10 @@
     "note": "Run IT-U-01 user certificate preview contract against the GitHub stylefeng/Guns source."
   },
   "GUNSQA-82": {
-    "gunsRef": "2a12947733945d5c06197d99ecaa77d7f2b0aeba",
+    "gunsRef": "84272f5a324e0d7890d241d7ae9afa7398da49fa",
     "testExecutionKey": "GUNSQA-89",
-    "testClass": "cn.stylefeng.guns.integration.FrontendIntegrationContractsTest",
-    "note": "Run IT-R-03 role company selector empty selection contract against the GitHub stylefeng/Guns source."
+    "testClass": "cn.stylefeng.guns.integration.RoleCompanySelectionIntegrationContractTest",
+    "note": "Run IT-R-03 role company selector empty selection contract against the GitCode javaguns/guns source."
   },
   "GUNSQA-83": {
     "gunsRef": "2a12947733945d5c06197d99ecaa77d7f2b0aeba",
