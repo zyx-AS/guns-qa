@@ -1,0 +1,34 @@
+{
+  "_meta": {
+    "description": "Single source of truth for Jira-driven frontend integration tests.",
+    "requiredFieldsForManagedIssues": [
+      "testClass",
+      "testExecutionKey"
+    ],
+    "optionalFieldsForManagedIssues": [
+      "bugKey",
+      "note"
+    ],
+    "sourceTestRule": "The Jira issue key itself is treated as the Xray Test issue key. In this frontend-it workspace testClass is a Playwright grep selector."
+  },
+  "GUNSQA-85": {
+    "testClass": "@GUNSQA-85",
+    "testExecutionKey": "GUNSQA-89",
+    "note": "Certificate attachment preview should not fail because router is undefined."
+  },
+  "GUNSQA-86": {
+    "testClass": "@GUNSQA-86",
+    "testExecutionKey": "GUNSQA-89",
+    "note": "Non-Excel uploads must be rejected before hitting the preview API."
+  },
+  "GUNSQA-87": {
+    "testClass": "@GUNSQA-87",
+    "testExecutionKey": "GUNSQA-89",
+    "note": "Download URLs must not expose the login token as a query parameter."
+  },
+  "GUNSQA-88": {
+    "testClass": "@GUNSQA-88",
+    "testExecutionKey": "GUNSQA-89",
+    "note": "Upload failure responses must not be shown as successful uploads."
+  }
+}
