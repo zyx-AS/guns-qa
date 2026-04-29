@@ -110,7 +110,7 @@ def search_bug_by_source_label(
         "maxResults": 10,
         "fields": ["summary", "labels", "issuelinks", "issuetype", "assignee"],
     }
-    response = jira_request(base_url, email, token, "POST", "/rest/api/3/search", payload=payload) or {}
+    response = jira_request(base_url, email, token, "POST", "/rest/api/3/search/jql", payload=payload) or {}
     issues = response.get("issues", [])
     for issue in issues:
         fields = issue.get("fields", {})
