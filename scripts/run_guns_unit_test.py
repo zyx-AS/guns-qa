@@ -106,14 +106,25 @@ def clone_repo(work_dir: Path, repo_urls: list[str], default_branch: str) -> Non
     raise RuntimeError("Unable to clone the GUNS repository.")
 
 
-def resolve_head(work_dir: Path, guns_ref: str) -> str:
+def resolve_head(work_dir: Path, guns_ref: str, repo_urls: list[str]) -> str:
     resolved_head = capture_command(["git", "-C", str(work_dir), "rev-parse", "HEAD"])
     if guns_ref != resolved_head:
-        if run_command(["git", "-C", str(work_dir), "fetch", "--depth", "1", "origin", guns_ref]) != 0:
+        fetch_sources = ["origin", *repo_urls]
+        seen_sources: set[str] = set()
+        for fetch_source in fetch_sources:
+            normalized_source = fetch_source.strip()
+            if not normalized_source or normalized_source in seen_sources:
+                continue
+            seen_sources.add(normalized_source)
+            print(f"Fetching GUNS ref {guns_ref} from {normalized_source}")
+            if run_command(["git", "-C", str(work_dir), "fetch", "--depth", "1", normalized_source, guns_ref]) != 0:
+                continue
+            if run_command(["git", "-C", str(work_dir), "checkout", "--detach", "FETCH_HEAD"]) != 0:
+                raise RuntimeError(f"Failed to check out GUNS ref {guns_ref}")
+            resolved_head = capture_command(["git", "-C", str(work_dir), "rev-parse", "HEAD"])
+            break
+        else:
             raise RuntimeError(f"Failed to fetch GUNS ref {guns_ref}")
-        if run_command(["git", "-C", str(work_dir), "checkout", "--detach", "FETCH_HEAD"]) != 0:
-            raise RuntimeError(f"Failed to check out GUNS ref {guns_ref}")
-        resolved_head = capture_command(["git", "-C", str(work_dir), "rev-parse", "HEAD"])
     return resolved_head
 
 
@@ -634,8 +645,9 @@ def main() -> int:
         if not args.test_class.strip():
             raise RuntimeError("GUNS test class is required. Set GUNS_TEST_CLASS or pass --test-class.")
 
-        clone_repo(work_dir, [args.guns_repo_url, args.guns_fallback_repo_url], args.guns_default_branch)
-        resolved_head = resolve_head(work_dir, args.guns_ref)
+        repo_urls = [args.guns_repo_url, args.guns_fallback_repo_url]
+        clone_repo(work_dir, repo_urls, args.guns_default_branch)
+        resolved_head = resolve_head(work_dir, args.guns_ref, repo_urls)
         metadata["resolved_head"] = resolved_head
         result["resolved_commit"] = resolved_head
         copy_test_assets(root_dir, work_dir)
