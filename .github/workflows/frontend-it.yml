@@ -1,0 +1,181 @@
+name: GUNS Frontend Integration Test
+
+on:
+  push:
+    branches:
+      - GUNSQA-*
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      test_class:
+        description: Optional Playwright grep selector for unmanaged manual runs
+        required: false
+        default: ""
+      jira_issue_key:
+        description: Optional Jira Test issue key for unmanaged manual runs
+        required: false
+        default: ""
+      xray_test_execution_key:
+        description: Optional existing Xray Test Execution key for unmanaged manual runs
+        required: false
+        default: ""
+
+permissions:
+  contents: read
+
+concurrency:
+  group: guns-frontend-it-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  frontend-integration-test:
+    if: github.event_name == 'workflow_dispatch' || startsWith(github.ref_name, 'GUNSQA-') || startsWith(github.head_ref, 'GUNSQA-')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      XRAY_BASE_URL: https://us.xray.cloud.getxray.app
+      XRAY_JIRA_ISSUE_KEY: ""
+      XRAY_TEST_EXECUTION_KEY: ""
+      XRAY_TEST_EXECUTION_MAP_PATH: frontend-it/config/xray-test-executions.json
+      PLAYWRIGHT_JUNIT_OUTPUT: .artifacts/guns/playwright/junit.xml
+      PLAYWRIGHT_HTML_OUTPUT: .artifacts/guns/playwright/html-report
+      TEST_CLASS_SELECTOR: ""
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        working-directory: frontend-it
+        run: npm install
+
+      - name: Install Playwright browser
+        working-directory: frontend-it
+        run: npx playwright install --with-deps chromium
+
+      - name: Resolve Jira-driven test context
+        id: resolve_test_context
+        continue-on-error: true
+        shell: bash
+        env:
+          WORKFLOW_INPUT_TEST_CLASS: ${{ github.event.inputs.test_class || '' }}
+          WORKFLOW_INPUT_JIRA_ISSUE_KEY: ${{ github.event.inputs.jira_issue_key || '' }}
+          WORKFLOW_INPUT_XRAY_TEST_EXECUTION_KEY: ${{ github.event.inputs.xray_test_execution_key || '' }}
+        run: |
+          cd frontend-it
+          python scripts/resolve_test_context.py \
+            --mapping-path "$XRAY_TEST_EXECUTION_MAP_PATH" \
+            --input-test-class "$WORKFLOW_INPUT_TEST_CLASS" \
+            --input-jira-issue-key "$WORKFLOW_INPUT_JIRA_ISSUE_KEY" \
+            --input-xray-test-execution-key "$WORKFLOW_INPUT_XRAY_TEST_EXECUTION_KEY" \
+            --github-head-ref "${GITHUB_HEAD_REF:-}" \
+            --github-ref-name "${GITHUB_REF_NAME:-}" \
+            --github-event-path "${GITHUB_EVENT_PATH:-}" \
+            --github-env "$GITHUB_ENV" \
+            --github-output "$GITHUB_OUTPUT" \
+            --github-step-summary "$GITHUB_STEP_SUMMARY" \
+            --context-json-path ".artifacts/guns/context-result.json" \
+            --context-summary-path ".artifacts/guns/context-summary.txt"
+
+      - name: Sync mapped Tests into stable Xray execution
+        if: steps.resolve_test_context.outcome == 'success' && steps.resolve_test_context.outputs.managed_issue == 'true'
+        continue-on-error: true
+        working-directory: frontend-it
+        env:
+          XRAY_CLIENT_ID: ${{ secrets.XRAY_CLIENT_ID }}
+          XRAY_CLIENT_SECRET: ${{ secrets.XRAY_CLIENT_SECRET }}
+          JIRA_BASE_URL: https://jira20260410.atlassian.net
+          JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL }}
+          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+        run: python scripts/sync_xray_execution_members.py
+
+      - name: Run selected frontend integration test
+        id: run_frontend_test
+        if: steps.resolve_test_context.outcome == 'success'
+        continue-on-error: true
+        working-directory: frontend-it
+        env:
+          APP_BASE_URL: http://101.200.163.141
+          APP_USERNAME: admin
+          APP_PASSWORD: ${{ secrets.APP_PASSWORD }}
+        run: python scripts/run_frontend_it.py
+
+      - name: Import managed test result into Xray
+        if: always() && steps.resolve_test_context.outcome == 'success'
+        continue-on-error: true
+        working-directory: frontend-it
+        env:
+          XRAY_CLIENT_ID: ${{ secrets.XRAY_CLIENT_ID }}
+          XRAY_CLIENT_SECRET: ${{ secrets.XRAY_CLIENT_SECRET }}
+        run: python scripts/import_xray_results.py
+
+      - name: Create or reuse Jira Bug
+        if: always() && steps.resolve_test_context.outcome == 'success'
+        continue-on-error: true
+        working-directory: frontend-it
+        env:
+          JIRA_BASE_URL: https://jira20260410.atlassian.net
+          JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL }}
+          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+        run: python scripts/create_or_reuse_jira_bug.py
+
+      - name: Write Jira execution comments
+        if: always() && steps.resolve_test_context.outcome == 'success'
+        continue-on-error: true
+        working-directory: frontend-it
+        env:
+          JIRA_BASE_URL: https://jira20260410.atlassian.net
+          JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL }}
+          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+        run: python scripts/post_jira_execution_comments.py
+
+      - name: Upload Playwright artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-artifacts
+          path: frontend-it/.artifacts/guns
+          if-no-files-found: warn
+
+      - name: Publish summary
+        if: always()
+        shell: bash
+        run: |
+          for summary_file in \
+            frontend-it/.artifacts/guns/context-summary.txt \
+            frontend-it/.artifacts/guns/run-summary.txt \
+            frontend-it/.artifacts/guns/xray-sync-summary.txt \
+            frontend-it/.artifacts/guns/xray-import-summary.txt \
+            frontend-it/.artifacts/guns/jira-bug-summary.txt \
+            frontend-it/.artifacts/guns/jira-comment-summary.txt; do
+            if [[ -f "$summary_file" ]]; then
+              cat "$summary_file" >> "$GITHUB_STEP_SUMMARY"
+              printf '\n' >> "$GITHUB_STEP_SUMMARY"
+            fi
+          done
+
+      - name: Fail job on missing context or failing test
+        if: always()
+        shell: bash
+        run: |
+          if [[ "${{ steps.resolve_test_context.outcome }}" != "success" ]]; then
+            echo "context resolution failed: ${{ steps.resolve_test_context.outputs.validation_message }}"
+            exit 1
+          fi
+
+          if [[ "${{ steps.run_frontend_test.outcome }}" != "success" ]]; then
+            echo "frontend integration test failed"
+            exit 1
+          fi
+
+          echo "workflow completed"
