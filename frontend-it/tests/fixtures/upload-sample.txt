@@ -1,0 +1,1 @@
+Sample upload payload used for negative-path integration testing.
