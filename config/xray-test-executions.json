@@ -102,5 +102,14 @@
       "cn.stylefeng.roses.kernel.file.modular.service.impl.SysFileBusinessServiceImpl"
     ],
     "note": "Run UT-F-03 from the Test issue branch and reuse the stable unit-test execution."
+  },
+  "GUNSQA-137": {
+    "gunsRef": "84272f5a324e0d7890d241d7ae9afa7398da49fa",
+    "testExecutionKey": "GUNSQA-50",
+    "testClass": "cn.stylefeng.roses.kernel.sys.modular.app.controller.SysAppUpdateStatusPermissionContractTest",
+    "coverageClasses": [
+      "cn.stylefeng.roses.kernel.sys.modular.app.controller.SysAppController"
+    ],
+    "note": "Run IT-A-01 to verify the app status switch permission guard matches the backend update-status permission contract."
   }
 }
