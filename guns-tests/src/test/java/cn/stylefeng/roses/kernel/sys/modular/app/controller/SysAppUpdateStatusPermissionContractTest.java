@@ -38,7 +38,7 @@ class SysAppUpdateStatusPermissionContractTest {
         String appPageSource = readAppPageSource();
 
         String statusSwitchBlock = vxeSwitchBlockForChange(appPageSource, "statusFlagChange(record)");
-        String statusChangeBlock = functionBlock(appPageSource, "const statusFlagChange = record =>");
+        String statusChangeBlock = sourceBlock(appPageSource, "const statusFlagChange = record =>", "</script>");
         String frontEndPermission = disabledComputedPermission(appPageSource);
         String backendPermission = backendRequiredPermission("updateStatus");
 
@@ -79,7 +79,7 @@ class SysAppUpdateStatusPermissionContractTest {
     }
 
     private static String disabledComputedPermission(String source) {
-        String disabledBlock = functionBlock(source, "const disabled = computed(() =>");
+        String disabledBlock = sourceBlock(source, "const disabled = computed(() =>", "onMounted");
         Matcher matcher = USER_STORE_PERMISSION_PATTERN.matcher(disabledBlock);
         assertTrue(matcher.find(), () -> "Could not find the permission checked by the disabled computed value:\n" + disabledBlock);
         return matcher.group(1);
@@ -95,12 +95,12 @@ class SysAppUpdateStatusPermissionContractTest {
         return source.substring(blockStart, blockEnd);
     }
 
-    private static String functionBlock(String source, String functionStart) {
-        int start = source.indexOf(functionStart);
-        assertTrue(start >= 0, () -> "Could not find source block starting with " + functionStart);
+    private static String sourceBlock(String source, String startToken, String endToken) {
+        int start = source.indexOf(startToken);
+        assertTrue(start >= 0, () -> "Could not find source block starting with " + startToken);
 
-        int end = source.indexOf(";\n", start);
-        assertTrue(end > start, () -> "Could not extract source block starting with " + functionStart);
-        return source.substring(start, end + 1);
+        int end = source.indexOf(endToken, start);
+        assertTrue(end > start, () -> "Could not extract source block starting with " + startToken);
+        return source.substring(start, end);
     }
 }
