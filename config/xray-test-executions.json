@@ -127,12 +127,14 @@
   "GUNSQA-83": {
     "gunsRef": "2a12947733945d5c06197d99ecaa77d7f2b0aeba",
     "testExecutionKey": "GUNSQA-89",
+    "bugKey": "GUNSQA-121",
     "testClass": "cn.stylefeng.guns.integration.UserRoleSearchParameterIntegrationContractTest",
     "note": "Run IT-U-02 user role search API parameter contract via CI and reuse the stable integration execution."
   },
   "GUNSQA-84": {
     "gunsRef": "2a12947733945d5c06197d99ecaa77d7f2b0aeba",
     "testExecutionKey": "GUNSQA-89",
+    "bugKey": "GUNSQA-122",
     "testClass": "cn.stylefeng.guns.integration.FileUploadAuthorizationHeaderIntegrationContractTest",
     "note": "Run IT-F-01 file upload Authorization refresh contract via CI and reuse the stable integration execution."
   }
