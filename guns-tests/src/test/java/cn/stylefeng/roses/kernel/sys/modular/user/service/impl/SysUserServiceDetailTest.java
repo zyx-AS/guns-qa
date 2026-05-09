@@ -11,11 +11,14 @@ import com.baomidou.mybatisplus.core.metadata.TableInfoHelper;
 import com.baomidou.mybatisplus.core.toolkit.LambdaUtils;
 import org.apache.ibatis.builder.MapperBuilderAssistant;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.InjectMocks;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -42,10 +45,11 @@ class SysUserServiceDetailTest {
     @InjectMocks
     private SysUserServiceImpl sysUserService;
 
-    @Test
-    void shouldThrowBusinessExceptionWhenUserDoesNotExist() {
+    @ParameterizedTest
+    @MethodSource("missingUserIds")
+    void shouldThrowBusinessExceptionWhenUserDoesNotExist(Long userId) {
         SysUserRequest request = new SysUserRequest();
-        request.setUserId(999999L);
+        request.setUserId(userId);
 
         doReturn(null).when(sysUserService).getOne(any(Wrapper.class), eq(false));
 
@@ -56,5 +60,9 @@ class SysUserServiceDetailTest {
 
         assertEquals(SysUserExceptionEnum.SYS_USER_NOT_EXISTED.getErrorCode(), exception.getErrorCode());
         assertEquals(SysUserExceptionEnum.SYS_USER_NOT_EXISTED.getUserTip(), exception.getUserTip());
+    }
+
+    private static Stream<Long> missingUserIds() {
+        return Stream.of(999999L, 0L, -1L, null, 999999999L);
     }
 }
