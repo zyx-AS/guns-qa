@@ -12,6 +12,8 @@ import cn.stylefeng.roses.kernel.sys.modular.user.enums.SysUserExceptionEnum;
 import cn.stylefeng.roses.kernel.sys.modular.user.pojo.request.SysUserRequest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockedStatic;
@@ -41,13 +43,22 @@ class SysUserServiceEditPasswordTrimRepeatTest {
     @InjectMocks
     private SysUserServiceImpl sysUserService;
 
-    @Test
-    void shouldRejectPasswordChangeWhenTrimmedNewPasswordMatchesOldPassword() {
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "abc123 ",
+            " abc123",
+            " abc123 ",
+            "abc123\t",
+            "\tabc123",
+            "\tabc123 ",
+            " abc123\t"
+    })
+    void shouldRejectPasswordChangeWhenTrimmedNewPasswordMatchesOldPassword(String newPassword) {
         Long userId = 10001L;
 
         SysUserRequest request = new SysUserRequest();
         request.setPassword("abc123");
-        request.setNewPassword("abc123 ");
+        request.setNewPassword(newPassword);
 
         SysUser sysUser = new SysUser();
         sysUser.setUserId(userId);
