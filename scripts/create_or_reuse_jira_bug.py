@@ -97,6 +97,45 @@ def metadata_value(metadata_path: Path, key: str) -> str:
     return parse_metadata_file(metadata_path).get(key, "")
 
 
+def jira_search_issues(
+    base_url: str,
+    email: str,
+    token: str,
+    jql: str,
+    fields: list[str],
+    max_results: int = 10,
+) -> list[dict[str, object]]:
+    payload = {
+        "jql": jql,
+        "maxResults": max_results,
+        "fields": fields,
+        "fieldsByKeys": False,
+    }
+    try:
+        response = jira_request(
+            base_url,
+            email,
+            token,
+            "POST",
+            "/rest/api/3/search/jql",
+            payload=payload,
+        ) or {}
+    except urllib.error.HTTPError as exc:
+        if exc.code not in {400, 404, 405, 410}:
+            raise
+        response = jira_request(
+            base_url,
+            email,
+            token,
+            "POST",
+            "/rest/api/3/search",
+            payload=payload,
+        ) or {}
+
+    issues = response.get("issues", [])
+    return [issue for issue in issues if isinstance(issue, dict)]
+
+
 def search_bug_by_source_label(
     base_url: str,
     email: str,
@@ -105,13 +144,14 @@ def search_bug_by_source_label(
     source_issue_label: str,
     bug_issue_type_id: str,
 ) -> dict[str, object] | None:
-    payload = {
-        "jql": f'project = "{project_key}" AND labels = "{source_issue_label}" ORDER BY created DESC',
-        "maxResults": 10,
-        "fields": ["summary", "labels", "issuelinks", "issuetype", "assignee"],
-    }
-    response = jira_request(base_url, email, token, "POST", "/rest/api/3/search", payload=payload) or {}
-    issues = response.get("issues", [])
+    issues = jira_search_issues(
+        base_url,
+        email,
+        token,
+        jql=f'project = "{project_key}" AND labels = "{source_issue_label}" ORDER BY created DESC',
+        fields=["summary", "labels", "issuelinks", "issuetype", "assignee"],
+        max_results=10,
+    )
     for issue in issues:
         fields = issue.get("fields", {})
         issue_type = fields.get("issuetype", {}) if isinstance(fields, dict) else {}
