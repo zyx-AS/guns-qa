@@ -102,5 +102,9 @@
       "cn.stylefeng.roses.kernel.file.modular.service.impl.SysFileBusinessServiceImpl"
     ],
     "note": "Run UT-F-03 from the Test issue branch and reuse the stable unit-test execution."
+  },
+  "GUNSQA-134": {
+    "testClass": "cn.stylefeng.roses.kernel.sys.modular.user.service.impl.NullInputValidationTest",
+    "testExecutionKey": "GUNSQA-132"
   }
 }
