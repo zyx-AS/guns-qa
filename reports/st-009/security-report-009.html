@@ -1,0 +1,2788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ZAP by Checkmarx Scanning Report</title>
+<link
+	href="security-report-009/normalize/normalize.css" rel="stylesheet">
+<link
+	href="security-report-009/themes/original/main.css" rel="stylesheet">
+<link
+	href="security-report-009/themes/original/colors.css" rel="stylesheet">
+</head>
+<body>
+	<header>
+		<h1>ZAP by Checkmarx Scanning Report</h1>
+		<p>
+			<span>Generated with</span> <a href="https://zaproxy.org"><img
+				src="security-report-009/zap32x32.png" alt="The ZAP logo" class="zap-logo">ZAP</a>
+			<span>on 周四 28 5月 2026, at 00:34:04</span>
+		</p>
+		<p>ZAP 版本：2.17.0</p>
+		<p>
+			ZAP by <a href="https://checkmarx.com/">Checkmarx</a>
+		</p>
+	</header>
+
+	<main>
+
+		<section id="contents" class="contents">
+			<h2>Contents</h2>
+			<nav>
+				<ol>
+					<li><a
+						href="#about-this-report">About This Report</a>
+						<ol>
+							
+							<li><a
+								href="#report-parameters">Report Parameters</a></li>
+						</ol></li>
+					<data-th-block>
+					<li><a
+						href="#summaries">Summaries</a>
+						<ol>
+							<li><a
+								href="#risk-confidence-counts">Alert Counts by Risk and Confidence</a></li>
+							<li><a
+								href="#site-risk-counts">Alert Counts by Site and Risk</a></li>
+							<li><a
+								href="#alert-type-counts">Alert Counts by Alert Type</a></li>
+							<li><a
+								href="#insights">Insights</a></li>
+						</ol></li>
+					<li><a
+						href="#alerts">Alerts</a>
+						<ol>
+							
+							 
+							
+							
+							
+							
+							<li><a
+								href="#alerts--risk-2-confidence-3"><span>Risk</span>=<span
+									class="risk-level">中</span>, <span>Confidence</span>=<span
+									class="confidence-level">高</span> <span>(1)</span></a></li>
+							
+							<li><a
+								href="#alerts--risk-2-confidence-2"><span>Risk</span>=<span
+									class="risk-level">中</span>, <span>Confidence</span>=<span
+									class="confidence-level">中</span> <span>(1)</span></a></li>
+							
+							
+							  
+							
+							
+							
+							
+							<li><a
+								href="#alerts--risk-1-confidence-3"><span>Risk</span>=<span
+									class="risk-level">低</span>, <span>Confidence</span>=<span
+									class="confidence-level">高</span> <span>(1)</span></a></li>
+							
+							<li><a
+								href="#alerts--risk-1-confidence-2"><span>Risk</span>=<span
+									class="risk-level">低</span>, <span>Confidence</span>=<span
+									class="confidence-level">中</span> <span>(1)</span></a></li>
+							
+							<li><a
+								href="#alerts--risk-1-confidence-1"><span>Risk</span>=<span
+									class="risk-level">低</span>, <span>Confidence</span>=<span
+									class="confidence-level">低</span> <span>(1)</span></a></li>
+							  
+							
+							
+							
+							
+							
+							
+							
+							
+							<li><a
+								href="#alerts--risk-0-confidence-1"><span>Risk</span>=<span
+									class="risk-level">信息提示</span>, <span>Confidence</span>=<span
+									class="confidence-level">低</span> <span>(1)</span></a></li>
+							  
+						</ol></li>
+					<li><a
+						href="#appendix">Appendix</a>
+						<ol>
+							<li><a
+								href="#alert-types">Alert Types</a></li>
+						</ol></li>
+					</data-th-block>
+				</ol>
+			</nav>
+		</section>
+
+		<section
+			id="about-this-report" class="about-this-report">
+			<h2>About This Report</h2>
+
+			
+
+			<section
+				id="report-parameters">
+				<h3>Report Parameters</h3>
+				<div class="report-parameters--container">
+					<h4>Contexts</h4>
+					
+					
+					<p>No contexts were selected, so all contexts were included by default.</p>
+					  
+
+					<h4>Sites</h4>
+					
+					<p>The following sites were included:</p>
+					<ul class="sites-list">
+						<li><span class="site">https://android.clients.google.com</span></li>
+						<li><span class="site">https://update.googleapis.com</span></li>
+						<li><span class="site">https://optimizationguide-pa.googleapis.com</span></li>
+						<li><span class="site">https://www.googleapis.com</span></li>
+						<li><span class="site">https://www.google.com</span></li>
+						<li><span class="site">https://accounts.google.com</span></li>
+						<li><span class="site">http://localhost:8080</span></li>
+						<li><span class="site">http://clients2.google.com</span></li>
+					</ul>
+					
+					<p>(If no sites were selected, all sites were included by default.)</p>
+					<p>An included site must also be within one of the included contexts for its data to be included in the report.</p>
+
+					<h4>Risk levels</h4>
+					<p>
+						<span>Included</span>:
+						 
+						<span class="included-risk-codes"><span class="risk-level">高</span>, <span class="risk-level">中</span>, <span class="risk-level">低</span>, <span class="risk-level">信息提示</span></span>
+					</p>
+					<p>
+						<span>Excluded</span>:
+						 <span>None</span>
+						
+					</p>
+
+					<h4>Confidence levels</h4>
+					<p>
+						<span>Included</span>:
+						
+						
+						<span class="included-confidence-codes"><span class="confidence-level">用户已确认</span>, <span class="confidence-level">高</span>, <span class="confidence-level">中</span>, <span class="confidence-level">低</span></span>
+					</p>
+					<p>
+						<span>Excluded</span>:
+						
+						
+						<span class="included-confidence-codes"> <span class="confidence-level">用户已确认</span>, <span class="confidence-level">高</span>, <span class="confidence-level">中</span>, <span class="confidence-level">低</span>, <span class="confidence-level">误报</span></span>
+					</p>
+				</div>
+			</section>
+		</section>
+
+		
+		<section>
+			
+		</section>
+		
+		<section id="summaries" class="summaries">
+			<h2>Summaries</h2>
+
+			<section
+				id="risk-confidence-counts">
+				<h3>Alert Counts by Risk and Confidence</h3>
+				<table class="risk-confidence-counts-table">
+					<caption>
+						<p>This table shows the number of alerts for each level of risk and confidence included in the report.</p>
+						<p>(The percentages in brackets represent the count as a percentage of the total number of alerts included in the report, rounded to one decimal place.)</p>
+					</caption>
+					<colgroup>
+						<col>
+						<col>
+					</colgroup>
+					<colgroup>
+						<col
+							style="width: 14.0%"><col
+							style="width: 14.0%"><col
+							style="width: 14.0%"><col
+							style="width: 14.0%">
+						<col style="width: 14.0%">
+					</colgroup>
+					<thead>
+						<tr>
+							<td colspan="2" rowspan="2"></td>
+							<th scope="colgroup"
+								colspan="5">Confidence</th>
+						</tr>
+						<tr>
+							<th scope="col">用户已确认</th>
+							<th scope="col">高</th>
+							<th scope="col">中</th>
+							<th scope="col">低</th>
+							<th scope="col">Total</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th scope="rowgroup"
+								rowspan="5">Risk</th>
+							<th scope="row">高</th>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0.0%)</span></td>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0.0%)</span></td>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0.0%)</span></td>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0.0%)</span></td>
+							<td><span>0</span><br> <span class="additional-info-percentages">(0.0%)</span></td>
+						</tr>
+						<tr>
+							
+							<th scope="row">中</th>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0.0%)</span></td>
+							<td><span>1</span><br> <span
+								class="additional-info-percentages">(16.7%)</span></td>
+							<td><span>1</span><br> <span
+								class="additional-info-percentages">(16.7%)</span></td>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0.0%)</span></td>
+							<td><span>2</span><br> <span class="additional-info-percentages">(33.3%)</span></td>
+						</tr>
+						<tr>
+							
+							<th scope="row">低</th>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0.0%)</span></td>
+							<td><span>1</span><br> <span
+								class="additional-info-percentages">(16.7%)</span></td>
+							<td><span>1</span><br> <span
+								class="additional-info-percentages">(16.7%)</span></td>
+							<td><span>1</span><br> <span
+								class="additional-info-percentages">(16.7%)</span></td>
+							<td><span>3</span><br> <span class="additional-info-percentages">(50.0%)</span></td>
+						</tr>
+						<tr>
+							
+							<th scope="row">信息提示</th>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0.0%)</span></td>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0.0%)</span></td>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0.0%)</span></td>
+							<td><span>1</span><br> <span
+								class="additional-info-percentages">(16.7%)</span></td>
+							<td><span>1</span><br> <span class="additional-info-percentages">(16.7%)</span></td>
+						</tr>
+						<tr>
+							<th scope="row">Total</th>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0.0%)</span></td>
+							<td><span>2</span><br> <span
+								class="additional-info-percentages">(33.3%)</span></td>
+							<td><span>2</span><br> <span
+								class="additional-info-percentages">(33.3%)</span></td>
+							<td><span>2</span><br> <span
+								class="additional-info-percentages">(33.3%)</span></td>
+							<td><span>6</span><br> <span
+								class="additional-info-percentages">(100%)</span></td>
+						</tr>
+					</tbody>
+				</table>
+			</section>
+
+			<section
+				id="site-risk-counts">
+				<h3>Alert Counts by Site and Risk</h3>
+				<table class="site-risk-counts-table">
+					<caption>
+						<p>This table shows, for each site for which one or more alerts were raised, the number of alerts raised at each risk level.</p>
+						<p>Alerts with a confidence level of &quot;False Positive&quot; have been excluded from these counts.</p>
+						<p>(The numbers in brackets are the number of alerts raised for the site at or above that risk level.)</p>
+					</caption>
+					<colgroup>
+						<col>
+						<col>
+					</colgroup>
+					<colgroup>
+						<col
+							style="width: 16.25%"><col
+							style="width: 16.25%"><col
+							style="width: 16.25%"><col
+							style="width: 16.25%">
+					</colgroup>
+					<thead>
+						<tr>
+							<td colspan="2" rowspan="2"></td>
+							<th scope="colgroup" colspan="4">Risk</th>
+						</tr>
+						<tr>
+							<th scope="col">
+								<span>高</span><br>  <span
+									class="additional-info-percentages">(= 高)</span>  
+							</th>
+							<th scope="col">
+								<span>中</span><br>   <span
+									class="additional-info-percentages">(&gt;= 中)</span> 
+							</th>
+							<th scope="col">
+								<span>低</span><br>   <span
+									class="additional-info-percentages">(&gt;= 低)</span> 
+							</th>
+							<th scope="col">
+								<span>信息提示</span><br>   <span
+									class="additional-info-percentages">(&gt;= 信息提示)</span> 
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th scope="rowgroup"
+								rowspan="3">Site</th>
+							<th scope="row">https://optimizationguide-pa.googleapis.com</th>
+							
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0)</span></td>
+							<td><span>1</span><br> <span
+								class="additional-info-percentages">(1)</span></td>
+							<td><span>2</span><br> <span
+								class="additional-info-percentages">(3)</span></td>
+							<td><span>1</span><br> <span
+								class="additional-info-percentages">(4)</span></td>
+							
+						</tr>
+						<tr>
+							
+							<th scope="row">https://www.googleapis.com</th>
+							
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0)</span></td>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0)</span></td>
+							<td><span>1</span><br> <span
+								class="additional-info-percentages">(1)</span></td>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(1)</span></td>
+							
+						</tr>
+						<tr>
+							
+							<th scope="row">http://localhost:8080</th>
+							
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0)</span></td>
+							<td><span>1</span><br> <span
+								class="additional-info-percentages">(1)</span></td>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(1)</span></td>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(1)</span></td>
+							
+						</tr>
+					</tbody>
+				</table>
+			</section>
+
+			<section
+				id="alert-type-counts">
+				<h3>Alert Counts by Alert Type</h3>
+				<table class="alert-type-counts-table">
+					<caption>
+						<p>This table shows the number of alerts of each alert type, together with the alert type&#39;s risk level.</p>
+						<p>(The percentages in brackets represent each count as a percentage, rounded to one decimal place, of the total number of alerts included in this report.)</p>
+					</caption>
+					<thead>
+						<tr>
+							<th scope="col">Alert type</th>
+							<th scope="col">Risk</th>
+							<th scope="col">Count</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th scope="row"><a
+								href="#alert-type-0">Content Security Policy (CSP) Header Not Set</a></th>
+							<td class="risk-level">中</td>
+							<td><span>2</span><br> <span
+								class="additional-info-percentages">(33.3%)</span></td>
+						</tr>
+						<tr>
+							<th scope="row"><a
+								href="#alert-type-1">Missing Anti-clickjacking Header</a></th>
+							<td class="risk-level">中</td>
+							<td><span>1</span><br> <span
+								class="additional-info-percentages">(16.7%)</span></td>
+						</tr>
+						<tr>
+							<th scope="row"><a
+								href="#alert-type-2">Strict-Transport-Security Header Not Set</a></th>
+							<td class="risk-level">低</td>
+							<td><span>8</span><br> <span
+								class="additional-info-percentages">(133.3%)</span></td>
+						</tr>
+						<tr>
+							<th scope="row"><a
+								href="#alert-type-3">X-Content-Type-Options Header Missing</a></th>
+							<td class="risk-level">低</td>
+							<td><span>1</span><br> <span
+								class="additional-info-percentages">(16.7%)</span></td>
+						</tr>
+						<tr>
+							<th scope="row"><a
+								href="#alert-type-4">时间戳泄漏 - Unix</a></th>
+							<td class="risk-level">低</td>
+							<td><span>5</span><br> <span
+								class="additional-info-percentages">(83.3%)</span></td>
+						</tr>
+						<tr>
+							<th scope="row"><a
+								href="#alert-type-5">Re-examine Cache-control Directives</a></th>
+							<td class="risk-level">信息提示</td>
+							<td><span>1</span><br> <span
+								class="additional-info-percentages">(16.7%)</span></td>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<th scope="row">Total</th>
+							<td></td>
+							<td>6</td>
+						</tr>
+					</tfoot>
+				</table>
+			</section>
+			
+			<section
+				id="insights">
+				<h3 class="left-header">Insights</h3>
+				<table class="insights-table">
+						<caption>
+						<p>This table shows information that is likely to be very relevant to you, but which is not related to vulnerabilities, or potentially even related to the application in question.</p>
+					</caption>
+					<thead>
+					<tr>
+						<th scope="col">Level</th>
+						<th scope="col">原因</th>
+						<th scope="col">Site</th>
+						<th scope="col">说明</th>
+						<th scope="col">Statistic</th>
+					</tr>
+					</thead>
+					<tbody>
+					
+						<tr>
+						<td class="risk-2">
+							<div>中</div>
+						</td>
+						<td>
+							<div>Exceeded Low</div>
+						</td>
+						<td>
+							<div></div>
+						</td>
+						<td>
+							<div>Percentage of memory used</div>
+						</td>
+						<td align="center">
+							<div>83   </div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-1">
+							<div>低</div>
+						</td>
+						<td>
+							<div>警告</div>
+						</td>
+						<td>
+							<div></div>
+						</td>
+						<td>
+							<div>ZAP errors logged - see the zap.log file for details</div>
+						</td>
+						<td align="center">
+							<div>4   </div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-1">
+							<div>低</div>
+						</td>
+						<td>
+							<div>警告</div>
+						</td>
+						<td>
+							<div></div>
+						</td>
+						<td>
+							<div>ZAP warnings logged - see the zap.log file for details</div>
+						</td>
+						<td align="center">
+							<div>10   </div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>信息。</div>
+						</td>
+						<td>
+							<div>信息提示</div>
+						</td>
+						<td>
+							<div>http://clients2.google.com</div>
+						</td>
+						<td>
+							<div>Percentage of responses with status code 2xx</div>
+						</td>
+						<td align="center">
+							<div>100 %</div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>信息。</div>
+						</td>
+						<td>
+							<div>信息提示</div>
+						</td>
+						<td>
+							<div>http://clients2.google.com</div>
+						</td>
+						<td>
+							<div>Percentage of endpoints with content type application/json</div>
+						</td>
+						<td align="center">
+							<div>100 %</div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>信息。</div>
+						</td>
+						<td>
+							<div>信息提示</div>
+						</td>
+						<td>
+							<div>http://clients2.google.com</div>
+						</td>
+						<td>
+							<div>Percentage of endpoints with method GET</div>
+						</td>
+						<td align="center">
+							<div>100 %</div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>信息。</div>
+						</td>
+						<td>
+							<div>信息提示</div>
+						</td>
+						<td>
+							<div>http://clients2.google.com</div>
+						</td>
+						<td>
+							<div>Count of total endpoints</div>
+						</td>
+						<td align="center">
+							<div>1   </div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>信息。</div>
+						</td>
+						<td>
+							<div>信息提示</div>
+						</td>
+						<td>
+							<div>http://clients2.google.com</div>
+						</td>
+						<td>
+							<div>Percentage of slow responses</div>
+						</td>
+						<td align="center">
+							<div>100 %</div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>信息。</div>
+						</td>
+						<td>
+							<div>信息提示</div>
+						</td>
+						<td>
+							<div>http://localhost:8080</div>
+						</td>
+						<td>
+							<div>Percentage of responses with status code 4xx</div>
+						</td>
+						<td align="center">
+							<div>100 %</div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>信息。</div>
+						</td>
+						<td>
+							<div>信息提示</div>
+						</td>
+						<td>
+							<div>http://localhost:8080</div>
+						</td>
+						<td>
+							<div>Percentage of endpoints with content type text/html</div>
+						</td>
+						<td align="center">
+							<div>100 %</div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>信息。</div>
+						</td>
+						<td>
+							<div>信息提示</div>
+						</td>
+						<td>
+							<div>http://localhost:8080</div>
+						</td>
+						<td>
+							<div>Percentage of endpoints with method GET</div>
+						</td>
+						<td align="center">
+							<div>100 %</div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>信息。</div>
+						</td>
+						<td>
+							<div>信息提示</div>
+						</td>
+						<td>
+							<div>http://localhost:8080</div>
+						</td>
+						<td>
+							<div>Count of total endpoints</div>
+						</td>
+						<td align="center">
+							<div>1   </div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>信息。</div>
+						</td>
+						<td>
+							<div>信息提示</div>
+						</td>
+						<td>
+							<div>https://accounts.google.com</div>
+						</td>
+						<td>
+							<div>Percentage of responses with status code 2xx</div>
+						</td>
+						<td align="center">
+							<div>100 %</div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>信息。</div>
+						</td>
+						<td>
+							<div>信息提示</div>
+						</td>
+						<td>
+							<div>https://accounts.google.com</div>
+						</td>
+						<td>
+							<div>Percentage of endpoints with content type application/binary</div>
+						</td>
+						<td align="center">
+							<div>100 %</div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>信息。</div>
+						</td>
+						<td>
+							<div>信息提示</div>
+						</td>
+						<td>
+							<div>https://accounts.google.com</div>
+						</td>
+						<td>
+							<div>Percentage of endpoints with method POST</div>
+						</td>
+						<td align="center">
+							<div>100 %</div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>信息。</div>
+						</td>
+						<td>
+							<div>信息提示</div>
+						</td>
+						<td>
+							<div>https://accounts.google.com</div>
+						</td>
+						<td>
+							<div>Count of total endpoints</div>
+						</td>
+						<td align="center">
+							<div>1   </div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>信息。</div>
+						</td>
+						<td>
+							<div>信息提示</div>
+						</td>
+						<td>
+							<div>https://accounts.google.com</div>
+						</td>
+						<td>
+							<div>Percentage of slow responses</div>
+						</td>
+						<td align="center">
+							<div>100 %</div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>信息。</div>
+						</td>
+						<td>
+							<div>信息提示</div>
+						</td>
+						<td>
+							<div>https://android.clients.google.com</div>
+						</td>
+						<td>
+							<div>Percentage of responses with status code 2xx</div>
+						</td>
+						<td align="center">
+							<div>80 %</div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>信息。</div>
+						</td>
+						<td>
+							<div>信息提示</div>
+						</td>
+						<td>
+							<div>https://android.clients.google.com</div>
+						</td>
+						<td>
+							<div>Percentage of responses with status code 4xx</div>
+						</td>
+						<td align="center">
+							<div>20 %</div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>信息。</div>
+						</td>
+						<td>
+							<div>信息提示</div>
+						</td>
+						<td>
+							<div>https://android.clients.google.com</div>
+						</td>
+						<td>
+							<div>Percentage of endpoints with content type application/x-protobuffer</div>
+						</td>
+						<td align="center">
+							<div>33 %</div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>信息。</div>
+						</td>
+						<td>
+							<div>信息提示</div>
+						</td>
+						<td>
+							<div>https://android.clients.google.com</div>
+						</td>
+						<td>
+							<div>Percentage of endpoints with content type text/plain</div>
+						</td>
+						<td align="center">
+							<div>66 %</div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>信息。</div>
+						</td>
+						<td>
+							<div>信息提示</div>
+						</td>
+						<td>
+							<div>https://android.clients.google.com</div>
+						</td>
+						<td>
+							<div>Percentage of endpoints with method POST</div>
+						</td>
+						<td align="center">
+							<div>100 %</div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>信息。</div>
+						</td>
+						<td>
+							<div>信息提示</div>
+						</td>
+						<td>
+							<div>https://android.clients.google.com</div>
+						</td>
+						<td>
+							<div>Count of total endpoints</div>
+						</td>
+						<td align="center">
+							<div>3   </div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>信息。</div>
+						</td>
+						<td>
+							<div>信息提示</div>
+						</td>
+						<td>
+							<div>https://android.clients.google.com</div>
+						</td>
+						<td>
+							<div>Percentage of slow responses</div>
+						</td>
+						<td align="center">
+							<div>100 %</div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>信息。</div>
+						</td>
+						<td>
+							<div>信息提示</div>
+						</td>
+						<td>
+							<div>https://optimizationguide-pa.googleapis.com</div>
+						</td>
+						<td>
+							<div>Percentage of responses with status code 2xx</div>
+						</td>
+						<td align="center">
+							<div>100 %</div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>信息。</div>
+						</td>
+						<td>
+							<div>信息提示</div>
+						</td>
+						<td>
+							<div>https://optimizationguide-pa.googleapis.com</div>
+						</td>
+						<td>
+							<div>Percentage of endpoints with content type application/x-protobuf</div>
+						</td>
+						<td align="center">
+							<div>50 %</div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>信息。</div>
+						</td>
+						<td>
+							<div>信息提示</div>
+						</td>
+						<td>
+							<div>https://optimizationguide-pa.googleapis.com</div>
+						</td>
+						<td>
+							<div>Percentage of endpoints with content type text/html</div>
+						</td>
+						<td align="center">
+							<div>50 %</div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>信息。</div>
+						</td>
+						<td>
+							<div>信息提示</div>
+						</td>
+						<td>
+							<div>https://optimizationguide-pa.googleapis.com</div>
+						</td>
+						<td>
+							<div>Percentage of endpoints with method GET</div>
+						</td>
+						<td align="center">
+							<div>50 %</div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>信息。</div>
+						</td>
+						<td>
+							<div>信息提示</div>
+						</td>
+						<td>
+							<div>https://optimizationguide-pa.googleapis.com</div>
+						</td>
+						<td>
+							<div>Percentage of endpoints with method POST</div>
+						</td>
+						<td align="center">
+							<div>50 %</div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>信息。</div>
+						</td>
+						<td>
+							<div>信息提示</div>
+						</td>
+						<td>
+							<div>https://optimizationguide-pa.googleapis.com</div>
+						</td>
+						<td>
+							<div>Count of total endpoints</div>
+						</td>
+						<td align="center">
+							<div>2   </div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>信息。</div>
+						</td>
+						<td>
+							<div>信息提示</div>
+						</td>
+						<td>
+							<div>https://optimizationguide-pa.googleapis.com</div>
+						</td>
+						<td>
+							<div>Percentage of slow responses</div>
+						</td>
+						<td align="center">
+							<div>100 %</div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>信息。</div>
+						</td>
+						<td>
+							<div>信息提示</div>
+						</td>
+						<td>
+							<div>https://update.googleapis.com</div>
+						</td>
+						<td>
+							<div>Percentage of responses with status code 2xx</div>
+						</td>
+						<td align="center">
+							<div>100 %</div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>信息。</div>
+						</td>
+						<td>
+							<div>信息提示</div>
+						</td>
+						<td>
+							<div>https://update.googleapis.com</div>
+						</td>
+						<td>
+							<div>Percentage of endpoints with content type application/json</div>
+						</td>
+						<td align="center">
+							<div>100 %</div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>信息。</div>
+						</td>
+						<td>
+							<div>信息提示</div>
+						</td>
+						<td>
+							<div>https://update.googleapis.com</div>
+						</td>
+						<td>
+							<div>Percentage of endpoints with method POST</div>
+						</td>
+						<td align="center">
+							<div>100 %</div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>信息。</div>
+						</td>
+						<td>
+							<div>信息提示</div>
+						</td>
+						<td>
+							<div>https://update.googleapis.com</div>
+						</td>
+						<td>
+							<div>Count of total endpoints</div>
+						</td>
+						<td align="center">
+							<div>2   </div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>信息。</div>
+						</td>
+						<td>
+							<div>信息提示</div>
+						</td>
+						<td>
+							<div>https://update.googleapis.com</div>
+						</td>
+						<td>
+							<div>Percentage of slow responses</div>
+						</td>
+						<td align="center">
+							<div>100 %</div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>信息。</div>
+						</td>
+						<td>
+							<div>信息提示</div>
+						</td>
+						<td>
+							<div>https://www.google.com</div>
+						</td>
+						<td>
+							<div>Percentage of responses with status code 2xx</div>
+						</td>
+						<td align="center">
+							<div>100 %</div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>信息。</div>
+						</td>
+						<td>
+							<div>信息提示</div>
+						</td>
+						<td>
+							<div>https://www.google.com</div>
+						</td>
+						<td>
+							<div>Percentage of endpoints with content type application/x-protobuffer</div>
+						</td>
+						<td align="center">
+							<div>100 %</div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>信息。</div>
+						</td>
+						<td>
+							<div>信息提示</div>
+						</td>
+						<td>
+							<div>https://www.google.com</div>
+						</td>
+						<td>
+							<div>Percentage of endpoints with method GET</div>
+						</td>
+						<td align="center">
+							<div>100 %</div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>信息。</div>
+						</td>
+						<td>
+							<div>信息提示</div>
+						</td>
+						<td>
+							<div>https://www.google.com</div>
+						</td>
+						<td>
+							<div>Count of total endpoints</div>
+						</td>
+						<td align="center">
+							<div>1   </div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>信息。</div>
+						</td>
+						<td>
+							<div>信息提示</div>
+						</td>
+						<td>
+							<div>https://www.google.com</div>
+						</td>
+						<td>
+							<div>Percentage of slow responses</div>
+						</td>
+						<td align="center">
+							<div>100 %</div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>信息。</div>
+						</td>
+						<td>
+							<div>信息提示</div>
+						</td>
+						<td>
+							<div>https://www.googleapis.com</div>
+						</td>
+						<td>
+							<div>Percentage of responses with status code 2xx</div>
+						</td>
+						<td align="center">
+							<div>100 %</div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>信息。</div>
+						</td>
+						<td>
+							<div>信息提示</div>
+						</td>
+						<td>
+							<div>https://www.googleapis.com</div>
+						</td>
+						<td>
+							<div>Percentage of endpoints with content type application/json</div>
+						</td>
+						<td align="center">
+							<div>100 %</div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>信息。</div>
+						</td>
+						<td>
+							<div>信息提示</div>
+						</td>
+						<td>
+							<div>https://www.googleapis.com</div>
+						</td>
+						<td>
+							<div>Percentage of endpoints with method POST</div>
+						</td>
+						<td align="center">
+							<div>100 %</div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>信息。</div>
+						</td>
+						<td>
+							<div>信息提示</div>
+						</td>
+						<td>
+							<div>https://www.googleapis.com</div>
+						</td>
+						<td>
+							<div>Count of total endpoints</div>
+						</td>
+						<td align="center">
+							<div>1   </div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>信息。</div>
+						</td>
+						<td>
+							<div>信息提示</div>
+						</td>
+						<td>
+							<div>https://www.googleapis.com</div>
+						</td>
+						<td>
+							<div>Percentage of slow responses</div>
+						</td>
+						<td align="center">
+							<div>100 %</div>
+						</td>
+						</tr>
+					
+					</tbody>
+				</table>
+			</section>
+		</section>
+
+		<section id="alerts" class="alerts">
+			<h2>Alerts</h2>
+			<ol>
+				
+				 
+				 
+				
+				
+				<li id="alerts--risk-2-confidence-3">
+					<h3>
+						<span>Risk</span>=<span
+							class="risk-level">中</span>, <span>Confidence</span>=<span
+							class="confidence-level">高</span> <span>(1)</span>
+					</h3>
+					<ol>
+						
+						
+						
+						
+						
+						<li class="alerts--site-li">
+							<h4>
+								<span class="site">http://localhost:8080</span> <span>(1)</span>
+							</h4>
+							<ol>
+								
+								<li>
+									<h5>
+										<a
+											href="#alert-type-0">Content Security Policy (CSP) Header Not Set</a> <span>(1)</span>
+									</h5>
+									<ol>
+										<li><details>
+												<summary>
+													<span class="request-method-n-url">GET http://localhost:8080/</span>
+												</summary>
+												
+<table class="alerts-table">
+	<tr>
+		<th scope="row">Alert tags</th>
+		<td>
+			<ul class="alert-tags-list">
+				<li>
+					<span><a href="https://owasp.org/Top10/A05_2021-Security_Misconfiguration/">OWASP_2021_A05</a></span> 
+				</li>
+				<li>
+					 <span>POLICY_QA_STD = </span>
+				</li>
+				<li>
+					 <span>POLICY_PENTEST = </span>
+				</li>
+				<li>
+					<span><a href="https://www.zaproxy.org/docs/desktop/addons/common-library/alerttags/#systemic">SYSTEMIC</a></span> 
+				</li>
+				<li>
+					<span><a href="https://cwe.mitre.org/data/definitions/693.html">CWE-693</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/www-project-top-ten/2017/A6_2017-Security_Misconfiguration.html">OWASP_2017_A06</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/Top10/2025/A02_2025-Security_Misconfiguration/">OWASP_2025_A02</a></span> 
+				</li>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row">Alert description</th>
+		<td> 
+<p>Content Security Policy (CSP) is an added layer of security that helps to detect and mitigate certain types of attacks, including Cross Site Scripting (XSS) and data injection attacks. These attacks are used for everything from data theft to site defacement or distribution of malware. CSP provides a set of standard HTTP headers that allow website owners to declare approved sources of content that browsers should be allowed to load on that page — covered types are JavaScript, CSS, HTML frames, fonts, images and embeddable objects such as Java applets, ActiveX, audio and video files.</p>
+ </td>
+	</tr>
+	
+	<tr>
+		<th scope="row">Request</th>
+		<td><details open="open">
+				<summary>Request line and header section (649 bytes)</summary>
+				
+				<pre><code>GET http://localhost:8080/ HTTP/1.1
+host: localhost:8080
+Proxy-Connection: keep-alive
+sec-ch-ua: &quot;Chromium&quot;;v=&quot;148&quot;, &quot;Google Chrome&quot;;v=&quot;148&quot;, &quot;Not/A)Brand&quot;;v=&quot;99&quot;
+sec-ch-ua-mobile: ?0
+sec-ch-ua-platform: &quot;Windows&quot;
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: none
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Accept-Language: zh-CN,zh;q=0.9
+
+</code></pre>
+				
+				
+			</details> <details class="request-body" open="open">
+				<summary>Request body (0 bytes)</summary>
+				
+				<pre><code></code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Response</th>
+		<td><details open="open">
+				<summary>Status line and header section (138 bytes)</summary>
+				
+				<pre><code>HTTP/1.1 404
+Content-Type: text/html;charset=UTF-8
+Content-Language: zh-CN
+Content-Length: 275
+Date: Wed, 27 May 2026 16:31:38 GMT
+
+</code></pre>
+				
+				
+			</details> <details class="response-body" open="open">
+				<summary>Response body (275 bytes)</summary>
+				
+				<pre><code>&lt;html&gt;&lt;body&gt;&lt;h1&gt;Whitelabel Error Page&lt;/h1&gt;&lt;p&gt;This application has no explicit mapping for /error, so you are seeing this as a fallback.&lt;/p&gt;&lt;div id=&#39;created&#39;&gt;Thu May 28 00:31:38 CST 2026&lt;/div&gt;&lt;div&gt;There was an unexpected error (type=Not Found, status=404).&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	
+	
+	
+	<tr>
+		<th scope="row">Solution</th>
+		<td> 
+<p>Ensure that your web server, application server, load balancer, etc. is configured to set the Content-Security-Policy header.</p>
+ </td>
+	</tr>
+</table>
+
+											</details></li>
+									</ol>
+								</li>
+								
+							</ol>
+						</li>
+						
+					</ol>
+				</li>
+				
+				<li id="alerts--risk-2-confidence-2">
+					<h3>
+						<span>Risk</span>=<span
+							class="risk-level">中</span>, <span>Confidence</span>=<span
+							class="confidence-level">中</span> <span>(1)</span>
+					</h3>
+					<ol>
+						
+						<li class="alerts--site-li">
+							<h4>
+								<span class="site">https://optimizationguide-pa.googleapis.com</span> <span>(1)</span>
+							</h4>
+							<ol>
+								
+								<li>
+									<h5>
+										<a
+											href="#alert-type-1">Missing Anti-clickjacking Header</a> <span>(1)</span>
+									</h5>
+									<ol>
+										<li><details>
+												<summary>
+													<span class="request-method-n-url">GET https://optimizationguide-pa.googleapis.com/downloads?name=1776093117&amp;target=OPTIMIZATION_TARGET_NOTIFICATION_PERMISSION_PREDICTIONS</span>
+												</summary>
+												
+<table class="alerts-table">
+	<tr>
+		<th scope="row">Alert tags</th>
+		<td>
+			<ul class="alert-tags-list">
+				<li>
+					<span><a href="https://owasp.org/Top10/A05_2021-Security_Misconfiguration/">OWASP_2021_A05</a></span> 
+				</li>
+				<li>
+					 <span>POLICY_QA_STD = </span>
+				</li>
+				<li>
+					 <span>POLICY_PENTEST = </span>
+				</li>
+				<li>
+					<span><a href="https://cwe.mitre.org/data/definitions/1021.html">CWE-1021</a></span> 
+				</li>
+				<li>
+					<span><a href="https://www.zaproxy.org/docs/desktop/addons/common-library/alerttags/#systemic">SYSTEMIC</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/11-Client-side_Testing/09-Testing_for_Clickjacking">WSTG-v42-CLNT-09</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/www-project-top-ten/2017/A6_2017-Security_Misconfiguration.html">OWASP_2017_A06</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/Top10/2025/A02_2025-Security_Misconfiguration/">OWASP_2025_A02</a></span> 
+				</li>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row">Alert description</th>
+		<td> 
+<p>The response does not protect against &#39;ClickJacking&#39; attacks. It should include either Content-Security-Policy with &#39;frame-ancestors&#39; directive or X-Frame-Options.</p>
+ </td>
+	</tr>
+	
+	<tr>
+		<th scope="row">Request</th>
+		<td><details open="open">
+				<summary>Request line and header section (502 bytes)</summary>
+				
+				<pre><code>GET https://optimizationguide-pa.googleapis.com/downloads?name=1776093117&amp;target=OPTIMIZATION_TARGET_NOTIFICATION_PERMISSION_PREDICTIONS HTTP/1.1
+host: optimizationguide-pa.googleapis.com
+Connection: keep-alive
+X-Goog-Api-Key: AIzaSyA2KlwBX3mkFo30om9LUFYQhpqLoa_BNhE
+Sec-Fetch-Site: none
+Sec-Fetch-Mode: navigate
+Sec-Fetch-Dest: empty
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36
+Accept-Language: zh-CN,zh;q=0.9
+
+</code></pre>
+				
+				
+			</details> <details class="request-body" open="open">
+				<summary>Request body (0 bytes)</summary>
+				
+				<pre><code></code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Response</th>
+		<td><details open="open">
+				<summary>Status line and header section (446 bytes)</summary>
+				
+				<pre><code>HTTP/1.1 200 OK
+X-GUploader-UploadID: AAVLpEjsPKPrtoFZX8VPuHbYDNzLfIGL71J5NbrRtRISIL5Q3aX77KG_7frJrGpwuFJ2v4it
+Cache-Control: public, max-age=86400
+Date: Wed, 27 May 2026 16:31:49 GMT
+Expires: Thu, 28 May 2026 16:31:49 GMT
+Accept-Ranges: bytes
+Vary: X-Goog-Api-Key
+X-Goog-Hash: crc32c=8izQ4A==
+Content-Length: 18385
+Server: UploadServer
+Content-Type: text/html; charset=UTF-8
+Alt-Svc: h3=&quot;:443&quot;; ma=2592000,h3-29=&quot;:443&quot;; ma=2592000
+
+</code></pre>
+				
+				
+			</details> <details class="response-body">
+				<summary>Response body (18385 bytes)</summary>
+				
+				<pre><code>Cr24   E  �
+�0�&quot;0	*�H�� � 0�
+� �:2�W�))���I��5_U(I7nzԂ��2[�;�H�ǦS��٨/���nb%Yx�6�]i�����u���PDF�iLJK�?��l����R��|���j�C�j!%&#39;�s��[�&quot;�
+�Gy�
+�=l).�=�l\���4蠕�Q!$e�=���C�1�%d��B�ݖK�[�l,�����7��	�y�$7J�G&amp;TT��W�-=jgs[���&amp;�@/гj$���+��yk|l^��Km)\Yx��}OCXf��	��A5s7�8�o����L�(p[��^e�Ȃ���㟪?&amp;X�:~,�)��C�nʯ��Hh�����&lt;�N�0.����woa6��&#39;&amp;y����tHƔ�*7@�a�t�����F�YQU�����&lt;�����m!.^�#f�&#39;F&quot;��lt�97U3f��WM˦�]Lw���)�x��)��Hy Z���l�a�)J~&#39;�y�o�NS�#�,6D�9UMW�l&gt;pa�WG䍇^�L,��B���&quot;p�Y�	ĸ��&lt;��� �߰����R�[�����=�c	��$�H��!u�	¾OAX�h�6��`�i�C�@z.�7��Ŗ��iQ�CM]�s��e��F����aB410Y���j��:mOO]gGD!N�]��:@�㙇X�٧B�.r1���haC�qȪ���{;�Q$�Q��~�!O:4�A9�/��8�	帲ٜ��&#39;U��|��p�_6�f���Z��{2q5wGD!CXbh��q��xW?�o	�Ll*v�`�Y=[����� �#��w�S&gt;���L�_�=�?���S`�2
+_߇��ρ�`���y{��ߖ`&lt;�J���)�߶�����{Ox/�Ȳ7Ǿi�X־	���Q=��E���nF=x��W/��ߚ�!���jy#̹&#39;�(j e�&gt;��0J�iTBЙK6��&lt;?jj�%)a�&#39;�y������x9t��g#	y�`]V�	e��$S��R�l$�?{���`�B��A@�w�����EiuG#���`|%�r{)�}�~��^��cJ��
+0xE:?�Җ*��PK  |A�\               model-info.pb����������TF���ʂT�������Ă�b���\}W��(�,1�R�&lt;5� �(7��83?��(5%3��*�+3�OM
+�� �|�SRs|SKSK�t�x��YX��98��y%�TϞ���e`h�e``��e`p�W�g��  PK��n��   �   PK  |A�\               model.tflite�y|SU��}�=�W�@��W�
+�IeQAqGe(��3!�q���2#�2��(���ҦP֖ҍ�{�4M��w��	�@�&amp;�������Mr����s��s�=���$ �|��x��@2��@	ߓ��= 
+Q �!��p��5 0�&gt;�!o^�y������X�}��-/�Z�n����
+�h�fy�O�k	d���m;w�*�Eg!�!� s JH��a�6�&quot;�xa}7�����/ݴ�p����۲s3\��˄�+ ���Q�s��[�
+�����ߴqݖ��[�lZ�}��m�J`9ԈMZ�f���w�ظu�5 {�^,��!sw�X����lݾnٚ�u��&#39;�^:�?����k�
+r��z��Z�`�����&lt;�+}j��-��[/�7P7����6 ^w4j�jn�9~�fP� 8u�����] ��.hZ�~���_���&lt;��}�{���W-�o��s�υ�Uy�����ݼq˪�;�nܼnծu������6�H�r������|�r ��RYY�ɀDO�f�0�� �������B�j�b�,H&amp;$�d�:@j!:�1���6�
+��I �`�`�3!i�x��C$7��CZ �¾Z
+99	999�y��ط7A�BV@�CC@T��,H&amp;$QBp�톘!zH�R)�哐c�Ð�¾�d�H!dd-dd9d1dD�ɂdB� �B��C 1��;��B�!����}��ބ�� d��?�G׵@�_-�Ry�E� �[��ޯ�����������=��p��.~kM �&#39;ggO�
+��e���o�7m���ۏ���吧 + �!k! � � ��W!o@vC�@�Bށ����|9�rrrr
+r���B�@�!��ZH���C�3�qC��m�H!JH4$�I�d@2!�!Y����Ydddd1d)d9�)�
+�j�Z��&amp;�6H!�U��ݐ=���w � �! ����O&quot;F�,˕��S�.Fk��)�cb3F/M��~��A�����o��׾�J&gt;,b�~zK�FM½qh����&#39;ι?�Y�3k����=#�Gt����Tc��޷&amp;�U����&#39;�YOߗ_��&#39;_&quot;��ܵ3k��ey���}�0گ�?k���H+&quot;����o+�S����&#39;;J&gt;d�4;�鬌�s5�b��:�K!�?�x܃+5s�&quot;�V�?55ٽ�����ô�ƣ���|����-�M%&#39;,�&amp;i6O�C���X&amp;1{�/��ܭc��d}&#39;����7.ҳR[�9zT2��̵��̴��1��0����hF3�?-���G��M���y�����&quot;�Md̂��S4�9�����9U�G��΍Έj����&quot; �po��ˎe�������Q�����H-��T��q9�/?�=��Q�?��,�y*&amp;yj�\�[��W�S����?�����������g����GN:�����NM���g�u�����&amp;n&amp;�F�[̱�֞�*L��ϓ��\ϙi�T�~ϭ_25g�f�&lt;eֹO�&amp;t�C3��6�˛�֬B�&gt;ϯZ��wњRD�~{\٦?�|m�FM���ϳ��6�,��ì��S�z�eM�Z�4F��cQ9���&lt;�A�&gt;��z~�C�S��Ρ�*&gt;mQF�&lt;���a�/?�{u7ޠ�,�tg%�~�iE&gt;������cƟпx�Q[1N��,̻�k���	]u��!��՚�v!s�fR��IS�9�w^���奨Bq��&amp;ʷL[,��N����3�x9�z?&gt;�u��^�g8]��Ӿ�j���h�k��K��=�9VirGD�FFZbZ��&lt;.�`�9�}ɉ	R�����|��43
+��)1hC�M�_��)�#�g$�K�3A���9��E���vv�3U�)�N7h1w����Q)�#��^�abEq�iGĤ֊d��J�e����#4q�q��:Z7Y�r�W5�&gt;4,��4���IEKƿz)_���r�(�_~���W4O΍V|�+K�2&amp;�ĖiR�SZ��P�8nX�Tߔ��Q)W^��O�p�5�r$��j �c��KIJ��R�c���eӳ�*3ߧ.�|� ��������::��P���&#39;-�7���G���R�Jqֿ�f�稘���RL_����;�iD���P�$
+��2^4&lt;�xatN�s��W��5,^�*m�+�!&gt;�N�!��$J��JK����\?a:*��,�Dp��1�&lt;���6sD�\-���@�5׷u�fR���?Q��_�\�3����u+f�Op[�\���U���&#39;Vk�o��&amp;�|���M�����N;K��|��d��{�����+���_���p�anjǪ�R��MZ���i���2#S#1��I3=��c��@[�,�Q?�O=��3M{1Bw���/&lt;\�R�8%��KP~�&gt;�&quot;6&lt;O������j�~48k�Xfg|��?`�k�w���4-��5��&#39;@.�p��`�2׵�O�X�Di٢y?�?{����D���(i�8D[4ʡ4ߣ���-=c��S%�!��ԙ�i���]��=#���=�3;�}�mH-Υ�$&quot;��MO�~��ٸq�p��5/�����3O��TθE�5S�ZZ�����j2�/M�KM������g�C�6�쌔��i\�$~��9�%Ϯ�E����?;+�@S0;���50\�=q��[�Ei���w����b�Nm�zV~_Y����#�^��c9��o#&#39;���r��n}Q�D~����[0..W���ɝ-����$�5Oj�X�|G;��;�-ۡy��Ǒ+��ն����lͯ�h\�}�顜v,����)_~d|K{�]OIdӆ��׾��|�����p�u$~�%�O��|�G��o2�:�ܡ�`���Fl�L�.�2��;{^�Z�#�i�A|nn�r�q���`�b�,v�&amp;nfzOi5֢c6h6Lu�(EWRm3Jw��3�c^�D�&#39;&#39;��hG���g�n;�&#39;g���n����-�4����,���QS5���e�إ6d���ޥ����w�ƏE��9#���Tґ+H�U��˟H٨���t#D��d������(��QI&amp;��ys���&lt;[��$Fgk뇝�� �=�vN���ۥ�\�6�����Sv[FD�&quot;�}��i\V�+��=���hy�=T�L&#39;HNk���]
+NF�Ik2c&quot;�vKI���X+J�(���&amp;�U;8�i�S6&#39;K�9e�n���Η1v7���{q�ԃ�0�N��&quot;�(3���4G�Qy4���q.�c���*Gx-�e�@$��cK�4��pW|cEP��I ����&amp;���i��08�He�DE���s�ȍ��ȱ�s��$�LU�|Y��b��b��W�yn��RK�$q�ڒ�-�H۟&quot;~rx*������������pz����I�&#39;�+�z$�z*�g&lt;��5�����(܊�n���)%yO&#39;AΌ���_;�ai����m��f����[�#\�I溺Ɔ�&amp;�/ґ\fO�����ׇ���N�(w����&gt;E!�1�$�⃛��D�{�-R�T۔ioN}�L��L�h��ho��)�ζ$��Enf���z�ɢ��w�z�H�ȩh���0%�z9ނ��=J&#39;jef�a��&quot;�΍E�m/�$��p7ñ?&quot;mfE8�C�t��.��8������&amp;�fY�5��z	����C��N��H?��|���҄�D�;��&gt;��9��%�&lt;!rb�y&gt;�ш,U�Gw�ݎx89NQ,C�������`c�Ør#mC�� 8���14�C� ���k��6�ppa�$���x��Ѧ�&quot;��%ZeNbL�2�c�x����-�Ww1��om��0˃�7p��G�� �eeL���h��t���c����	b0ōQUv�8a={���{A__���Q�1�����d��}q�uM��7]T���;�YEE��(��G����J~�V���&lt;�7��9N��������pCK|��	�rΛ�V~��	�z�6`��g�;�~l*1GF�D#f��\l�zM�a�3������Y�y���]oi�dE ���G�N�0L�=�D�@Fvuq&amp;���f	��J�v_�kr��@�1���4md�5�Q��iǙF��WqK���7yy��@8q�fk�8_�̔	b�*��W�ԗ��]W�Ʃ�J�(��dn�7�T����D�&#39;�]Gz����#u���_`O�o����g �=joS�� ��_�2���Z}�h�W�`�0ߏ��v[�.���G̋��gKf���;�vL4�-����\��l��KM%l����6���Y,ʆ��^i�i�F�1$�]���#M�n��w����=�{i��ݖ9&quot;���
+ւ8���|����.�zFTVݧk�:���Ry��f�����ӝ�`�exj�c&amp;��4ʋ,�`8�:FI���R���1rSn�ZhP��)��p&amp;��H��}�ќ��$&lt;���0��.s\A���&amp;�q��&amp;�B&#39;!&gt;Z��^�7� �Pϟ�1�&quot;��W9���[��N+�I��-� �׈Y�ؿ+��y��&amp;S���cFd����)E�=Nr�8�3rrށz/�e]���f�(�����9�pc�f�Ed=M����� ѵ@�l`X���EX�� AX�aY���3(ܐ�,*�i�9@�� ��8 /� Gb 3� &lt;� ���JZ�����(/By�;�&lt;&lt;x�e&lt; �@L\���kqK*e��iv}�4K?��h��o�5�bǴ��셞8���t�z�W���)g�����rq���F�~�����(�Ov%9~Qr��E�Đ*�sfko߽���HK��b����v�i}1�f&#39;����� e}N��#���1��@ he=zD�m�M�M��&gt;a�Ho�M������D&lt;J�0G
+Ċ�}4¸�F��ak�=&#39;My]�b8�γ.�T�I��VRQ��i&lt;�P�_��G�K&lt;^�ځ���D��^�����&#39;�ڪ��yYk����XM��57�G�lM��)�Qy@��z��X���]�t3K�|#�,H:i�Y�l2��zFo�&lt;0��R�6wMq��� ��?�Ki��B|Y,F�FYb(����9�Q�s�鬔q�ݨ�e h�i1͔�C�&gt;�86&quot;��ټ��t�ͱ4M��BqW
+���d2M���x)e�Ͱ�8F���ke ۠`��H.����Y9��TA�����A�e ��
+Io��Mqi=f7���;���LW��Uۧp&#39;�#G��
+���ؼ4o�^d��n9��+���3^g�V�)�kclp��#Z��$*�L������&gt;Ŋ�6�ey��(ƙ� ���a�^�a	��o!���c1����)��Z�eZh�=�QH�Nu1-��&lt;�r�v,g�8w�A����0��&#39;Y���1$��1��Rc��y���^��E�HW�����hE�����ܮ��δj���:����H,&amp;�i��7��h����bzg��F�����A������(�O�U��^&quot;&gt;׊���^��c��8k�H�|I����Ʊŀ����C�N&amp;%4����&#39;6N�~��y��QJ�h
+P�b&gt;�	IR&quot;Q��Hs��lg��-���|�R�9��u=�����a��݀馉����H�!uŤ�o��u���dP�S ��&gt;��(j �6�݊Q��x�K��m��(gx#E�#0P��D�`Ι��`�0�9D�Ј�&#39;N�۽�dG/&quot;aMtQz���l�ۿ$e�˖�I������������7�L������U���*�&gt;û�8�UR�kd�mW��z�Ĭ�c��*,��Mt嬱q�Wm�1������p��t�&gt;p%��	�/��d	&amp;B�h�Î4k�-�V���{J$�=$P��.�F���;���O����^2�|���?irc3)%q��}%=2�oD����{#��Q��S�Ȫ��nӕɗ��)�aE�(&quot;2�n��]��.�8���luz���B�7!�D��Ѳ�������_�ST�zt�s����)�7��T�ՐQ�=9��7���/(����9b���]�]t�L|����yg\�ƕ���$�َ���:�������?��8�r�}�����t���Wї5�	M�׽����8���R���o�,Vo������XH�EQ2�6�P�/��g���5
+�O$-b-��T��;���⣼�6�������&gt;�-qȭ�����Nkrr�Q�Xx�����r����Y�qД���C[������z������k��t.#kz���T��HCG���V�k�D;zE��Ůs�]�*d��4H��I�*E&amp;K�U�,��6��k/�1.Fd�����xOc�����b-���G���#��p�U�S*��s��������$���1�i����Ο-�l8�QUρe��A�w��נn�_hT	��v����hg�)��H=祔8{�&lt;i&#39;E�F�qx[t+ �N
+� �v�}�Y��;��J�|&lt;_�8�7sa���W���+�}���f��k&gt;��_bہ�2}u^����ۈ (�A_�(��A��v�54�h檣��Q�e��͚�1��t��g�E �����0����#hx���icPy�����E��&amp;��G�&lt;��&amp;Rh��(FJ�p���Ĵ�J��@�N����)�f����y��D�P�)��a��.�H�R�� �s4&lt;�� �&#39;�Q �8�cy�=�1��@�9Df@�Q��s&lt;��ḇ{��K(@��W2�X����Q(�2pdE{�&lt;� �&lt;2Fh���Sz��z#���5�z��G�[���x����b|�2H{�y2�Gw����������FB�m���E�����X�()�꩟d�#Ef�{�d$�����S�K.��IY��7��1BQ�a�&gt;�s�a��?��Qމ�4�]��,�ã:
+�x��$� �V�|��&amp; ��-F%z@1����r���.���&lt;ø��EX���,��9�P�E��a���nl	� �(p�a�~gg�/�?h*���)Ut^��l�u��m���3�i�O�9;3�~˭Wz��Y�9Ͳb_c2���%s�����_��[�?h�^�K���w�}o:&quot;J��6&amp;0m�����~���-�lr[�]��]��I�����u��n��i�[oAz.�z����M��둞�ߍfp�a�0���;�����V��j�&gt;^Ë�W�k�[[W�Ċ��-&gt;��� ��� 놵�v2=-Hgc���.����n�����9���{,m�8)ZF�Il��VY�1|��u��:9��F��6Rc��_/�&lt;.q;���@��y����I`�|��_/g�.EXҀy���S�H�J:�h)p�[i���&amp;4�HdO!f�yQ�٢B��DJ�:L��;��ݟ�(��9�~��gIZ����A���`+����GD�!�V�&quot;͈�v87[�b�SB�+�1�K�yF��z�}�\�`0)YW᳏�:[���j�2����.���_$��:[�zI�Ş���&amp;w�6�;w�����H\�g��L륱�bO5� �t;:7�ju��Zg[���K	6���ż?K}�|Hf���d�t�);��qN
+H�d�M�Y�YDƉ`O�&quot;�w2I\5�9�2�2p�x��`�w�68�q�`Q-��;P��$ ���x{
+�g$N@S&lt;\�8ؑ��4�`�u�si����w��尡��Ժ��y[{�ߜ29���#=N�l�&lt;n�D�&lt;�!��Tz���B4���Z��B3+���Sk{�8V^�\eu�������s܂k�	Dc�q5F�1�g���.C��q��z��89����O�Ղ�&lt;����0��唌�% m���m���Y)j0��c$R1ںŝU؇��i3��YbIڇ��z���6��E�o����&quot;k~u�����H으�.�en��T���ov5#G�&quot;O���$�#�&gt;�,3�87&quot;�R��0�T�RP��7�`���($#����դ�*h��/�xIE�2��#a�N���#��Fb�&gt;B�0������o��ɝ�����&lt;�]Y�E��.G�2Gk;-�b��V�0�=�X/��1��[ze���i@{�M�|w�4��_G^�p��93B�2\A`��񼬀��c�����vᘍ�^��$d��̣.�/¿��Q�]�h�l&amp;�H�&quot;^����&gt;����R$��޸N���&amp;)�{cᜤQ3K�3KLQ�C2�_#&lt;tE��Ң�%�e	.o%�v)�d��xQe4�\뒓��XM�#ݑN�Uf��0�$�Ȍ����x�E:U�����&lt;�BVFT�wx��5:3Ƴ����)��yo�=����o��7���0i��M5w (�Ƨq���P[ku�V��d�(j�[}L���#�{0&#39;&lt;L�:�6�vP.���}Wc��.��n����ԟjm��;M1!�k1�;�Vk�ҷK�j���eT�B��&lt;i��X��kt�G��#c�Y��m�Q��_�y�aD�f����3��E�}ִd{�o�b}���G��N#�}��6y2���)��4��� �Wُ&amp;\��ٜ���`u��7���3#g�f�p�Dd�/�x��ܙ*oc�;&quot;O�lm5�m���nK&quot;v��u��Ѣ�\!ƍ�V������S�b�ۍ�-��t��pc��n�n59�c�����#��+ �&gt;����&lt;��p.�ex0��o�8�T�ƹfxg� r��\��D��l3��Ac;���u���������ݜ��1!!����[x�%�Ϛ���8��2���u
+�p����v����g+Z�8���jH�Q�/$f}���P(x���^����r���9���&quot;��x��,!ш�^�/e�C/��2ae��f��fǁQ�E�Xo�q�W�n���l_��5DE��6�4ܐŷ��o�k)��q5^�v&amp;��CIG�͘���*mk]zfUOGu�%A�хkc\W��I1�=��$C�8|�߯7$#�{M7�3e&quot;���e��Z���y.�N��� ��`# �Y�T�&#39;�4��,��a)��9�� Sa�x�P4�3(�����4{0hX��,�J��X��������ώG�u�{���O���(���Q\&amp;�E������ 2���玷�&gt;$�2F��&quot;E�:�/��~��Ob1[�=��c�8���d��w���C��m�
+��:D(�%���a�/v_�q��I�v�����3(���p&quot;$aY�����yG�W�}?M�4b��69ߧ����mC=vF��D��UrZЇA��0&lt;�����)�H�Oǂ���(#fs��l���Bg�*ҥ��Ҭ�B&amp;�j�ŚQ��j��,I�bnb���DD�b��|Gu�/��z7�i��F�=SjE:�
+ܕ�gAdW{n0Wd&gt;�^�e�ݿ��` �����&amp;�������H�P&amp;��~�v{�$� �����t$�6G�&gt;JF:���s4	�8	0�p���-����QR�(�c��AH�Y���2�S4H��4�AQ_�p@n��4/&quot;��N�����] ͳpb��8|�����顁��9=l����z�pB�be���#M���Ü�$@�N�lf��&quot; f�h�C�V&#39;r�&gt;(8���h�{=,��	��&lt;��[`������p,��g�򝬇b�$�s_�H�&quot;�p����nb��Y{YT¡J&#39;`q�����p�}���4�l����}�������������~��)���~�y�����R[�8�Up��/���5d��z���o8�F�C���;���?�����&amp;r2&gt;����~����O��{__n�O���M��㊤�5�w�Wv�\���}g���1��r���)�O�h(k�B�c���+�b��u!⠡�#o]��&quot;V{�nE�g?w���N�����G_M��}&gt;&gt;���R�qU�� �S}��v��u��P֍0sz�;is���Z�k�|I��z���}I���Rt�&#39;&lt;���#�N���/RJz/��W@��e��뫁=i���ݝ�2�C;{��t���\����)k��6;ww���|#��5[%K4i��=.�1��t!�ۍ�ȝ&gt;�5�����	���|Ίj��L�n�j�[�&#39;]�e�k�:&gt;ǘ�.������4I���m W#=��x��s�����&quot;�S���1���Uβ��E��k�%��7�V�T�b&lt;V�|:Q���nd��D���hC�8��IkϢ�����ɒ.r֪��$n��2�uۼVx�L���1z��.�,v��|���p�DϏ�B��ݴ��g���q]ԏ&amp;��/�hl��Z����Y�X���SQ-����EN���NvQ�cN�8٧aÆ�?Ga),�4�����co�O0��@&lt;XDs�X���8�AaG�sh&#39;���ݗ�h��¹$a&amp;�s z3&lt;\�&amp;��èp��&gt;�󍟊�U.,޲�[��@�Ē�L~�ł��ElyS[�&#39;��Mݰ�hF�ߋzw�&lt;��ܥ&quot;)+���솢��ǳ&#39;^�N��q���Kůu^QO�����^P���s��+Z�T�d;���&#39;)���}g[�~X�}2Z���h~�S�-�,~b�)uTR�i��EߖH�9���#j鄟��~�V��yP}�t�hʃ�,x��G�GW~p������΢a/�K\�ը7��㋯6^U��K��u��1���wW~UP]���y���ve��&gt;i&gt;���Й�O���W���s��w{��sL�g�CX&gt;~���w����I���qŜ����U����)X5��9�Xn���yi���w�����5��
+���W��XN�-*8:`y�s����7���ڀ�yM�}Fm�����j�r���@���asS,�oWO��m[1�t��I%y{�t�]��v��|�~r��Jf�^����M�t�����&quot;��K0�XC�4?�����K�&#39;9��N)��ʉ�̞c%�yJ|�\r���%:M]Ѽ�G�/%*j[	t����g�R���_���=��)�&lt;��z]�2����-�����KnH��V��Q2&gt;F~~�g�ߟ�����gƶ��WtGg/��r�x����E��K��J&gt;ࢋE樂���_�:$&gt;�������{�����LjeQQ֫���T4�:�;��B݈	+t�� B�X��9O��&gt;]��ST�&lt;��]���h��sus^�Y���s���{{Q��5&quot;���ͅ��v�s��³�����k;&gt;Y��Z��㪢؏��c��%ب�t�w�����Z��k�����nʞsE���O��EW������.yɱ����h{O���|��jQR��J���RR���:��A���ݺ=�ȒG_�&lt;eםX�R7�[���b�&gt;W�K����m*�Y��-�^��n�^yɑ�:��ӌ���+Ku[?\Z�2���PsA��cK�Il*)Z;UWؒ�[��D��4c�+�\����&gt;�K���2���^��[�럊$l�&gt;�f:wB�X��������D�5�:Q��h�E���y�NW|2���)Q����������*����t�&lt;��F����U|PW��Pђ�st�*�yWw.�uݧ]Wt��&amp;��:�:׉n]�{���m)ʫ��������߹t2ӇE�;[�s-�h��H�A�������˶ꌒ�Jf�I+y�5�d�g�u2�Nݹ�i%��[Q��%��K���׽��ߺ�ݫJ�����-/�G��O �}�A�p_���o�������&amp;o���{�4���셼��9 9�r�5��?Ғ�,˘�uˮu�׭�|�:��[���s%��:�H�}��8{��9(�[�k&lt;Y�ˀ���אW! �349�YɈ�U��~�j�T��r���(!
+�&gt;d7d1$b�p��2�P
+����!�0��A6AC�! �Aހ,����Ű���&lt;Ʉ��r  k!��7@A:` ��B�@��R��w ��{R�����+Y$�+�!���pO�^�c5�{�y&amp;p�����p�ş��7�m���\i���}P{��7zCh?&lt;�������9YX�
+lC�A���!@�&amp;&#39;\/CX���)��o�[o�o��q��u��5�D��)�y�l�����-c�E��g#�%���⿑��N�.�+�W�m�{����۱��g��\���@��χї
+�W�A��w�]�~���
+��,
+�w
+�lA�,�~��/���7�����~���1�����.�g	��0z�����/�[��mU*�r���
+����}�S};�����&lt;A�o��%R���S�ݡ�SXXo�P�D���u����{�Y�o��/-E��B�&amp;����!x���v�7	u~9��c=��&lt;^X�e�2�~O��?%�_��[a�{�FA��������z7vJ��}��싐�� �y�b*���(&lt;����㧸�w�8U�[/��N�I�]���zy��:��_��w�	��~���v���׎��W�v[����/z�k�;��RA��P�5���� ����X��WCb}�c&gt;�Z(��y�бX �W	��r��B�b��]),��c!�|�c�N�������б��+��=y
+�$�K��X&lt;+&lt;?N��Eƅ��3B�O�x�����i��_��D�X�!h����1��D�X�O
+z�~�i&quot;BǢE�?!��q�2ȣ����x\x^�H��EVi�o�P�cB,�!C�b��L����:{�2aٯ��!C�┠T��I��б0
+��B��,�&lt;)&quot;����aH.:�.��^&quot;�b=:���_��T�X����e�v4�&lt;:���!A�w%@�T�X���B��,���F��³�^�yt�X,��[$����t�X
+��o���б�L�.���Q�
+:t,*�}�&gt;K�G����/�62r/������&lt;ޙбX*��ʟ+���L�X��so�G�б8&amp;h��~�HH:-��^A?	�r6t,�W��njHd6����&lt;Æ��
+�O%��/��m6t,�������_�б8%h�e�6b`C��(�gzy��QH�B�&quot;�j@?K����0ȁX����)&lt;�B�s�c�A��ʟ!��C.t,������\�X�
+��²_;��B��-�s���Ň�E浀&gt;[��4p�k�=��i³����|�X
+~S������Â~���/���JA;YX�k�ߒ�=7�pn 86�e�����o�0H?x;����L�Jnϊ\X�n��,w��J!���qA�?�K�w����!�a0	�@���s� ���9��b�8YI�t��&#39;|oE��&gt;�j�Ԭ��T�l�L��x9��́��z/$R	&#39;慐d�Y8�]�BJ�@n9&lt;P�a&#39;s��C�m����u/d*�n�B�C�p@�*$R	�B2!������dm��CJ����� rN������p�b������ÐY�� �AfA�¹��J��ݐ�Z�=�9L�6H�&lt;p�������� �����m�$Ct0�+�s0�`bA�0�!� n��τ�-��K��wp�F�{�Zh�W��s ��F������~{NW~���m���5����ܴt����nY�v��M��n�o��[�o����A���|����[׮�4e�[���1eɚ�%;7�zo��5;��Os��%D9��&lt;��3&gt;��Yv��׮]�eզ5��۾*{pyA[�n����S����Å������������_�3-l}������*���������c�&gt;�w����-/�&lt;o���ݯ7��}M�����;����m͖�6nޱj��&lt;�V�{5���p~�����~�����W�oW?w8���~c����ᷠ*�ߌ�~�B�����o�`�K!�v��Ӈ���X3�o{���a������?7u���ط�%��[�iM!lַv��l[w�ӯ==�3C����8�v��[�o�����aO�j��Bh-����g����f�?y�����7	��
+�%.T�M����Öqx�%��N��8����a⠯�o܍��(��Ѻ�q�&amp;j��a���sh^Ѿ�׆i_ӂ���B��k�g� A��_��F!O��7�f���5�֭*ܺ��U�~S[�i��Od��ߍ���m�P�5�s��@��9��X����~/��cQ�W����x�ך�q��Z?�k}ж���RCy��n���6m|y��e!��mv� �M�oJ(���;׭ݸ+hP���p���(cm��ׅ��;���C�^����ۿj��l��kj���\��V��@O!�w��e�:�	�^�K�w+㷽�!�V��㶗j�C{��]υ�C=���\=sB{�˺?����}�rV��JC�8���m/*��sAy�o��YC�^�&lt;4�+B�}Cc�����CMC��l���j������뙠��Ma�&gt;+t���z&gt;������}V���
+���!�y*��7��à�;Cx=�wes�����k�C��D���n���C��a��:&gt;��&#39;��l���y�
+�&lt;(�Ls������֡���}iK������Ay?��e��%l����Ѡ��a�;4��ۇ�}i��?�&amp;�C��^��:&gt;��_������yo
+��pP�ݭa�:�ۇz.	����0y���ܠ������-l�+��CAyg���}�м����C�}i{����}��𭎡u| h{?k��3�:�ע������}F輏��yP��t�����y����B��0��w��à�7��/(��0y�&gt;4�?v���y_�&amp;�Ӈ���]C�8?h{t�����~-�׼���;��}z���97(ﳺ��}z��O��[!ʙ�����aPޫCx��wsW�����ў�y/��9�a�3��ߥZGu������9��~&gt;��*(�-�a�:�=C=��&gt;U&amp;�9����?�(&#39;/�����aPޯ���w�&gt;L޳����ޡy�&quot;�z��={h޷��qf����	��ك�~:�WnP�k{��=;t�#{�z���xC��g��{vP�w�(gzp�7��à�����C��O����{v��O���iC��8��ӂ�wwo��68�?������0y�:�⾡�S��a��i��&gt;-(�[B�39����aP�O��&#39;ȫ��|�0�����^YA^}a��������_{=)�vd������ER&lt;�y��=������&gt;vC.�OPm/����Ϫ�`��]��Vc_x��~�U��N��9?���=�z��/��?�.�ޯ���I�OU{#�W�9�����U߭m�;➠z��I�a�T}�ܷ���\�V��~��:�H�X����U�|hJ��/�ToaK�K��o_������׳��llV5O�M��N�~���_kTW�MP�+r���5Am�h�*y�IU�Ʒ���r
+R����V��-Щ;�&gt;�:L�����&#39;�3Ǘ罼|���H�jQͿ�#�xՕ�w��ߙ�^tm��o��P�iP=�VQ^�.�	��ث��Y����I��7�.�U�ᡋy_u&lt;������&gt;x��5���D�[�4����TI�1����Vo|e����Y�)�;
+�}D�����S���ͪ����wf��_��.��	ߩ����z��C*ۑ�*s�:䚬����*��_�SUq������{�L�&#39;�V��1���т�rOޖ��Ѫz�/Tʼ�T�^&lt;�&gt;�Q-��a5��T��X}�yV}�,���ب�k�xT����ʩ�wF}z�۪��}������
+n}.�o&#39;�~c�8�d���c�{S�C���o��&amp;�
+�]r��#40�����=�@&gt;.��x�#U���������p�zǫ���gI�*3�K���I��X{��|��F���P�&lt;pQ�ړ?�P�z����?���?t����~����37T/oV�%���6�0�	Q~�Vs����:?�rZը�����&lt;���3����q�}j˨}��+�U�J�U�}t����T��ꊝ{�ͭ���W���U֟^PѯOS7�`�Ko�����_��W�/��/+�V��T��|K��f�*&gt;nR�ۺP�(z�z�)&lt;�_���W-JHW�%���&gt;U��ײ�k�8톬$����㿗,2�5�3�A�@���P�������p}�����g��:�&lt;�	e����!&lt;������`߱�o�;���~v��&quot;�w��)���~6�|3��p��{�9໌�;Z�M����s�ߣA����p��{�,��2�}G
+���|��L��� ��7���w����|G�o���ݹe���@_�u���W�7�[��nf� �i��d�|�	ڀ&gt;��������������~�`����KA�A�o�~�m�7H?L�����,7X�,����@��i�m1P�������v� m��G��	��p�v�-m]�֯���j��c��L�,[�f�k�o\���u�l�3�_�&gt;���o��ᙡ�$�X�_&lt;�muW�g��9��9�y�\���~2p�;\�p���QZ��p����[ױ�N��Cr+�n�َ�^�����=g�&#39;*���j�T��g���9`��!��B����4)L�o{F�&lt;=#�x���p���������sDA�c����f��s~�&gt;�d���&amp;�矰S�_�q�4os�sn�9Hy`3���N��y����&amp;��[C�_#)#�O~��w~%�_ȝ��B�]���`9�C�3��^�e��]T�RF�����~�WPa!w&gt;w��],�}`9Yl���ߒ�-����e��;��n}��?�|�P�j@��`���S��R�C�}��\h;��A~�����x��}xX�{ݝ�aB��Au&gt;}��W��{��&lt;�	G�PyX&amp;T�TȘ�V�v�L)�{:N@&gt;�������0.ڴ_���{���5�w������&lt;�~����|�&lt;�#O�׏^?~�^x������#�;���\��|��[���Ck~B���{�n5�[e���PK&lt;���A  xz  PK  |A�\��n��   �             $    model-info.pbPK  |A�\&lt;���A  xz            $�   model.tflitePK      u   �B    </code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Parameter</th>
+		<td><pre><code>x-frame-options</code></pre></td>
+	</tr>
+	
+	
+	<tr>
+		<th scope="row">Solution</th>
+		<td> 
+<p>Modern Web browsers support the Content-Security-Policy and X-Frame-Options HTTP headers. Ensure one of them is set on all web pages returned by your site/app.</p>
+
+<p>If you expect the page to be framed only by pages on your server (e.g. it&#39;s part of a FRAMESET) then you&#39;ll want to use SAMEORIGIN, otherwise if you never expect the page to be framed, you should use DENY. Alternatively consider implementing Content Security Policy&#39;s &quot;frame-ancestors&quot; directive.</p>
+ </td>
+	</tr>
+</table>
+
+											</details></li>
+									</ol>
+								</li>
+								
+							</ol>
+						</li>
+						
+						
+						
+						
+						
+					</ol>
+				</li>
+				
+				
+				  
+				 
+				
+				
+				<li id="alerts--risk-1-confidence-3">
+					<h3>
+						<span>Risk</span>=<span
+							class="risk-level">低</span>, <span>Confidence</span>=<span
+							class="confidence-level">高</span> <span>(1)</span>
+					</h3>
+					<ol>
+						
+						
+						
+						<li class="alerts--site-li">
+							<h4>
+								<span class="site">https://www.googleapis.com</span> <span>(1)</span>
+							</h4>
+							<ol>
+								
+								<li>
+									<h5>
+										<a
+											href="#alert-type-2">Strict-Transport-Security Header Not Set</a> <span>(1)</span>
+									</h5>
+									<ol>
+										<li><details>
+												<summary>
+													<span class="request-method-n-url">POST https://www.googleapis.com/chromewebstore/v1.1/items/verify</span>
+												</summary>
+												
+<table class="alerts-table">
+	<tr>
+		<th scope="row">Alert tags</th>
+		<td>
+			<ul class="alert-tags-list">
+				<li>
+					<span><a href="https://owasp.org/Top10/A05_2021-Security_Misconfiguration/">OWASP_2021_A05</a></span> 
+				</li>
+				<li>
+					 <span>POLICY_QA_STD = </span>
+				</li>
+				<li>
+					 <span>POLICY_PENTEST = </span>
+				</li>
+				<li>
+					<span><a href="https://www.zaproxy.org/docs/desktop/addons/common-library/alerttags/#systemic">SYSTEMIC</a></span> 
+				</li>
+				<li>
+					<span><a href="https://cwe.mitre.org/data/definitions/319.html">CWE-319</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/www-project-top-ten/2017/A6_2017-Security_Misconfiguration.html">OWASP_2017_A06</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/Top10/2025/A02_2025-Security_Misconfiguration/">OWASP_2025_A02</a></span> 
+				</li>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row">Alert description</th>
+		<td> 
+<p>HTTP Strict Transport Security (HSTS) is a web security policy mechanism whereby a web server declares that complying user agents (such as a web browser) are to interact with it using only secure HTTPS connections (i.e. HTTP layered over TLS/SSL). HSTS is an IETF standards track protocol and is specified in RFC 6797.</p>
+ </td>
+	</tr>
+	
+	<tr>
+		<th scope="row">Request</th>
+		<td><details open="open">
+				<summary>Request line and header section (442 bytes)</summary>
+				
+				<pre><code>POST https://www.googleapis.com/chromewebstore/v1.1/items/verify HTTP/1.1
+host: www.googleapis.com
+Connection: keep-alive
+Content-Length: 119
+Content-Type: application/json
+Sec-Fetch-Site: none
+Sec-Fetch-Mode: no-cors
+Sec-Fetch-Dest: empty
+Sec-Fetch-Storage-Access: active
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36
+Accept-Language: zh-CN,zh;q=0.9
+
+</code></pre>
+				
+				
+			</details> <details class="request-body" open="open">
+				<summary>Request body (119 bytes)</summary>
+				
+				<pre><code>{&quot;hash&quot;:&quot;ebmFJOsmd5UzvAIe9qBuKsZsWMF3WbQPEOPOaLD4eYs=&quot;,&quot;ids&quot;:[&quot;lacmdodbmabmhnbnnahhglnplkmgmhjl&quot;],&quot;protocol_version&quot;:1}</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Response</th>
+		<td><details open="open">
+				<summary>Status line and header section (321 bytes)</summary>
+				
+				<pre><code>HTTP/1.1 200 OK
+Content-Type: application/json; charset=UTF-8
+Vary: Origin
+Vary: X-Origin
+Vary: Referer
+Date: Wed, 27 May 2026 16:31:39 GMT
+Server: ESF
+Content-Length: 91
+X-XSS-Protection: 0
+X-Frame-Options: SAMEORIGIN
+X-Content-Type-Options: nosniff
+Alt-Svc: h3=&quot;:443&quot;; ma=2592000,h3-29=&quot;:443&quot;; ma=2592000
+
+</code></pre>
+				
+				
+			</details> <details class="response-body" open="open">
+				<summary>Response body (91 bytes)</summary>
+				
+				<pre><code>{
+  &quot;protocol_version&quot;: 1,
+  &quot;invalid_ids&quot;: [
+    &quot;lacmdodbmabmhnbnnahhglnplkmgmhjl&quot;
+  ]
+}
+</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	
+	
+	
+	<tr>
+		<th scope="row">Solution</th>
+		<td> 
+<p>Ensure that your web server, application server, load balancer, etc. is configured to enforce Strict-Transport-Security.</p>
+ </td>
+	</tr>
+</table>
+
+											</details></li>
+									</ol>
+								</li>
+								
+							</ol>
+						</li>
+						
+						
+						
+					</ol>
+				</li>
+				
+				<li id="alerts--risk-1-confidence-2">
+					<h3>
+						<span>Risk</span>=<span
+							class="risk-level">低</span>, <span>Confidence</span>=<span
+							class="confidence-level">中</span> <span>(1)</span>
+					</h3>
+					<ol>
+						
+						<li class="alerts--site-li">
+							<h4>
+								<span class="site">https://optimizationguide-pa.googleapis.com</span> <span>(1)</span>
+							</h4>
+							<ol>
+								
+								<li>
+									<h5>
+										<a
+											href="#alert-type-3">X-Content-Type-Options Header Missing</a> <span>(1)</span>
+									</h5>
+									<ol>
+										<li><details>
+												<summary>
+													<span class="request-method-n-url">GET https://optimizationguide-pa.googleapis.com/downloads?name=1776093117&amp;target=OPTIMIZATION_TARGET_NOTIFICATION_PERMISSION_PREDICTIONS</span>
+												</summary>
+												
+<table class="alerts-table">
+	<tr>
+		<th scope="row">Alert tags</th>
+		<td>
+			<ul class="alert-tags-list">
+				<li>
+					<span><a href="https://owasp.org/Top10/A05_2021-Security_Misconfiguration/">OWASP_2021_A05</a></span> 
+				</li>
+				<li>
+					 <span>POLICY_QA_STD = </span>
+				</li>
+				<li>
+					 <span>POLICY_PENTEST = </span>
+				</li>
+				<li>
+					<span><a href="https://www.zaproxy.org/docs/desktop/addons/common-library/alerttags/#systemic">SYSTEMIC</a></span> 
+				</li>
+				<li>
+					<span><a href="https://cwe.mitre.org/data/definitions/693.html">CWE-693</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/www-project-top-ten/2017/A6_2017-Security_Misconfiguration.html">OWASP_2017_A06</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/Top10/2025/A02_2025-Security_Misconfiguration/">OWASP_2025_A02</a></span> 
+				</li>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row">Alert description</th>
+		<td> 
+<p>The Anti-MIME-Sniffing header X-Content-Type-Options was not set to &#39;nosniff&#39;. This allows older versions of Internet Explorer and Chrome to perform MIME-sniffing on the response body, potentially causing the response body to be interpreted and displayed as a content type other than the declared content type. Current (early 2014) and legacy versions of Firefox will use the declared content type (if one is set), rather than performing MIME-sniffing.</p>
+ </td>
+	</tr>
+	<tr>
+		<th scope="row">Other info</th>
+		<td> 
+<p>This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.</p>
+
+<p>At &quot;High&quot; threshold this scan rule will not alert on client or server error responses.</p>
+ </td>
+	</tr>
+	<tr>
+		<th scope="row">Request</th>
+		<td><details open="open">
+				<summary>Request line and header section (502 bytes)</summary>
+				
+				<pre><code>GET https://optimizationguide-pa.googleapis.com/downloads?name=1776093117&amp;target=OPTIMIZATION_TARGET_NOTIFICATION_PERMISSION_PREDICTIONS HTTP/1.1
+host: optimizationguide-pa.googleapis.com
+Connection: keep-alive
+X-Goog-Api-Key: AIzaSyA2KlwBX3mkFo30om9LUFYQhpqLoa_BNhE
+Sec-Fetch-Site: none
+Sec-Fetch-Mode: navigate
+Sec-Fetch-Dest: empty
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36
+Accept-Language: zh-CN,zh;q=0.9
+
+</code></pre>
+				
+				
+			</details> <details class="request-body" open="open">
+				<summary>Request body (0 bytes)</summary>
+				
+				<pre><code></code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Response</th>
+		<td><details open="open">
+				<summary>Status line and header section (446 bytes)</summary>
+				
+				<pre><code>HTTP/1.1 200 OK
+X-GUploader-UploadID: AAVLpEjsPKPrtoFZX8VPuHbYDNzLfIGL71J5NbrRtRISIL5Q3aX77KG_7frJrGpwuFJ2v4it
+Cache-Control: public, max-age=86400
+Date: Wed, 27 May 2026 16:31:49 GMT
+Expires: Thu, 28 May 2026 16:31:49 GMT
+Accept-Ranges: bytes
+Vary: X-Goog-Api-Key
+X-Goog-Hash: crc32c=8izQ4A==
+Content-Length: 18385
+Server: UploadServer
+Content-Type: text/html; charset=UTF-8
+Alt-Svc: h3=&quot;:443&quot;; ma=2592000,h3-29=&quot;:443&quot;; ma=2592000
+
+</code></pre>
+				
+				
+			</details> <details class="response-body">
+				<summary>Response body (18385 bytes)</summary>
+				
+				<pre><code>Cr24   E  �
+�0�&quot;0	*�H�� � 0�
+� �:2�W�))���I��5_U(I7nzԂ��2[�;�H�ǦS��٨/���nb%Yx�6�]i�����u���PDF�iLJK�?��l����R��|���j�C�j!%&#39;�s��[�&quot;�
+�Gy�
+�=l).�=�l\���4蠕�Q!$e�=���C�1�%d��B�ݖK�[�l,�����7��	�y�$7J�G&amp;TT��W�-=jgs[���&amp;�@/гj$���+��yk|l^��Km)\Yx��}OCXf��	��A5s7�8�o����L�(p[��^e�Ȃ���㟪?&amp;X�:~,�)��C�nʯ��Hh�����&lt;�N�0.����woa6��&#39;&amp;y����tHƔ�*7@�a�t�����F�YQU�����&lt;�����m!.^�#f�&#39;F&quot;��lt�97U3f��WM˦�]Lw���)�x��)��Hy Z���l�a�)J~&#39;�y�o�NS�#�,6D�9UMW�l&gt;pa�WG䍇^�L,��B���&quot;p�Y�	ĸ��&lt;��� �߰����R�[�����=�c	��$�H��!u�	¾OAX�h�6��`�i�C�@z.�7��Ŗ��iQ�CM]�s��e��F����aB410Y���j��:mOO]gGD!N�]��:@�㙇X�٧B�.r1���haC�qȪ���{;�Q$�Q��~�!O:4�A9�/��8�	帲ٜ��&#39;U��|��p�_6�f���Z��{2q5wGD!CXbh��q��xW?�o	�Ll*v�`�Y=[����� �#��w�S&gt;���L�_�=�?���S`�2
+_߇��ρ�`���y{��ߖ`&lt;�J���)�߶�����{Ox/�Ȳ7Ǿi�X־	���Q=��E���nF=x��W/��ߚ�!���jy#̹&#39;�(j e�&gt;��0J�iTBЙK6��&lt;?jj�%)a�&#39;�y������x9t��g#	y�`]V�	e��$S��R�l$�?{���`�B��A@�w�����EiuG#���`|%�r{)�}�~��^��cJ��
+0xE:?�Җ*��PK  |A�\               model-info.pb����������TF���ʂT�������Ă�b���\}W��(�,1�R�&lt;5� �(7��83?��(5%3��*�+3�OM
+�� �|�SRs|SKSK�t�x��YX��98��y%�TϞ���e`h�e``��e`p�W�g��  PK��n��   �   PK  |A�\               model.tflite�y|SU��}�=�W�@��W�
+�IeQAqGe(��3!�q���2#�2��(���ҦP֖ҍ�{�4M��w��	�@�&amp;�������Mr����s��s�=���$ �|��x��@2��@	ߓ��= 
+Q �!��p��5 0�&gt;�!o^�y������X�}��-/�Z�n����
+�h�fy�O�k	d���m;w�*�Eg!�!� s JH��a�6�&quot;�xa}7�����/ݴ�p����۲s3\��˄�+ ���Q�s��[�
+�����ߴqݖ��[�lZ�}��m�J`9ԈMZ�f���w�ظu�5 {�^,��!sw�X����lݾnٚ�u��&#39;�^:�?����k�
+r��z��Z�`�����&lt;�+}j��-��[/�7P7����6 ^w4j�jn�9~�fP� 8u�����] ��.hZ�~���_���&lt;��}�{���W-�o��s�υ�Uy�����ݼq˪�;�nܼnծu������6�H�r������|�r ��RYY�ɀDO�f�0�� �������B�j�b�,H&amp;$�d�:@j!:�1���6�
+��I �`�`�3!i�x��C$7��CZ �¾Z
+99	999�y��ط7A�BV@�CC@T��,H&amp;$QBp�톘!zH�R)�哐c�Ð�¾�d�H!dd-dd9d1dD�ɂdB� �B��C 1��;��B�!����}��ބ�� d��?�G׵@�_-�Ry�E� �[��ޯ�����������=��p��.~kM �&#39;ggO�
+��e���o�7m���ۏ���吧 + �!k! � � ��W!o@vC�@�Bށ����|9�rrrr
+r���B�@�!��ZH���C�3�qC��m�H!JH4$�I�d@2!�!Y����Ydddd1d)d9�)�
+�j�Z��&amp;�6H!�U��ݐ=���w � �! ����O&quot;F�,˕��S�.Fk��)�cb3F/M��~��A�����o��׾�J&gt;,b�~zK�FM½qh����&#39;ι?�Y�3k����=#�Gt����Tc��޷&amp;�U����&#39;�YOߗ_��&#39;_&quot;��ܵ3k��ey���}�0گ�?k���H+&quot;����o+�S����&#39;;J&gt;d�4;�鬌�s5�b��:�K!�?�x܃+5s�&quot;�V�?55ٽ�����ô�ƣ���|����-�M%&#39;,�&amp;i6O�C���X&amp;1{�/��ܭc��d}&#39;����7.ҳR[�9zT2��̵��̴��1��0����hF3�?-���G��M���y�����&quot;�Md̂��S4�9�����9U�G��΍Έj����&quot; �po��ˎe�������Q�����H-��T��q9�/?�=��Q�?��,�y*&amp;yj�\�[��W�S����?�����������g����GN:�����NM���g�u�����&amp;n&amp;�F�[̱�֞�*L��ϓ��\ϙi�T�~ϭ_25g�f�&lt;eֹO�&amp;t�C3��6�˛�֬B�&gt;ϯZ��wњRD�~{\٦?�|m�FM���ϳ��6�,��ì��S�z�eM�Z�4F��cQ9���&lt;�A�&gt;��z~�C�S��Ρ�*&gt;mQF�&lt;���a�/?�{u7ޠ�,�tg%�~�iE&gt;������cƟпx�Q[1N��,̻�k���	]u��!��՚�v!s�fR��IS�9�w^���奨Bq��&amp;ʷL[,��N����3�x9�z?&gt;�u��^�g8]��Ӿ�j���h�k��K��=�9VirGD�FFZbZ��&lt;.�`�9�}ɉ	R�����|��43
+��)1hC�M�_��)�#�g$�K�3A���9��E���vv�3U�)�N7h1w����Q)�#��^�abEq�iGĤ֊d��J�e����#4q�q��:Z7Y�r�W5�&gt;4,��4���IEKƿz)_���r�(�_~���W4O΍V|�+K�2&amp;�ĖiR�SZ��P�8nX�Tߔ��Q)W^��O�p�5�r$��j �c��KIJ��R�c���eӳ�*3ߧ.�|� ��������::��P���&#39;-�7���G���R�Jqֿ�f�稘���RL_����;�iD���P�$
+��2^4&lt;�xatN�s��W��5,^�*m�+�!&gt;�N�!��$J��JK����\?a:*��,�Dp��1�&lt;���6sD�\-���@�5׷u�fR���?Q��_�\�3����u+f�Op[�\���U���&#39;Vk�o��&amp;�|���M�����N;K��|��d��{�����+���_���p�anjǪ�R��MZ���i���2#S#1��I3=��c��@[�,�Q?�O=��3M{1Bw���/&lt;\�R�8%��KP~�&gt;�&quot;6&lt;O������j�~48k�Xfg|��?`�k�w���4-��5��&#39;@.�p��`�2׵�O�X�Di٢y?�?{����D���(i�8D[4ʡ4ߣ���-=c��S%�!��ԙ�i���]��=#���=�3;�}�mH-Υ�$&quot;��MO�~��ٸq�p��5/�����3O��TθE�5S�ZZ�����j2�/M�KM������g�C�6�쌔��i\�$~��9�%Ϯ�E����?;+�@S0;���50\�=q��[�Ei���w����b�Nm�zV~_Y����#�^��c9��o#&#39;���r��n}Q�D~����[0..W���ɝ-����$�5Oj�X�|G;��;�-ۡy��Ǒ+��ն����lͯ�h\�}�顜v,����)_~d|K{�]OIdӆ��׾��|�����p�u$~�%�O��|�G��o2�:�ܡ�`���Fl�L�.�2��;{^�Z�#�i�A|nn�r�q���`�b�,v�&amp;nfzOi5֢c6h6Lu�(EWRm3Jw��3�c^�D�&#39;&#39;��hG���g�n;�&#39;g���n����-�4����,���QS5���e�إ6d���ޥ����w�ƏE��9#���Tґ+H�U��˟H٨���t#D��d������(��QI&amp;��ys���&lt;[��$Fgk뇝�� �=�vN���ۥ�\�6�����Sv[FD�&quot;�}��i\V�+��=���hy�=T�L&#39;HNk���]
+NF�Ik2c&quot;�vKI���X+J�(���&amp;�U;8�i�S6&#39;K�9e�n���Η1v7���{q�ԃ�0�N��&quot;�(3���4G�Qy4���q.�c���*Gx-�e�@$��cK�4��pW|cEP��I ����&amp;���i��08�He�DE���s�ȍ��ȱ�s��$�LU�|Y��b��b��W�yn��RK�$q�ڒ�-�H۟&quot;~rx*������������pz����I�&#39;�+�z$�z*�g&lt;��5�����(܊�n���)%yO&#39;AΌ���_;�ai����m��f����[�#\�I溺Ɔ�&amp;�/ґ\fO�����ׇ���N�(w����&gt;E!�1�$�⃛��D�{�-R�T۔ioN}�L��L�h��ho��)�ζ$��Enf���z�ɢ��w�z�H�ȩh���0%�z9ނ��=J&#39;jef�a��&quot;�΍E�m/�$��p7ñ?&quot;mfE8�C�t��.��8������&amp;�fY�5��z	����C��N��H?��|���҄�D�;��&gt;��9��%�&lt;!rb�y&gt;�ш,U�Gw�ݎx89NQ,C�������`c�Ør#mC�� 8���14�C� ���k��6�ppa�$���x��Ѧ�&quot;��%ZeNbL�2�c�x����-�Ww1��om��0˃�7p��G�� �eeL���h��t���c����	b0ōQUv�8a={���{A__���Q�1�����d��}q�uM��7]T���;�YEE��(��G����J~�V���&lt;�7��9N��������pCK|��	�rΛ�V~��	�z�6`��g�;�~l*1GF�D#f��\l�zM�a�3������Y�y���]oi�dE ���G�N�0L�=�D�@Fvuq&amp;���f	��J�v_�kr��@�1���4md�5�Q��iǙF��WqK���7yy��@8q�fk�8_�̔	b�*��W�ԗ��]W�Ʃ�J�(��dn�7�T����D�&#39;�]Gz����#u���_`O�o����g �=joS�� ��_�2���Z}�h�W�`�0ߏ��v[�.���G̋��gKf���;�vL4�-����\��l��KM%l����6���Y,ʆ��^i�i�F�1$�]���#M�n��w����=�{i��ݖ9&quot;���
+ւ8���|����.�zFTVݧk�:���Ry��f�����ӝ�`�exj�c&amp;��4ʋ,�`8�:FI���R���1rSn�ZhP��)��p&amp;��H��}�ќ��$&lt;���0��.s\A���&amp;�q��&amp;�B&#39;!&gt;Z��^�7� �Pϟ�1�&quot;��W9���[��N+�I��-� �׈Y�ؿ+��y��&amp;S���cFd����)E�=Nr�8�3rrށz/�e]���f�(�����9�pc�f�Ed=M����� ѵ@�l`X���EX�� AX�aY���3(ܐ�,*�i�9@�� ��8 /� Gb 3� &lt;� ���JZ�����(/By�;�&lt;&lt;x�e&lt; �@L\���kqK*e��iv}�4K?��h��o�5�bǴ��셞8���t�z�W���)g�����rq���F�~�����(�Ov%9~Qr��E�Đ*�sfko߽���HK��b����v�i}1�f&#39;����� e}N��#���1��@ he=zD�m�M�M��&gt;a�Ho�M������D&lt;J�0G
+Ċ�}4¸�F��ak�=&#39;My]�b8�γ.�T�I��VRQ��i&lt;�P�_��G�K&lt;^�ځ���D��^�����&#39;�ڪ��yYk����XM��57�G�lM��)�Qy@��z��X���]�t3K�|#�,H:i�Y�l2��zFo�&lt;0��R�6wMq��� ��?�Ki��B|Y,F�FYb(����9�Q�s�鬔q�ݨ�e h�i1͔�C�&gt;�86&quot;��ټ��t�ͱ4M��BqW
+���d2M���x)e�Ͱ�8F���ke ۠`��H.����Y9��TA�����A�e ��
+Io��Mqi=f7���;���LW��Uۧp&#39;�#G��
+���ؼ4o�^d��n9��+���3^g�V�)�kclp��#Z��$*�L������&gt;Ŋ�6�ey��(ƙ� ���a�^�a	��o!���c1����)��Z�eZh�=�QH�Nu1-��&lt;�r�v,g�8w�A����0��&#39;Y���1$��1��Rc��y���^��E�HW�����hE�����ܮ��δj���:����H,&amp;�i��7��h����bzg��F�����A������(�O�U��^&quot;&gt;׊���^��c��8k�H�|I����Ʊŀ����C�N&amp;%4����&#39;6N�~��y��QJ�h
+P�b&gt;�	IR&quot;Q��Hs��lg��-���|�R�9��u=�����a��݀馉����H�!uŤ�o��u���dP�S ��&gt;��(j �6�݊Q��x�K��m��(gx#E�#0P��D�`Ι��`�0�9D�Ј�&#39;N�۽�dG/&quot;aMtQz���l�ۿ$e�˖�I������������7�L������U���*�&gt;û�8�UR�kd�mW��z�Ĭ�c��*,��Mt嬱q�Wm�1������p��t�&gt;p%��	�/��d	&amp;B�h�Î4k�-�V���{J$�=$P��.�F���;���O����^2�|���?irc3)%q��}%=2�oD����{#��Q��S�Ȫ��nӕɗ��)�aE�(&quot;2�n��]��.�8���luz���B�7!�D��Ѳ�������_�ST�zt�s����)�7��T�ՐQ�=9��7���/(����9b���]�]t�L|����yg\�ƕ���$�َ���:�������?��8�r�}�����t���Wї5�	M�׽����8���R���o�,Vo������XH�EQ2�6�P�/��g���5
+�O$-b-��T��;���⣼�6�������&gt;�-qȭ�����Nkrr�Q�Xx�����r����Y�qД���C[������z������k��t.#kz���T��HCG���V�k�D;zE��Ůs�]�*d��4H��I�*E&amp;K�U�,��6��k/�1.Fd�����xOc�����b-���G���#��p�U�S*��s��������$���1�i����Ο-�l8�QUρe��A�w��נn�_hT	��v����hg�)��H=祔8{�&lt;i&#39;E�F�qx[t+ �N
+� �v�}�Y��;��J�|&lt;_�8�7sa���W���+�}���f��k&gt;��_bہ�2}u^����ۈ (�A_�(��A��v�54�h檣��Q�e��͚�1��t��g�E �����0����#hx���icPy�����E��&amp;��G�&lt;��&amp;Rh��(FJ�p���Ĵ�J��@�N����)�f����y��D�P�)��a��.�H�R�� �s4&lt;�� �&#39;�Q �8�cy�=�1��@�9Df@�Q��s&lt;��ḇ{��K(@��W2�X����Q(�2pdE{�&lt;� �&lt;2Fh���Sz��z#���5�z��G�[���x����b|�2H{�y2�Gw����������FB�m���E�����X�()�꩟d�#Ef�{�d$�����S�K.��IY��7��1BQ�a�&gt;�s�a��?��Qމ�4�]��,�ã:
+�x��$� �V�|��&amp; ��-F%z@1����r���.���&lt;ø��EX���,��9�P�E��a���nl	� �(p�a�~gg�/�?h*���)Ut^��l�u��m���3�i�O�9;3�~˭Wz��Y�9Ͳb_c2���%s�����_��[�?h�^�K���w�}o:&quot;J��6&amp;0m�����~���-�lr[�]��]��I�����u��n��i�[oAz.�z����M��둞�ߍfp�a�0���;�����V��j�&gt;^Ë�W�k�[[W�Ċ��-&gt;��� ��� 놵�v2=-Hgc���.����n�����9���{,m�8)ZF�Il��VY�1|��u��:9��F��6Rc��_/�&lt;.q;���@��y����I`�|��_/g�.EXҀy���S�H�J:�h)p�[i���&amp;4�HdO!f�yQ�٢B��DJ�:L��;��ݟ�(��9�~��gIZ����A���`+����GD�!�V�&quot;͈�v87[�b�SB�+�1�K�yF��z�}�\�`0)YW᳏�:[���j�2����.���_$��:[�zI�Ş���&amp;w�6�;w�����H\�g��L륱�bO5� �t;:7�ju��Zg[���K	6���ż?K}�|Hf���d�t�);��qN
+H�d�M�Y�YDƉ`O�&quot;�w2I\5�9�2�2p�x��`�w�68�q�`Q-��;P��$ ���x{
+�g$N@S&lt;\�8ؑ��4�`�u�si����w��尡��Ժ��y[{�ߜ29���#=N�l�&lt;n�D�&lt;�!��Tz���B4���Z��B3+���Sk{�8V^�\eu�������s܂k�	Dc�q5F�1�g���.C��q��z��89����O�Ղ�&lt;����0��唌�% m���m���Y)j0��c$R1ںŝU؇��i3��YbIڇ��z���6��E�o����&quot;k~u�����H으�.�en��T���ov5#G�&quot;O���$�#�&gt;�,3�87&quot;�R��0�T�RP��7�`���($#����դ�*h��/�xIE�2��#a�N���#��Fb�&gt;B�0������o��ɝ�����&lt;�]Y�E��.G�2Gk;-�b��V�0�=�X/��1��[ze���i@{�M�|w�4��_G^�p��93B�2\A`��񼬀��c�����vᘍ�^��$d��̣.�/¿��Q�]�h�l&amp;�H�&quot;^����&gt;����R$��޸N���&amp;)�{cᜤQ3K�3KLQ�C2�_#&lt;tE��Ң�%�e	.o%�v)�d��xQe4�\뒓��XM�#ݑN�Uf��0�$�Ȍ����x�E:U�����&lt;�BVFT�wx��5:3Ƴ����)��yo�=����o��7���0i��M5w (�Ƨq���P[ku�V��d�(j�[}L���#�{0&#39;&lt;L�:�6�vP.���}Wc��.��n����ԟjm��;M1!�k1�;�Vk�ҷK�j���eT�B��&lt;i��X��kt�G��#c�Y��m�Q��_�y�aD�f����3��E�}ִd{�o�b}���G��N#�}��6y2���)��4��� �Wُ&amp;\��ٜ���`u��7���3#g�f�p�Dd�/�x��ܙ*oc�;&quot;O�lm5�m���nK&quot;v��u��Ѣ�\!ƍ�V������S�b�ۍ�-��t��pc��n�n59�c�����#��+ �&gt;����&lt;��p.�ex0��o�8�T�ƹfxg� r��\��D��l3��Ac;���u���������ݜ��1!!����[x�%�Ϛ���8��2���u
+�p����v����g+Z�8���jH�Q�/$f}���P(x���^����r���9���&quot;��x��,!ш�^�/e�C/��2ae��f��fǁQ�E�Xo�q�W�n���l_��5DE��6�4ܐŷ��o�k)��q5^�v&amp;��CIG�͘���*mk]zfUOGu�%A�хkc\W��I1�=��$C�8|�߯7$#�{M7�3e&quot;���e��Z���y.�N��� ��`# �Y�T�&#39;�4��,��a)��9�� Sa�x�P4�3(�����4{0hX��,�J��X��������ώG�u�{���O���(���Q\&amp;�E������ 2���玷�&gt;$�2F��&quot;E�:�/��~��Ob1[�=��c�8���d��w���C��m�
+��:D(�%���a�/v_�q��I�v�����3(���p&quot;$aY�����yG�W�}?M�4b��69ߧ����mC=vF��D��UrZЇA��0&lt;�����)�H�Oǂ���(#fs��l���Bg�*ҥ��Ҭ�B&amp;�j�ŚQ��j��,I�bnb���DD�b��|Gu�/��z7�i��F�=SjE:�
+ܕ�gAdW{n0Wd&gt;�^�e�ݿ��` �����&amp;�������H�P&amp;��~�v{�$� �����t$�6G�&gt;JF:���s4	�8	0�p���-����QR�(�c��AH�Y���2�S4H��4�AQ_�p@n��4/&quot;��N�����] ͳpb��8|�����顁��9=l����z�pB�be���#M���Ü�$@�N�lf��&quot; f�h�C�V&#39;r�&gt;(8���h�{=,��	��&lt;��[`������p,��g�򝬇b�$�s_�H�&quot;�p����nb��Y{YT¡J&#39;`q�����p�}���4�l����}�������������~��)���~�y�����R[�8�Up��/���5d��z���o8�F�C���;���?�����&amp;r2&gt;����~����O��{__n�O���M��㊤�5�w�Wv�\���}g���1��r���)�O�h(k�B�c���+�b��u!⠡�#o]��&quot;V{�nE�g?w���N�����G_M��}&gt;&gt;���R�qU�� �S}��v��u��P֍0sz�;is���Z�k�|I��z���}I���Rt�&#39;&lt;���#�N���/RJz/��W@��e��뫁=i���ݝ�2�C;{��t���\����)k��6;ww���|#��5[%K4i��=.�1��t!�ۍ�ȝ&gt;�5�����	���|Ίj��L�n�j�[�&#39;]�e�k�:&gt;ǘ�.������4I���m W#=��x��s�����&quot;�S���1���Uβ��E��k�%��7�V�T�b&lt;V�|:Q���nd��D���hC�8��IkϢ�����ɒ.r֪��$n��2�uۼVx�L���1z��.�,v��|���p�DϏ�B��ݴ��g���q]ԏ&amp;��/�hl��Z����Y�X���SQ-����EN���NvQ�cN�8٧aÆ�?Ga),�4�����co�O0��@&lt;XDs�X���8�AaG�sh&#39;���ݗ�h��¹$a&amp;�s z3&lt;\�&amp;��èp��&gt;�󍟊�U.,޲�[��@�Ē�L~�ł��ElyS[�&#39;��Mݰ�hF�ߋzw�&lt;��ܥ&quot;)+���솢��ǳ&#39;^�N��q���Kůu^QO�����^P���s��+Z�T�d;���&#39;)���}g[�~X�}2Z���h~�S�-�,~b�)uTR�i��EߖH�9���#j鄟��~�V��yP}�t�hʃ�,x��G�GW~p������΢a/�K\�ը7��㋯6^U��K��u��1���wW~UP]���y���ve��&gt;i&gt;���Й�O���W���s��w{��sL�g�CX&gt;~���w����I���qŜ����U����)X5��9�Xn���yi���w�����5��
+���W��XN�-*8:`y�s����7���ڀ�yM�}Fm�����j�r���@���asS,�oWO��m[1�t��I%y{�t�]��v��|�~r��Jf�^����M�t�����&quot;��K0�XC�4?�����K�&#39;9��N)��ʉ�̞c%�yJ|�\r���%:M]Ѽ�G�/%*j[	t����g�R���_���=��)�&lt;��z]�2����-�����KnH��V��Q2&gt;F~~�g�ߟ�����gƶ��WtGg/��r�x����E��K��J&gt;ࢋE樂���_�:$&gt;�������{�����LjeQQ֫���T4�:�;��B݈	+t�� B�X��9O��&gt;]��ST�&lt;��]���h��sus^�Y���s���{{Q��5&quot;���ͅ��v�s��³�����k;&gt;Y��Z��㪢؏��c��%ب�t�w�����Z��k�����nʞsE���O��EW������.yɱ����h{O���|��jQR��J���RR���:��A���ݺ=�ȒG_�&lt;eםX�R7�[���b�&gt;W�K����m*�Y��-�^��n�^yɑ�:��ӌ���+Ku[?\Z�2���PsA��cK�Il*)Z;UWؒ�[��D��4c�+�\����&gt;�K���2���^��[�럊$l�&gt;�f:wB�X��������D�5�:Q��h�E���y�NW|2���)Q����������*����t�&lt;��F����U|PW��Pђ�st�*�yWw.�uݧ]Wt��&amp;��:�:׉n]�{���m)ʫ��������߹t2ӇE�;[�s-�h��H�A�������˶ꌒ�Jf�I+y�5�d�g�u2�Nݹ�i%��[Q��%��K���׽��ߺ�ݫJ�����-/�G��O �}�A�p_���o�������&amp;o���{�4���셼��9 9�r�5��?Ғ�,˘�uˮu�׭�|�:��[���s%��:�H�}��8{��9(�[�k&lt;Y�ˀ���אW! �349�YɈ�U��~�j�T��r���(!
+�&gt;d7d1$b�p��2�P
+����!�0��A6AC�! �Aހ,����Ű���&lt;Ʉ��r  k!��7@A:` ��B�@��R��w ��{R�����+Y$�+�!���pO�^�c5�{�y&amp;p�����p�ş��7�m���\i���}P{��7zCh?&lt;�������9YX�
+lC�A���!@�&amp;&#39;\/CX���)��o�[o�o��q��u��5�D��)�y�l�����-c�E��g#�%���⿑��N�.�+�W�m�{����۱��g��\���@��χї
+�W�A��w�]�~���
+��,
+�w
+�lA�,�~��/���7�����~���1�����.�g	��0z�����/�[��mU*�r���
+����}�S};�����&lt;A�o��%R���S�ݡ�SXXo�P�D���u����{�Y�o��/-E��B�&amp;����!x���v�7	u~9��c=��&lt;^X�e�2�~O��?%�_��[a�{�FA��������z7vJ��}��싐�� �y�b*���(&lt;����㧸�w�8U�[/��N�I�]���zy��:��_��w�	��~���v���׎��W�v[����/z�k�;��RA��P�5���� ����X��WCb}�c&gt;�Z(��y�бX �W	��r��B�b��]),��c!�|�c�N�������б��+��=y
+�$�K��X&lt;+&lt;?N��Eƅ��3B�O�x�����i��_��D�X�!h����1��D�X�O
+z�~�i&quot;BǢE�?!��q�2ȣ����x\x^�H��EVi�o�P�cB,�!C�b��L����:{�2aٯ��!C�┠T��I��б0
+��B��,�&lt;)&quot;����aH.:�.��^&quot;�b=:���_��T�X����e�v4�&lt;:���!A�w%@�T�X���B��,���F��³�^�yt�X,��[$����t�X
+��o���б�L�.���Q�
+:t,*�}�&gt;K�G����/�62r/������&lt;ޙбX*��ʟ+���L�X��so�G�б8&amp;h��~�HH:-��^A?	�r6t,�W��njHd6����&lt;Æ��
+�O%��/��m6t,�������_�б8%h�e�6b`C��(�gzy��QH�B�&quot;�j@?K����0ȁX����)&lt;�B�s�c�A��ʟ!��C.t,������\�X�
+��²_;��B��-�s���Ň�E浀&gt;[��4p�k�=��i³����|�X
+~S������Â~���/���JA;YX�k�ߒ�=7�pn 86�e�����o�0H?x;����L�Jnϊ\X�n��,w��J!���qA�?�K�w����!�a0	�@���s� ���9��b�8YI�t��&#39;|oE��&gt;�j�Ԭ��T�l�L��x9��́��z/$R	&#39;慐d�Y8�]�BJ�@n9&lt;P�a&#39;s��C�m����u/d*�n�B�C�p@�*$R	�B2!������dm��CJ����� rN������p�b������ÐY�� �AfA�¹��J��ݐ�Z�=�9L�6H�&lt;p�������� �����m�$Ct0�+�s0�`bA�0�!� n��τ�-��K��wp�F�{�Zh�W��s ��F������~{NW~���m���5����ܴt����nY�v��M��n�o��[�o����A���|����[׮�4e�[���1eɚ�%;7�zo��5;��Os��%D9��&lt;��3&gt;��Yv��׮]�eզ5��۾*{pyA[�n����S����Å������������_�3-l}������*���������c�&gt;�w����-/�&lt;o���ݯ7��}M�����;����m͖�6nޱj��&lt;�V�{5���p~�����~�����W�oW?w8���~c����ᷠ*�ߌ�~�B�����o�`�K!�v��Ӈ���X3�o{���a������?7u���ط�%��[�iM!lַv��l[w�ӯ==�3C����8�v��[�o�����aO�j��Bh-����g����f�?y�����7	��
+�%.T�M����Öqx�%��N��8����a⠯�o܍��(��Ѻ�q�&amp;j��a���sh^Ѿ�׆i_ӂ���B��k�g� A��_��F!O��7�f���5�֭*ܺ��U�~S[�i��Od��ߍ���m�P�5�s��@��9��X����~/��cQ�W����x�ך�q��Z?�k}ж���RCy��n���6m|y��e!��mv� �M�oJ(���;׭ݸ+hP���p���(cm��ׅ��;���C�^����ۿj��l��kj���\��V��@O!�w��e�:�	�^�K�w+㷽�!�V��㶗j�C{��]υ�C=���\=sB{�˺?����}�rV��JC�8���m/*��sAy�o��YC�^�&lt;4�+B�}Cc�����CMC��l���j������뙠��Ma�&gt;+t���z&gt;������}V���
+���!�y*��7��à�;Cx=�wes�����k�C��D���n���C��a��:&gt;��&#39;��l���y�
+�&lt;(�Ls������֡���}iK������Ay?��e��%l����Ѡ��a�;4��ۇ�}i��?�&amp;�C��^��:&gt;��_������yo
+��pP�ݭa�:�ۇz.	����0y���ܠ������-l�+��CAyg���}�м����C�}i{����}��𭎡u| h{?k��3�:�ע������}F輏��yP��t�����y����B��0��w��à�7��/(��0y�&gt;4�?v���y_�&amp;�Ӈ���]C�8?h{t�����~-�׼���;��}z���97(ﳺ��}z��O��[!ʙ�����aPޫCx��wsW�����ў�y/��9�a�3��ߥZGu������9��~&gt;��*(�-�a�:�=C=��&gt;U&amp;�9����?�(&#39;/�����aPޯ���w�&gt;L޳����ޡy�&quot;�z��={h޷��qf����	��ك�~:�WnP�k{��=;t�#{�z���xC��g��{vP�w�(gzp�7��à�����C��O����{v��O���iC��8��ӂ�wwo��68�?������0y�:�⾡�S��a��i��&gt;-(�[B�39����aP�O��&#39;ȫ��|�0�����^YA^}a��������_{=)�vd������ER&lt;�y��=������&gt;vC.�OPm/����Ϫ�`��]��Vc_x��~�U��N��9?���=�z��/��?�.�ޯ���I�OU{#�W�9�����U߭m�;➠z��I�a�T}�ܷ���\�V��~��:�H�X����U�|hJ��/�ToaK�K��o_������׳��llV5O�M��N�~���_kTW�MP�+r���5Am�h�*y�IU�Ʒ���r
+R����V��-Щ;�&gt;�:L�����&#39;�3Ǘ罼|���H�jQͿ�#�xՕ�w��ߙ�^tm��o��P�iP=�VQ^�.�	��ث��Y����I��7�.�U�ᡋy_u&lt;������&gt;x��5���D�[�4����TI�1����Vo|e����Y�)�;
+�}D�����S���ͪ����wf��_��.��	ߩ����z��C*ۑ�*s�:䚬����*��_�SUq������{�L�&#39;�V��1���т�rOޖ��Ѫz�/Tʼ�T�^&lt;�&gt;�Q-��a5��T��X}�yV}�,���ب�k�xT����ʩ�wF}z�۪��}������
+n}.�o&#39;�~c�8�d���c�{S�C���o��&amp;�
+�]r��#40�����=�@&gt;.��x�#U���������p�zǫ���gI�*3�K���I��X{��|��F���P�&lt;pQ�ړ?�P�z����?���?t����~����37T/oV�%���6�0�	Q~�Vs����:?�rZը�����&lt;���3����q�}j˨}��+�U�J�U�}t����T��ꊝ{�ͭ���W���U֟^PѯOS7�`�Ko�����_��W�/��/+�V��T��|K��f�*&gt;nR�ۺP�(z�z�)&lt;�_���W-JHW�%���&gt;U��ײ�k�8톬$����㿗,2�5�3�A�@���P�������p}�����g��:�&lt;�	e����!&lt;������`߱�o�;���~v��&quot;�w��)���~6�|3��p��{�9໌�;Z�M����s�ߣA����p��{�,��2�}G
+���|��L��� ��7���w����|G�o���ݹe���@_�u���W�7�[��nf� �i��d�|�	ڀ&gt;��������������~�`����KA�A�o�~�m�7H?L�����,7X�,����@��i�m1P�������v� m��G��	��p�v�-m]�֯���j��c��L�,[�f�k�o\���u�l�3�_�&gt;���o��ᙡ�$�X�_&lt;�muW�g��9��9�y�\���~2p�;\�p���QZ��p����[ױ�N��Cr+�n�َ�^�����=g�&#39;*���j�T��g���9`��!��B����4)L�o{F�&lt;=#�x���p���������sDA�c����f��s~�&gt;�d���&amp;�矰S�_�q�4os�sn�9Hy`3���N��y����&amp;��[C�_#)#�O~��w~%�_ȝ��B�]���`9�C�3��^�e��]T�RF�����~�WPa!w&gt;w��],�}`9Yl���ߒ�-����e��;��n}��?�|�P�j@��`���S��R�C�}��\h;��A~�����x��}xX�{ݝ�aB��Au&gt;}��W��{��&lt;�	G�PyX&amp;T�TȘ�V�v�L)�{:N@&gt;�������0.ڴ_���{���5�w������&lt;�~����|�&lt;�#O�׏^?~�^x������#�;���\��|��[���Ck~B���{�n5�[e���PK&lt;���A  xz  PK  |A�\��n��   �             $    model-info.pbPK  |A�\&lt;���A  xz            $�   model.tflitePK      u   �B    </code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Parameter</th>
+		<td><pre><code>x-content-type-options</code></pre></td>
+	</tr>
+	
+	
+	<tr>
+		<th scope="row">Solution</th>
+		<td> 
+<p>Ensure that the application/web server sets the Content-Type header appropriately, and that it sets the X-Content-Type-Options header to &#39;nosniff&#39; for all web pages.</p>
+
+<p>If possible, ensure that the end user uses a standards-compliant and modern web browser that does not perform MIME-sniffing at all, or that can be directed by the web application/web server to not perform MIME-sniffing.</p>
+ </td>
+	</tr>
+</table>
+
+											</details></li>
+									</ol>
+								</li>
+								
+							</ol>
+						</li>
+						
+						
+						
+						
+						
+					</ol>
+				</li>
+				
+				<li id="alerts--risk-1-confidence-1">
+					<h3>
+						<span>Risk</span>=<span
+							class="risk-level">低</span>, <span>Confidence</span>=<span
+							class="confidence-level">低</span> <span>(1)</span>
+					</h3>
+					<ol>
+						
+						<li class="alerts--site-li">
+							<h4>
+								<span class="site">https://optimizationguide-pa.googleapis.com</span> <span>(1)</span>
+							</h4>
+							<ol>
+								
+								<li>
+									<h5>
+										<a
+											href="#alert-type-4">时间戳泄漏 - Unix</a> <span>(1)</span>
+									</h5>
+									<ol>
+										<li><details>
+												<summary>
+													<span class="request-method-n-url">POST https://optimizationguide-pa.googleapis.com/v1:GetModels?key=AIzaSyA2KlwBX3mkFo30om9LUFYQhpqLoa_BNhE</span>
+												</summary>
+												
+<table class="alerts-table">
+	<tr>
+		<th scope="row">Alert tags</th>
+		<td>
+			<ul class="alert-tags-list">
+				<li>
+					<span><a href="https://owasp.org/Top10/A01_2021-Broken_Access_Control/">OWASP_2021_A01</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/www-project-top-ten/2017/A3_2017-Sensitive_Data_Exposure.html">OWASP_2017_A03</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/Top10/2025/A01_2025-Broken_Access_Control/">OWASP_2025_A01</a></span> 
+				</li>
+				<li>
+					 <span>POLICY_PENTEST = </span>
+				</li>
+				<li>
+					<span><a href="https://cwe.mitre.org/data/definitions/497.html">CWE-497</a></span> 
+				</li>
+				<li>
+					<span><a href="https://www.zaproxy.org/docs/desktop/addons/common-library/alerttags/#systemic">SYSTEMIC</a></span> 
+				</li>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row">Alert description</th>
+		<td> 
+<p>A timestamp was disclosed by the application/web server. - Unix</p>
+ </td>
+	</tr>
+	<tr>
+		<th scope="row">Other info</th>
+		<td> 
+<p>1679317318, which evaluates to: 2023-03-20 21:01:58.</p>
+ </td>
+	</tr>
+	<tr>
+		<th scope="row">Request</th>
+		<td><details open="open">
+				<summary>Request line and header section (465 bytes)</summary>
+				
+				<pre><code>POST https://optimizationguide-pa.googleapis.com/v1:GetModels?key=AIzaSyA2KlwBX3mkFo30om9LUFYQhpqLoa_BNhE HTTP/1.1
+host: optimizationguide-pa.googleapis.com
+Connection: keep-alive
+Content-Length: 1114
+Content-Type: application/x-protobuf
+X-Client-Data: CNaSywE=
+Sec-Fetch-Site: none
+Sec-Fetch-Mode: no-cors
+Sec-Fetch-Dest: empty
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36
+
+</code></pre>
+				
+				
+			</details> <details class="request-body" open="open">
+				<summary>Request body (1114 bytes)</summary>
+				
+				<pre><code>
+ 
+n	 2h
+atype.googleapis.com/google.privacy.webpermissionpredictions.v1.WebPermissionPredictionsClientInfo
+e 2_
+Wtype.googleapis.com/google.internal.chrome.optimizationguide.v1.PageTopicsModelMetadata0
+g 2a
+Ytype.googleapis.com/google.internal.chrome.optimizationguide.v1.SegmentationModelMetadataJ
+n 2h
+atype.googleapis.com/google.privacy.webpermissionpredictions.v1.WebPermissionPredictionsClientInfo
+g 2a
+Ytype.googleapis.com/google.internal.chrome.optimizationguide.v1.SegmentationModelMetadataJ
+g 2a
+Ytype.googleapis.com/google.internal.chrome.optimizationguide.v1.SegmentationModelMetadataJ
+ 
+l 2f
+`type.googleapis.com/google.internal.chrome.optimizationguide.v1.AutocompleteScoringModelMetadata
+g 2a
+Ytype.googleapis.com/google.internal.chrome.optimizationguide.v1.SegmentationModelMetadataJ
++ 
+g- 2a
+Ytype.googleapis.com/google.internal.chrome.optimizationguide.v1.SegmentationModelMetadataJ
+g. 2a
+Ytype.googleapis.com/google.internal.chrome.optimizationguide.v1.SegmentationModelMetadataJ*zh-CN2148.0.7778.168</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Response</th>
+		<td><details open="open">
+				<summary>Status line and header section (384 bytes)</summary>
+				
+				<pre><code>HTTP/1.1 200 OK
+Content-Type: application/x-protobuf
+Content-Disposition: attachment
+Vary: X-Origin
+Vary: Referer
+Date: Wed, 27 May 2026 16:31:48 GMT
+Server: ESF
+X-XSS-Protection: 0
+X-Frame-Options: SAMEORIGIN
+X-Content-Type-Options: nosniff
+Alt-Svc: h3=&quot;:443&quot;; ma=2592000,h3-29=&quot;:443&quot;; ma=2592000
+Accept-Ranges: none
+Vary: Origin,Accept-Encoding
+content-length: 9408
+
+</code></pre>
+				
+				
+			</details> <details class="response-body">
+				<summary>Response body (9408 bytes)</summary>
+				
+				<pre><code>
+
+Æ²á &quot;HR u*shttps://optimizationguide-pa.googleapis.com/downloads?name=1679317318&amp;target=OPTIMIZATION_TARGET_LANGUAGE_DETECTION
+»
+®	½ôÎ&quot;2
+dtype.googleapis.com/google.privacy.webpermissionpredictions.v1.WebPermissionPredictionsModelMetadata-
+	
+%ÍÌL&gt;*  &gt;   ?  @?%R¸^?BH R *https://optimizationguide-pa.googleapis.com/downloads?name=1776093117&amp;target=OPTIMIZATION_TARGET_NOTIFICATION_PERMISSION_PREDICTIONS
+
+¨&quot;2u
+Wtype.googleapis.com/google.internal.chrome.optimizationguide.v1.PageTopicsModelMetadata
+×#&lt;  &gt;%ÍÌL?0:
+override_list.pb.gz:
+VERSION.txtHR h*fhttps://optimizationguide-pa.googleapis.com/downloads?name=5&amp;target=OPTIMIZATION_TARGET_PAGE_TOPICS_V2
+º
+®§ôÎ&quot;2
+dtype.googleapis.com/google.privacy.webpermissionpredictions.v1.WebPermissionPredictionsModelMetadata-
+	
+%&gt;*  &gt;   ?
+×#?%Ãõh?BH R *https://optimizationguide-pa.googleapis.com/downloads?name=1776093095&amp;target=OPTIMIZATION_TARGET_GEOLOCATION_PERMISSION_PREDICTIONS
+
+öÃ¯Î&quot;
+2e
+_type.googleapis.com/google.internal.chrome.optimizationguide.v1.ClientSidePhishingModelMetadata:
+visual_model_desktop.tfliteBH R w*uhttps://optimizationguide-pa.googleapis.com/downloads?name=1774969334&amp;target=OPTIMIZATION_TARGET_CLIENT_SIDE_PHISHING
+
+£¦ì¨&quot;2
+`type.googleapis.com/google.internal.chrome.optimizationguide.v1.AutocompleteScoringModelMetadata§
+    5   A
+    5  À@
+  pB%    5  pB
+    
+  HB5  HB
+    5   A
+    5  ðA
+  °A%    5  °A
+    5   A
+    5  pA
+    
+  pB%    5  pB
+  ÈA%    5  ÈA
+    5  ÈA
+
+    5   A
+	    5  ÈA
+  ÈB5  ÈB
+    
+  HB5  HB
+  ÈB5  ÈBB¤âR v*thttps://optimizationguide-pa.googleapis.com/downloads?name=1696268326&amp;target=OPTIMIZATION_TARGET_OMNIBOX_URL_SCORING
+
++èÌ&quot;2g
+^type.googleapis.com/google_internal_chrome_optimizationguide_v1.PassageEmbeddingsModelMetadata@:
+sentencepiece.modelBR s*qhttps://optimizationguide-pa.googleapis.com/downloads?name=1770062312&amp;target=OPTIMIZATION_TARGET_PASSAGE_EMBEDDER
+Ô8
+Ê7-âÀå&quot;2²7
+Ytype.googleapis.com/google.internal.chrome.optimizationguide.v1.SegmentationModelMetadataÔ6 (0R*field_form_control_typeR*total_field_countR*multiline_field_countR*time_spent_on_pageRãà
+«WITH event_ids AS (SELECT DISTINCT event_id FROM metrics WHERE metrics.metric_hash = &#39;CCC33F79ECE7363D&#39; AND metrics.metric_value IN (0, 14)) SELECT IFNULL(SUM(metric_value), 0) FROM metrics INNER JOIN event_ids ON metrics.event_id = event_ids.event_id WHERE metrics.metric_hash = &#39;4E7D579594EB8315&#39;;!
+¥ùÓÇÖî&#39;®§ÙòÕ¾N½ìçïÏáÌ&quot;words_writtenRãà
+«WITH event_ids AS (SELECT DISTINCT event_id FROM metrics WHERE metrics.metric_hash = &#39;CCC33F79ECE7363D&#39; AND metrics.metric_value IN (0, 14)) SELECT IFNULL(SUM(metric_value), 0) FROM metrics INNER JOIN event_ids ON metrics.event_id = event_ids.event_id WHERE metrics.metric_hash = &#39;CE71BF280B4EB4B5&#39;;&quot;
+ ¥ùÓÇÖî&#39;½ìçïÏáÌµéºÚåï¸Î&quot;editing_timeR¦£
+uSELECT COUNT(metric_value) FROM metrics WHERE metrics.metric_hash = &#39;CE71BF280B4EB4B5&#39; AND metrics.metric_value &gt; 45;
+¥ùÓÇÖî&#39;
+µéºÚåï¸Î&quot;editing_sessionsR¬©
+vSELECT COUNT(metric_value) FROM metrics WHERE metrics.metric_hash = &#39;CE71BF280B4EB4B5&#39; AND metrics.metric_value &gt; 120;
+¥ùÓÇÖî&#39;
+µéºÚåï¸Î&quot;long_editing_sessionsRâß
+WITH on_site_urlids AS (SELECT DISTINCT url_id FROM urls WHERE instr(url, ?) &gt; 0) SELECT COUNT(metric_value) FROM metrics INNER JOIN on_site_urlids ON metrics.url_id = on_site_urlids.url_id WHERE metrics.metric_hash = &#39;CE71BF280B4EB4B5&#39; AND metrics.metric_value &gt; 45;
+¥ùÓÇÖî&#39;
+µéºÚåï¸Î
+ &quot;
+nameorigin&quot;editing_sessions_on_siteRèå
+WITH on_site_urlids AS (SELECT DISTINCT url_id FROM urls WHERE instr(url, ?) &gt; 0) SELECT COUNT(metric_value) FROM metrics INNER JOIN on_site_urlids ON metrics.url_id = on_site_urlids.url_id WHERE metrics.metric_hash = &#39;CE71BF280B4EB4B5&#39; AND metrics.metric_value &gt; 120;
+¥ùÓÇÖî&#39;
+µéºÚåï¸Î
+ &quot;
+nameorigin&quot;long_editing_sessions_on_siteRþû
+ÈWITH on_site_urlids AS (SELECT DISTINCT url_id FROM urls WHERE instr(url, ?) &gt; 0), event_ids_for_field AS ( SELECT DISTINCT event_id FROM metrics WHERE metrics.metric_hash = &#39;AE239414CC02813B&#39; AND metrics.metric_value = ? ), event_ids_for_form AS ( SELECT DISTINCT event_id FROM metrics WHERE metrics.metric_hash = &#39;42D464F8DC98BC83&#39; AND metrics.metric_value = ? ) SELECT COUNT(metric_value) FROM metrics INNER JOIN event_ids_for_field ON metrics.event_id = event_ids_for_field.event_id INNER JOIN event_ids_for_form ON metrics.event_id = event_ids_for_form.event_id INNER JOIN on_site_urlids ON metrics.url_id = on_site_urlids.url_id WHERE metrics.metric_hash = &#39;CE71BF280B4EB4B5&#39; AND metrics.metric_value &gt; 45;+
+)¥ùÓÇÖî&#39;ùâäêB»àÌå®µéºÚåï¸Î
+ &quot;
+nameorigin$
+&quot;
+namefield_signature#
+&quot;
+nameform_signature&quot;editing_sessions_on_fieldR
+ÉWITH on_site_urlids AS (SELECT DISTINCT url_id FROM urls WHERE instr(url, ?) &gt; 0), event_ids_for_field AS ( SELECT DISTINCT event_id FROM metrics WHERE metrics.metric_hash = &#39;AE239414CC02813B&#39; AND metrics.metric_value = ? ), event_ids_for_form AS ( SELECT DISTINCT event_id FROM metrics WHERE metrics.metric_hash = &#39;42D464F8DC98BC83&#39; AND metrics.metric_value = ? ) SELECT COUNT(metric_value) FROM metrics INNER JOIN event_ids_for_field ON metrics.event_id = event_ids_for_field.event_id INNER JOIN event_ids_for_form ON metrics.event_id = event_ids_for_form.event_id INNER JOIN on_site_urlids ON metrics.url_id = on_site_urlids.url_id WHERE metrics.metric_hash = &#39;CE71BF280B4EB4B5&#39; AND metrics.metric_value &gt; 120;+
+)¥ùÓÇÖî&#39;ùâäêB»àÌå®µéºÚåï¸Î
+ &quot;
+nameorigin$
+&quot;
+namefield_signature#
+&quot;
+nameform_signature&quot;long_editing_sessions_on_fieldR
+½WITH on_site_urlids AS (SELECT DISTINCT url_id FROM urls WHERE instr(url, ?) &gt; 0), event_ids AS (SELECT DISTINCT event_id FROM metrics WHERE metrics.metric_hash = &#39;CCC33F79ECE7363D&#39; AND metrics.metric_value IN (0, 14)) SELECT IFNULL(SUM(metric_value), 0) FROM metrics INNER JOIN event_ids ON metrics.event_id = event_ids.event_id INNER JOIN on_site_urlids ON metrics.url_id = on_site_urlids.url_id WHERE metrics.metric_hash = &#39;CE71BF280B4EB4B5&#39;;&quot;
+ ¥ùÓÇÖî&#39;½ìçïÏáÌµéºÚåï¸Î
+ &quot;
+nameorigin&quot;editing_time_on_siteR
+½WITH on_site_urlids AS (SELECT DISTINCT url_id FROM urls WHERE instr(url, ?) &gt; 0), event_ids AS (SELECT DISTINCT event_id FROM metrics WHERE metrics.metric_hash = &#39;CCC33F79ECE7363D&#39; AND metrics.metric_value IN (0, 14)) SELECT IFNULL(SUM(metric_value), 0) FROM metrics INNER JOIN event_ids ON metrics.event_id = event_ids.event_id INNER JOIN on_site_urlids ON metrics.url_id = on_site_urlids.url_id WHERE metrics.metric_hash = &#39;4E7D579594EB8315&#39;;!
+¥ùÓÇÖî&#39;®§ÙòÕ¾N½ìçïÏáÌ
+ &quot;
+nameorigin&quot;words_typed_on_siteR´±
+ãWITH on_site_urlids AS (SELECT DISTINCT url_id FROM urls WHERE instr(url, ?) &gt; 0) SELECT COUNT(id) FROM metrics INNER JOIN on_site_urlids ON metrics.url_id = on_site_urlids.url_id WHERE metrics.metric_hash = &#39;64BD7CCE5A95BF00&#39;;
+¦îÊà¹¬	þÖÔåßÞd
+ &quot;
+nameorigin&quot;page_loads_on_siteRwu
+MSELECT COUNT(id) FROM metrics WHERE metrics.metric_hash = &#39;64BD7CCE5A95BF00&#39;;
+¦îÊà¹¬	þÖÔåßÞd&quot;
+page_loadsRÛØ
+£SELECT COUNT(DISTINCT CAST((event_timestamp / 1000000 / 60 / 10) AS int)) FROM metrics WHERE metrics.metric_hash = &#39;AD411B741D0DA012&#39; AND metrics.metric_value &gt; 0;
+£ºè¢ºØµîô
+À¶èÁîÆ ­&quot;compose_session_countRâß
+£SELECT COUNT(DISTINCT CAST((event_timestamp / 1000000 / 60 / 10) AS int)) FROM metrics WHERE metrics.metric_hash = &#39;B4CFE8741404B691&#39; AND metrics.metric_value &gt; 0;
+£ºè¢ºØµîô
+í Áúç´&quot;compose_insert_session_countR
+gSELECT IFNULL(SUM(metrics.metric_value), 0) FROM metrics WHERE metrics.metric_hash = &#39;534661B278B11BD&#39;;
+äÙ´Ú¥§7	½£¬¼²Ã&quot;nudge_showsR
+hSELECT IFNULL(SUM(metrics.metric_value), 0) FROM metrics WHERE metrics.metric_hash = &#39;19E16122849E343B&#39;;
+äÙ´Ú¥§7	»èø¤¨¤Øð&quot;nudge_clicksR
+hSELECT IFNULL(SUM(metrics.metric_value), 0) FROM metrics WHERE metrics.metric_hash = &#39;79964621D357AB88&#39;;
+äÙ´Ú¥§7	×ÞÄËy&quot;nudge_site_disablesR
+hSELECT IFNULL(SUM(metrics.metric_value), 0) FROM metrics WHERE metrics.metric_hash = &#39;756F6A466879157E&#39;;
+äÙ´Ú¥§7	þªäÃæÈÚ·u&quot;nudge_global_disablesRËÈ
+ýWITH on_site_urlids AS (SELECT DISTINCT url_id FROM urls WHERE instr(url, ?) &gt; 0) SELECT IFNULL(SUM(metrics.metric_value), 0) FROM metrics INNER JOIN on_site_urlids ON metrics.url_id = on_site_urlids.url_id WHERE metrics.metric_hash = &#39;534661B278B11BD&#39;;
+äÙ´Ú¥§7	½£¬¼²Ã
+ &quot;
+nameorigin&quot;nudge_shows_siteRÍÊ
+þWITH on_site_urlids AS (SELECT DISTINCT url_id FROM urls WHERE instr(url, ?) &gt; 0) SELECT IFNULL(SUM(metrics.metric_value), 0) FROM metrics INNER JOIN on_site_urlids ON metrics.url_id = on_site_urlids.url_id WHERE metrics.metric_hash = &#39;19E16122849E343B&#39;;
+äÙ´Ú¥§7	»èø¤¨¤Øð
+ &quot;
+nameorigin&quot;nudge_clicks_site!
+
+  @?ShowDontShowBR *https://optimizationguide-pa.googleapis.com/downloads?name=240731042075&amp;target=OPTIMIZATION_TARGET_SEGMENTATION_COMPOSE_PROMOTION</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	
+	
+	<tr>
+		<th scope="row">Evidence</th>
+		<td><pre><code>1679317318</code></pre></td>
+	</tr>
+	<tr>
+		<th scope="row">Solution</th>
+		<td> 
+<p>Manually confirm that the timestamp data is not sensitive, and that the data cannot be aggregated to disclose exploitable patterns.</p>
+ </td>
+	</tr>
+</table>
+
+											</details></li>
+									</ol>
+								</li>
+								
+							</ol>
+						</li>
+						
+						
+						
+						
+						
+					</ol>
+				</li>
+				  
+				 
+				
+				
+				
+				
+				
+				
+				<li id="alerts--risk-0-confidence-1">
+					<h3>
+						<span>Risk</span>=<span
+							class="risk-level">信息提示</span>, <span>Confidence</span>=<span
+							class="confidence-level">低</span> <span>(1)</span>
+					</h3>
+					<ol>
+						
+						<li class="alerts--site-li">
+							<h4>
+								<span class="site">https://optimizationguide-pa.googleapis.com</span> <span>(1)</span>
+							</h4>
+							<ol>
+								
+								<li>
+									<h5>
+										<a
+											href="#alert-type-5">Re-examine Cache-control Directives</a> <span>(1)</span>
+									</h5>
+									<ol>
+										<li><details>
+												<summary>
+													<span class="request-method-n-url">GET https://optimizationguide-pa.googleapis.com/downloads?name=1776093117&amp;target=OPTIMIZATION_TARGET_NOTIFICATION_PERMISSION_PREDICTIONS</span>
+												</summary>
+												
+<table class="alerts-table">
+	<tr>
+		<th scope="row">Alert tags</th>
+		<td>
+			<ul class="alert-tags-list">
+				<li>
+					<span><a href="https://owasp.org/Top10/2025/A07_2025-Authentication_Failures/">OWASP_2025_A07</a></span> 
+				</li>
+				<li>
+					<span><a href="https://cwe.mitre.org/data/definitions/525.html">CWE-525</a></span> 
+				</li>
+				<li>
+					 <span>POLICY_PENTEST = </span>
+				</li>
+				<li>
+					<span><a href="https://owasp.org/Top10/A07_2021-Identification_and_Authentication_Failures/">OWASP_2021_A07</a></span> 
+				</li>
+				<li>
+					<span><a href="https://www.zaproxy.org/docs/desktop/addons/common-library/alerttags/#systemic">SYSTEMIC</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/04-Authentication_Testing/06-Testing_for_Browser_Cache_Weaknesses">WSTG-v42-ATHN-06</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/www-project-top-ten/2017/A2_2017-Broken_Authentication.html">OWASP_2017_A02</a></span> 
+				</li>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row">Alert description</th>
+		<td> 
+<p>The cache-control header has not been set properly or is missing, allowing the browser and proxies to cache content. For static assets like css, js, or image files this might be intended, however, the resources should be reviewed to ensure that no sensitive content will be cached.</p>
+ </td>
+	</tr>
+	
+	<tr>
+		<th scope="row">Request</th>
+		<td><details open="open">
+				<summary>Request line and header section (502 bytes)</summary>
+				
+				<pre><code>GET https://optimizationguide-pa.googleapis.com/downloads?name=1776093117&amp;target=OPTIMIZATION_TARGET_NOTIFICATION_PERMISSION_PREDICTIONS HTTP/1.1
+host: optimizationguide-pa.googleapis.com
+Connection: keep-alive
+X-Goog-Api-Key: AIzaSyA2KlwBX3mkFo30om9LUFYQhpqLoa_BNhE
+Sec-Fetch-Site: none
+Sec-Fetch-Mode: navigate
+Sec-Fetch-Dest: empty
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36
+Accept-Language: zh-CN,zh;q=0.9
+
+</code></pre>
+				
+				
+			</details> <details class="request-body" open="open">
+				<summary>Request body (0 bytes)</summary>
+				
+				<pre><code></code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Response</th>
+		<td><details open="open">
+				<summary>Status line and header section (446 bytes)</summary>
+				
+				<pre><code>HTTP/1.1 200 OK
+X-GUploader-UploadID: AAVLpEjsPKPrtoFZX8VPuHbYDNzLfIGL71J5NbrRtRISIL5Q3aX77KG_7frJrGpwuFJ2v4it
+Cache-Control: public, max-age=86400
+Date: Wed, 27 May 2026 16:31:49 GMT
+Expires: Thu, 28 May 2026 16:31:49 GMT
+Accept-Ranges: bytes
+Vary: X-Goog-Api-Key
+X-Goog-Hash: crc32c=8izQ4A==
+Content-Length: 18385
+Server: UploadServer
+Content-Type: text/html; charset=UTF-8
+Alt-Svc: h3=&quot;:443&quot;; ma=2592000,h3-29=&quot;:443&quot;; ma=2592000
+
+</code></pre>
+				
+				
+			</details> <details class="response-body">
+				<summary>Response body (18385 bytes)</summary>
+				
+				<pre><code>Cr24   E  �
+�0�&quot;0	*�H�� � 0�
+� �:2�W�))���I��5_U(I7nzԂ��2[�;�H�ǦS��٨/���nb%Yx�6�]i�����u���PDF�iLJK�?��l����R��|���j�C�j!%&#39;�s��[�&quot;�
+�Gy�
+�=l).�=�l\���4蠕�Q!$e�=���C�1�%d��B�ݖK�[�l,�����7��	�y�$7J�G&amp;TT��W�-=jgs[���&amp;�@/гj$���+��yk|l^��Km)\Yx��}OCXf��	��A5s7�8�o����L�(p[��^e�Ȃ���㟪?&amp;X�:~,�)��C�nʯ��Hh�����&lt;�N�0.����woa6��&#39;&amp;y����tHƔ�*7@�a�t�����F�YQU�����&lt;�����m!.^�#f�&#39;F&quot;��lt�97U3f��WM˦�]Lw���)�x��)��Hy Z���l�a�)J~&#39;�y�o�NS�#�,6D�9UMW�l&gt;pa�WG䍇^�L,��B���&quot;p�Y�	ĸ��&lt;��� �߰����R�[�����=�c	��$�H��!u�	¾OAX�h�6��`�i�C�@z.�7��Ŗ��iQ�CM]�s��e��F����aB410Y���j��:mOO]gGD!N�]��:@�㙇X�٧B�.r1���haC�qȪ���{;�Q$�Q��~�!O:4�A9�/��8�	帲ٜ��&#39;U��|��p�_6�f���Z��{2q5wGD!CXbh��q��xW?�o	�Ll*v�`�Y=[����� �#��w�S&gt;���L�_�=�?���S`�2
+_߇��ρ�`���y{��ߖ`&lt;�J���)�߶�����{Ox/�Ȳ7Ǿi�X־	���Q=��E���nF=x��W/��ߚ�!���jy#̹&#39;�(j e�&gt;��0J�iTBЙK6��&lt;?jj�%)a�&#39;�y������x9t��g#	y�`]V�	e��$S��R�l$�?{���`�B��A@�w�����EiuG#���`|%�r{)�}�~��^��cJ��
+0xE:?�Җ*��PK  |A�\               model-info.pb����������TF���ʂT�������Ă�b���\}W��(�,1�R�&lt;5� �(7��83?��(5%3��*�+3�OM
+�� �|�SRs|SKSK�t�x��YX��98��y%�TϞ���e`h�e``��e`p�W�g��  PK��n��   �   PK  |A�\               model.tflite�y|SU��}�=�W�@��W�
+�IeQAqGe(��3!�q���2#�2��(���ҦP֖ҍ�{�4M��w��	�@�&amp;�������Mr����s��s�=���$ �|��x��@2��@	ߓ��= 
+Q �!��p��5 0�&gt;�!o^�y������X�}��-/�Z�n����
+�h�fy�O�k	d���m;w�*�Eg!�!� s JH��a�6�&quot;�xa}7�����/ݴ�p����۲s3\��˄�+ ���Q�s��[�
+�����ߴqݖ��[�lZ�}��m�J`9ԈMZ�f���w�ظu�5 {�^,��!sw�X����lݾnٚ�u��&#39;�^:�?����k�
+r��z��Z�`�����&lt;�+}j��-��[/�7P7����6 ^w4j�jn�9~�fP� 8u�����] ��.hZ�~���_���&lt;��}�{���W-�o��s�υ�Uy�����ݼq˪�;�nܼnծu������6�H�r������|�r ��RYY�ɀDO�f�0�� �������B�j�b�,H&amp;$�d�:@j!:�1���6�
+��I �`�`�3!i�x��C$7��CZ �¾Z
+99	999�y��ط7A�BV@�CC@T��,H&amp;$QBp�톘!zH�R)�哐c�Ð�¾�d�H!dd-dd9d1dD�ɂdB� �B��C 1��;��B�!����}��ބ�� d��?�G׵@�_-�Ry�E� �[��ޯ�����������=��p��.~kM �&#39;ggO�
+��e���o�7m���ۏ���吧 + �!k! � � ��W!o@vC�@�Bށ����|9�rrrr
+r���B�@�!��ZH���C�3�qC��m�H!JH4$�I�d@2!�!Y����Ydddd1d)d9�)�
+�j�Z��&amp;�6H!�U��ݐ=���w � �! ����O&quot;F�,˕��S�.Fk��)�cb3F/M��~��A�����o��׾�J&gt;,b�~zK�FM½qh����&#39;ι?�Y�3k����=#�Gt����Tc��޷&amp;�U����&#39;�YOߗ_��&#39;_&quot;��ܵ3k��ey���}�0گ�?k���H+&quot;����o+�S����&#39;;J&gt;d�4;�鬌�s5�b��:�K!�?�x܃+5s�&quot;�V�?55ٽ�����ô�ƣ���|����-�M%&#39;,�&amp;i6O�C���X&amp;1{�/��ܭc��d}&#39;����7.ҳR[�9zT2��̵��̴��1��0����hF3�?-���G��M���y�����&quot;�Md̂��S4�9�����9U�G��΍Έj����&quot; �po��ˎe�������Q�����H-��T��q9�/?�=��Q�?��,�y*&amp;yj�\�[��W�S����?�����������g����GN:�����NM���g�u�����&amp;n&amp;�F�[̱�֞�*L��ϓ��\ϙi�T�~ϭ_25g�f�&lt;eֹO�&amp;t�C3��6�˛�֬B�&gt;ϯZ��wњRD�~{\٦?�|m�FM���ϳ��6�,��ì��S�z�eM�Z�4F��cQ9���&lt;�A�&gt;��z~�C�S��Ρ�*&gt;mQF�&lt;���a�/?�{u7ޠ�,�tg%�~�iE&gt;������cƟпx�Q[1N��,̻�k���	]u��!��՚�v!s�fR��IS�9�w^���奨Bq��&amp;ʷL[,��N����3�x9�z?&gt;�u��^�g8]��Ӿ�j���h�k��K��=�9VirGD�FFZbZ��&lt;.�`�9�}ɉ	R�����|��43
+��)1hC�M�_��)�#�g$�K�3A���9��E���vv�3U�)�N7h1w����Q)�#��^�abEq�iGĤ֊d��J�e����#4q�q��:Z7Y�r�W5�&gt;4,��4���IEKƿz)_���r�(�_~���W4O΍V|�+K�2&amp;�ĖiR�SZ��P�8nX�Tߔ��Q)W^��O�p�5�r$��j �c��KIJ��R�c���eӳ�*3ߧ.�|� ��������::��P���&#39;-�7���G���R�Jqֿ�f�稘���RL_����;�iD���P�$
+��2^4&lt;�xatN�s��W��5,^�*m�+�!&gt;�N�!��$J��JK����\?a:*��,�Dp��1�&lt;���6sD�\-���@�5׷u�fR���?Q��_�\�3����u+f�Op[�\���U���&#39;Vk�o��&amp;�|���M�����N;K��|��d��{�����+���_���p�anjǪ�R��MZ���i���2#S#1��I3=��c��@[�,�Q?�O=��3M{1Bw���/&lt;\�R�8%��KP~�&gt;�&quot;6&lt;O������j�~48k�Xfg|��?`�k�w���4-��5��&#39;@.�p��`�2׵�O�X�Di٢y?�?{����D���(i�8D[4ʡ4ߣ���-=c��S%�!��ԙ�i���]��=#���=�3;�}�mH-Υ�$&quot;��MO�~��ٸq�p��5/�����3O��TθE�5S�ZZ�����j2�/M�KM������g�C�6�쌔��i\�$~��9�%Ϯ�E����?;+�@S0;���50\�=q��[�Ei���w����b�Nm�zV~_Y����#�^��c9��o#&#39;���r��n}Q�D~����[0..W���ɝ-����$�5Oj�X�|G;��;�-ۡy��Ǒ+��ն����lͯ�h\�}�顜v,����)_~d|K{�]OIdӆ��׾��|�����p�u$~�%�O��|�G��o2�:�ܡ�`���Fl�L�.�2��;{^�Z�#�i�A|nn�r�q���`�b�,v�&amp;nfzOi5֢c6h6Lu�(EWRm3Jw��3�c^�D�&#39;&#39;��hG���g�n;�&#39;g���n����-�4����,���QS5���e�إ6d���ޥ����w�ƏE��9#���Tґ+H�U��˟H٨���t#D��d������(��QI&amp;��ys���&lt;[��$Fgk뇝�� �=�vN���ۥ�\�6�����Sv[FD�&quot;�}��i\V�+��=���hy�=T�L&#39;HNk���]
+NF�Ik2c&quot;�vKI���X+J�(���&amp;�U;8�i�S6&#39;K�9e�n���Η1v7���{q�ԃ�0�N��&quot;�(3���4G�Qy4���q.�c���*Gx-�e�@$��cK�4��pW|cEP��I ����&amp;���i��08�He�DE���s�ȍ��ȱ�s��$�LU�|Y��b��b��W�yn��RK�$q�ڒ�-�H۟&quot;~rx*������������pz����I�&#39;�+�z$�z*�g&lt;��5�����(܊�n���)%yO&#39;AΌ���_;�ai����m��f����[�#\�I溺Ɔ�&amp;�/ґ\fO�����ׇ���N�(w����&gt;E!�1�$�⃛��D�{�-R�T۔ioN}�L��L�h��ho��)�ζ$��Enf���z�ɢ��w�z�H�ȩh���0%�z9ނ��=J&#39;jef�a��&quot;�΍E�m/�$��p7ñ?&quot;mfE8�C�t��.��8������&amp;�fY�5��z	����C��N��H?��|���҄�D�;��&gt;��9��%�&lt;!rb�y&gt;�ш,U�Gw�ݎx89NQ,C�������`c�Ør#mC�� 8���14�C� ���k��6�ppa�$���x��Ѧ�&quot;��%ZeNbL�2�c�x����-�Ww1��om��0˃�7p��G�� �eeL���h��t���c����	b0ōQUv�8a={���{A__���Q�1�����d��}q�uM��7]T���;�YEE��(��G����J~�V���&lt;�7��9N��������pCK|��	�rΛ�V~��	�z�6`��g�;�~l*1GF�D#f��\l�zM�a�3������Y�y���]oi�dE ���G�N�0L�=�D�@Fvuq&amp;���f	��J�v_�kr��@�1���4md�5�Q��iǙF��WqK���7yy��@8q�fk�8_�̔	b�*��W�ԗ��]W�Ʃ�J�(��dn�7�T����D�&#39;�]Gz����#u���_`O�o����g �=joS�� ��_�2���Z}�h�W�`�0ߏ��v[�.���G̋��gKf���;�vL4�-����\��l��KM%l����6���Y,ʆ��^i�i�F�1$�]���#M�n��w����=�{i��ݖ9&quot;���
+ւ8���|����.�zFTVݧk�:���Ry��f�����ӝ�`�exj�c&amp;��4ʋ,�`8�:FI���R���1rSn�ZhP��)��p&amp;��H��}�ќ��$&lt;���0��.s\A���&amp;�q��&amp;�B&#39;!&gt;Z��^�7� �Pϟ�1�&quot;��W9���[��N+�I��-� �׈Y�ؿ+��y��&amp;S���cFd����)E�=Nr�8�3rrށz/�e]���f�(�����9�pc�f�Ed=M����� ѵ@�l`X���EX�� AX�aY���3(ܐ�,*�i�9@�� ��8 /� Gb 3� &lt;� ���JZ�����(/By�;�&lt;&lt;x�e&lt; �@L\���kqK*e��iv}�4K?��h��o�5�bǴ��셞8���t�z�W���)g�����rq���F�~�����(�Ov%9~Qr��E�Đ*�sfko߽���HK��b����v�i}1�f&#39;����� e}N��#���1��@ he=zD�m�M�M��&gt;a�Ho�M������D&lt;J�0G
+Ċ�}4¸�F��ak�=&#39;My]�b8�γ.�T�I��VRQ��i&lt;�P�_��G�K&lt;^�ځ���D��^�����&#39;�ڪ��yYk����XM��57�G�lM��)�Qy@��z��X���]�t3K�|#�,H:i�Y�l2��zFo�&lt;0��R�6wMq��� ��?�Ki��B|Y,F�FYb(����9�Q�s�鬔q�ݨ�e h�i1͔�C�&gt;�86&quot;��ټ��t�ͱ4M��BqW
+���d2M���x)e�Ͱ�8F���ke ۠`��H.����Y9��TA�����A�e ��
+Io��Mqi=f7���;���LW��Uۧp&#39;�#G��
+���ؼ4o�^d��n9��+���3^g�V�)�kclp��#Z��$*�L������&gt;Ŋ�6�ey��(ƙ� ���a�^�a	��o!���c1����)��Z�eZh�=�QH�Nu1-��&lt;�r�v,g�8w�A����0��&#39;Y���1$��1��Rc��y���^��E�HW�����hE�����ܮ��δj���:����H,&amp;�i��7��h����bzg��F�����A������(�O�U��^&quot;&gt;׊���^��c��8k�H�|I����Ʊŀ����C�N&amp;%4����&#39;6N�~��y��QJ�h
+P�b&gt;�	IR&quot;Q��Hs��lg��-���|�R�9��u=�����a��݀馉����H�!uŤ�o��u���dP�S ��&gt;��(j �6�݊Q��x�K��m��(gx#E�#0P��D�`Ι��`�0�9D�Ј�&#39;N�۽�dG/&quot;aMtQz���l�ۿ$e�˖�I������������7�L������U���*�&gt;û�8�UR�kd�mW��z�Ĭ�c��*,��Mt嬱q�Wm�1������p��t�&gt;p%��	�/��d	&amp;B�h�Î4k�-�V���{J$�=$P��.�F���;���O����^2�|���?irc3)%q��}%=2�oD����{#��Q��S�Ȫ��nӕɗ��)�aE�(&quot;2�n��]��.�8���luz���B�7!�D��Ѳ�������_�ST�zt�s����)�7��T�ՐQ�=9��7���/(����9b���]�]t�L|����yg\�ƕ���$�َ���:�������?��8�r�}�����t���Wї5�	M�׽����8���R���o�,Vo������XH�EQ2�6�P�/��g���5
+�O$-b-��T��;���⣼�6�������&gt;�-qȭ�����Nkrr�Q�Xx�����r����Y�qД���C[������z������k��t.#kz���T��HCG���V�k�D;zE��Ůs�]�*d��4H��I�*E&amp;K�U�,��6��k/�1.Fd�����xOc�����b-���G���#��p�U�S*��s��������$���1�i����Ο-�l8�QUρe��A�w��נn�_hT	��v����hg�)��H=祔8{�&lt;i&#39;E�F�qx[t+ �N
+� �v�}�Y��;��J�|&lt;_�8�7sa���W���+�}���f��k&gt;��_bہ�2}u^����ۈ (�A_�(��A��v�54�h檣��Q�e��͚�1��t��g�E �����0����#hx���icPy�����E��&amp;��G�&lt;��&amp;Rh��(FJ�p���Ĵ�J��@�N����)�f����y��D�P�)��a��.�H�R�� �s4&lt;�� �&#39;�Q �8�cy�=�1��@�9Df@�Q��s&lt;��ḇ{��K(@��W2�X����Q(�2pdE{�&lt;� �&lt;2Fh���Sz��z#���5�z��G�[���x����b|�2H{�y2�Gw����������FB�m���E�����X�()�꩟d�#Ef�{�d$�����S�K.��IY��7��1BQ�a�&gt;�s�a��?��Qމ�4�]��,�ã:
+�x��$� �V�|��&amp; ��-F%z@1����r���.���&lt;ø��EX���,��9�P�E��a���nl	� �(p�a�~gg�/�?h*���)Ut^��l�u��m���3�i�O�9;3�~˭Wz��Y�9Ͳb_c2���%s�����_��[�?h�^�K���w�}o:&quot;J��6&amp;0m�����~���-�lr[�]��]��I�����u��n��i�[oAz.�z����M��둞�ߍfp�a�0���;�����V��j�&gt;^Ë�W�k�[[W�Ċ��-&gt;��� ��� 놵�v2=-Hgc���.����n�����9���{,m�8)ZF�Il��VY�1|��u��:9��F��6Rc��_/�&lt;.q;���@��y����I`�|��_/g�.EXҀy���S�H�J:�h)p�[i���&amp;4�HdO!f�yQ�٢B��DJ�:L��;��ݟ�(��9�~��gIZ����A���`+����GD�!�V�&quot;͈�v87[�b�SB�+�1�K�yF��z�}�\�`0)YW᳏�:[���j�2����.���_$��:[�zI�Ş���&amp;w�6�;w�����H\�g��L륱�bO5� �t;:7�ju��Zg[���K	6���ż?K}�|Hf���d�t�);��qN
+H�d�M�Y�YDƉ`O�&quot;�w2I\5�9�2�2p�x��`�w�68�q�`Q-��;P��$ ���x{
+�g$N@S&lt;\�8ؑ��4�`�u�si����w��尡��Ժ��y[{�ߜ29���#=N�l�&lt;n�D�&lt;�!��Tz���B4���Z��B3+���Sk{�8V^�\eu�������s܂k�	Dc�q5F�1�g���.C��q��z��89����O�Ղ�&lt;����0��唌�% m���m���Y)j0��c$R1ںŝU؇��i3��YbIڇ��z���6��E�o����&quot;k~u�����H으�.�en��T���ov5#G�&quot;O���$�#�&gt;�,3�87&quot;�R��0�T�RP��7�`���($#����դ�*h��/�xIE�2��#a�N���#��Fb�&gt;B�0������o��ɝ�����&lt;�]Y�E��.G�2Gk;-�b��V�0�=�X/��1��[ze���i@{�M�|w�4��_G^�p��93B�2\A`��񼬀��c�����vᘍ�^��$d��̣.�/¿��Q�]�h�l&amp;�H�&quot;^����&gt;����R$��޸N���&amp;)�{cᜤQ3K�3KLQ�C2�_#&lt;tE��Ң�%�e	.o%�v)�d��xQe4�\뒓��XM�#ݑN�Uf��0�$�Ȍ����x�E:U�����&lt;�BVFT�wx��5:3Ƴ����)��yo�=����o��7���0i��M5w (�Ƨq���P[ku�V��d�(j�[}L���#�{0&#39;&lt;L�:�6�vP.���}Wc��.��n����ԟjm��;M1!�k1�;�Vk�ҷK�j���eT�B��&lt;i��X��kt�G��#c�Y��m�Q��_�y�aD�f����3��E�}ִd{�o�b}���G��N#�}��6y2���)��4��� �Wُ&amp;\��ٜ���`u��7���3#g�f�p�Dd�/�x��ܙ*oc�;&quot;O�lm5�m���nK&quot;v��u��Ѣ�\!ƍ�V������S�b�ۍ�-��t��pc��n�n59�c�����#��+ �&gt;����&lt;��p.�ex0��o�8�T�ƹfxg� r��\��D��l3��Ac;���u���������ݜ��1!!����[x�%�Ϛ���8��2���u
+�p����v����g+Z�8���jH�Q�/$f}���P(x���^����r���9���&quot;��x��,!ш�^�/e�C/��2ae��f��fǁQ�E�Xo�q�W�n���l_��5DE��6�4ܐŷ��o�k)��q5^�v&amp;��CIG�͘���*mk]zfUOGu�%A�хkc\W��I1�=��$C�8|�߯7$#�{M7�3e&quot;���e��Z���y.�N��� ��`# �Y�T�&#39;�4��,��a)��9�� Sa�x�P4�3(�����4{0hX��,�J��X��������ώG�u�{���O���(���Q\&amp;�E������ 2���玷�&gt;$�2F��&quot;E�:�/��~��Ob1[�=��c�8���d��w���C��m�
+��:D(�%���a�/v_�q��I�v�����3(���p&quot;$aY�����yG�W�}?M�4b��69ߧ����mC=vF��D��UrZЇA��0&lt;�����)�H�Oǂ���(#fs��l���Bg�*ҥ��Ҭ�B&amp;�j�ŚQ��j��,I�bnb���DD�b��|Gu�/��z7�i��F�=SjE:�
+ܕ�gAdW{n0Wd&gt;�^�e�ݿ��` �����&amp;�������H�P&amp;��~�v{�$� �����t$�6G�&gt;JF:���s4	�8	0�p���-����QR�(�c��AH�Y���2�S4H��4�AQ_�p@n��4/&quot;��N�����] ͳpb��8|�����顁��9=l����z�pB�be���#M���Ü�$@�N�lf��&quot; f�h�C�V&#39;r�&gt;(8���h�{=,��	��&lt;��[`������p,��g�򝬇b�$�s_�H�&quot;�p����nb��Y{YT¡J&#39;`q�����p�}���4�l����}�������������~��)���~�y�����R[�8�Up��/���5d��z���o8�F�C���;���?�����&amp;r2&gt;����~����O��{__n�O���M��㊤�5�w�Wv�\���}g���1��r���)�O�h(k�B�c���+�b��u!⠡�#o]��&quot;V{�nE�g?w���N�����G_M��}&gt;&gt;���R�qU�� �S}��v��u��P֍0sz�;is���Z�k�|I��z���}I���Rt�&#39;&lt;���#�N���/RJz/��W@��e��뫁=i���ݝ�2�C;{��t���\����)k��6;ww���|#��5[%K4i��=.�1��t!�ۍ�ȝ&gt;�5�����	���|Ίj��L�n�j�[�&#39;]�e�k�:&gt;ǘ�.������4I���m W#=��x��s�����&quot;�S���1���Uβ��E��k�%��7�V�T�b&lt;V�|:Q���nd��D���hC�8��IkϢ�����ɒ.r֪��$n��2�uۼVx�L���1z��.�,v��|���p�DϏ�B��ݴ��g���q]ԏ&amp;��/�hl��Z����Y�X���SQ-����EN���NvQ�cN�8٧aÆ�?Ga),�4�����co�O0��@&lt;XDs�X���8�AaG�sh&#39;���ݗ�h��¹$a&amp;�s z3&lt;\�&amp;��èp��&gt;�󍟊�U.,޲�[��@�Ē�L~�ł��ElyS[�&#39;��Mݰ�hF�ߋzw�&lt;��ܥ&quot;)+���솢��ǳ&#39;^�N��q���Kůu^QO�����^P���s��+Z�T�d;���&#39;)���}g[�~X�}2Z���h~�S�-�,~b�)uTR�i��EߖH�9���#j鄟��~�V��yP}�t�hʃ�,x��G�GW~p������΢a/�K\�ը7��㋯6^U��K��u��1���wW~UP]���y���ve��&gt;i&gt;���Й�O���W���s��w{��sL�g�CX&gt;~���w����I���qŜ����U����)X5��9�Xn���yi���w�����5��
+���W��XN�-*8:`y�s����7���ڀ�yM�}Fm�����j�r���@���asS,�oWO��m[1�t��I%y{�t�]��v��|�~r��Jf�^����M�t�����&quot;��K0�XC�4?�����K�&#39;9��N)��ʉ�̞c%�yJ|�\r���%:M]Ѽ�G�/%*j[	t����g�R���_���=��)�&lt;��z]�2����-�����KnH��V��Q2&gt;F~~�g�ߟ�����gƶ��WtGg/��r�x����E��K��J&gt;ࢋE樂���_�:$&gt;�������{�����LjeQQ֫���T4�:�;��B݈	+t�� B�X��9O��&gt;]��ST�&lt;��]���h��sus^�Y���s���{{Q��5&quot;���ͅ��v�s��³�����k;&gt;Y��Z��㪢؏��c��%ب�t�w�����Z��k�����nʞsE���O��EW������.yɱ����h{O���|��jQR��J���RR���:��A���ݺ=�ȒG_�&lt;eםX�R7�[���b�&gt;W�K����m*�Y��-�^��n�^yɑ�:��ӌ���+Ku[?\Z�2���PsA��cK�Il*)Z;UWؒ�[��D��4c�+�\����&gt;�K���2���^��[�럊$l�&gt;�f:wB�X��������D�5�:Q��h�E���y�NW|2���)Q����������*����t�&lt;��F����U|PW��Pђ�st�*�yWw.�uݧ]Wt��&amp;��:�:׉n]�{���m)ʫ��������߹t2ӇE�;[�s-�h��H�A�������˶ꌒ�Jf�I+y�5�d�g�u2�Nݹ�i%��[Q��%��K���׽��ߺ�ݫJ�����-/�G��O �}�A�p_���o�������&amp;o���{�4���셼��9 9�r�5��?Ғ�,˘�uˮu�׭�|�:��[���s%��:�H�}��8{��9(�[�k&lt;Y�ˀ���אW! �349�YɈ�U��~�j�T��r���(!
+�&gt;d7d1$b�p��2�P
+����!�0��A6AC�! �Aހ,����Ű���&lt;Ʉ��r  k!��7@A:` ��B�@��R��w ��{R�����+Y$�+�!���pO�^�c5�{�y&amp;p�����p�ş��7�m���\i���}P{��7zCh?&lt;�������9YX�
+lC�A���!@�&amp;&#39;\/CX���)��o�[o�o��q��u��5�D��)�y�l�����-c�E��g#�%���⿑��N�.�+�W�m�{����۱��g��\���@��χї
+�W�A��w�]�~���
+��,
+�w
+�lA�,�~��/���7�����~���1�����.�g	��0z�����/�[��mU*�r���
+����}�S};�����&lt;A�o��%R���S�ݡ�SXXo�P�D���u����{�Y�o��/-E��B�&amp;����!x���v�7	u~9��c=��&lt;^X�e�2�~O��?%�_��[a�{�FA��������z7vJ��}��싐�� �y�b*���(&lt;����㧸�w�8U�[/��N�I�]���zy��:��_��w�	��~���v���׎��W�v[����/z�k�;��RA��P�5���� ����X��WCb}�c&gt;�Z(��y�бX �W	��r��B�b��]),��c!�|�c�N�������б��+��=y
+�$�K��X&lt;+&lt;?N��Eƅ��3B�O�x�����i��_��D�X�!h����1��D�X�O
+z�~�i&quot;BǢE�?!��q�2ȣ����x\x^�H��EVi�o�P�cB,�!C�b��L����:{�2aٯ��!C�┠T��I��б0
+��B��,�&lt;)&quot;����aH.:�.��^&quot;�b=:���_��T�X����e�v4�&lt;:���!A�w%@�T�X���B��,���F��³�^�yt�X,��[$����t�X
+��o���б�L�.���Q�
+:t,*�}�&gt;K�G����/�62r/������&lt;ޙбX*��ʟ+���L�X��so�G�б8&amp;h��~�HH:-��^A?	�r6t,�W��njHd6����&lt;Æ��
+�O%��/��m6t,�������_�б8%h�e�6b`C��(�gzy��QH�B�&quot;�j@?K����0ȁX����)&lt;�B�s�c�A��ʟ!��C.t,������\�X�
+��²_;��B��-�s���Ň�E浀&gt;[��4p�k�=��i³����|�X
+~S������Â~���/���JA;YX�k�ߒ�=7�pn 86�e�����o�0H?x;����L�Jnϊ\X�n��,w��J!���qA�?�K�w����!�a0	�@���s� ���9��b�8YI�t��&#39;|oE��&gt;�j�Ԭ��T�l�L��x9��́��z/$R	&#39;慐d�Y8�]�BJ�@n9&lt;P�a&#39;s��C�m����u/d*�n�B�C�p@�*$R	�B2!������dm��CJ����� rN������p�b������ÐY�� �AfA�¹��J��ݐ�Z�=�9L�6H�&lt;p�������� �����m�$Ct0�+�s0�`bA�0�!� n��τ�-��K��wp�F�{�Zh�W��s ��F������~{NW~���m���5����ܴt����nY�v��M��n�o��[�o����A���|����[׮�4e�[���1eɚ�%;7�zo��5;��Os��%D9��&lt;��3&gt;��Yv��׮]�eզ5��۾*{pyA[�n����S����Å������������_�3-l}������*���������c�&gt;�w����-/�&lt;o���ݯ7��}M�����;����m͖�6nޱj��&lt;�V�{5���p~�����~�����W�oW?w8���~c����ᷠ*�ߌ�~�B�����o�`�K!�v��Ӈ���X3�o{���a������?7u���ط�%��[�iM!lַv��l[w�ӯ==�3C����8�v��[�o�����aO�j��Bh-����g����f�?y�����7	��
+�%.T�M����Öqx�%��N��8����a⠯�o܍��(��Ѻ�q�&amp;j��a���sh^Ѿ�׆i_ӂ���B��k�g� A��_��F!O��7�f���5�֭*ܺ��U�~S[�i��Od��ߍ���m�P�5�s��@��9��X����~/��cQ�W����x�ך�q��Z?�k}ж���RCy��n���6m|y��e!��mv� �M�oJ(���;׭ݸ+hP���p���(cm��ׅ��;���C�^����ۿj��l��kj���\��V��@O!�w��e�:�	�^�K�w+㷽�!�V��㶗j�C{��]υ�C=���\=sB{�˺?����}�rV��JC�8���m/*��sAy�o��YC�^�&lt;4�+B�}Cc�����CMC��l���j������뙠��Ma�&gt;+t���z&gt;������}V���
+���!�y*��7��à�;Cx=�wes�����k�C��D���n���C��a��:&gt;��&#39;��l���y�
+�&lt;(�Ls������֡���}iK������Ay?��e��%l����Ѡ��a�;4��ۇ�}i��?�&amp;�C��^��:&gt;��_������yo
+��pP�ݭa�:�ۇz.	����0y���ܠ������-l�+��CAyg���}�м����C�}i{����}��𭎡u| h{?k��3�:�ע������}F輏��yP��t�����y����B��0��w��à�7��/(��0y�&gt;4�?v���y_�&amp;�Ӈ���]C�8?h{t�����~-�׼���;��}z���97(ﳺ��}z��O��[!ʙ�����aPޫCx��wsW�����ў�y/��9�a�3��ߥZGu������9��~&gt;��*(�-�a�:�=C=��&gt;U&amp;�9����?�(&#39;/�����aPޯ���w�&gt;L޳����ޡy�&quot;�z��={h޷��qf����	��ك�~:�WnP�k{��=;t�#{�z���xC��g��{vP�w�(gzp�7��à�����C��O����{v��O���iC��8��ӂ�wwo��68�?������0y�:�⾡�S��a��i��&gt;-(�[B�39����aP�O��&#39;ȫ��|�0�����^YA^}a��������_{=)�vd������ER&lt;�y��=������&gt;vC.�OPm/����Ϫ�`��]��Vc_x��~�U��N��9?���=�z��/��?�.�ޯ���I�OU{#�W�9�����U߭m�;➠z��I�a�T}�ܷ���\�V��~��:�H�X����U�|hJ��/�ToaK�K��o_������׳��llV5O�M��N�~���_kTW�MP�+r���5Am�h�*y�IU�Ʒ���r
+R����V��-Щ;�&gt;�:L�����&#39;�3Ǘ罼|���H�jQͿ�#�xՕ�w��ߙ�^tm��o��P�iP=�VQ^�.�	��ث��Y����I��7�.�U�ᡋy_u&lt;������&gt;x��5���D�[�4����TI�1����Vo|e����Y�)�;
+�}D�����S���ͪ����wf��_��.��	ߩ����z��C*ۑ�*s�:䚬����*��_�SUq������{�L�&#39;�V��1���т�rOޖ��Ѫz�/Tʼ�T�^&lt;�&gt;�Q-��a5��T��X}�yV}�,���ب�k�xT����ʩ�wF}z�۪��}������
+n}.�o&#39;�~c�8�d���c�{S�C���o��&amp;�
+�]r��#40�����=�@&gt;.��x�#U���������p�zǫ���gI�*3�K���I��X{��|��F���P�&lt;pQ�ړ?�P�z����?���?t����~����37T/oV�%���6�0�	Q~�Vs����:?�rZը�����&lt;���3����q�}j˨}��+�U�J�U�}t����T��ꊝ{�ͭ���W���U֟^PѯOS7�`�Ko�����_��W�/��/+�V��T��|K��f�*&gt;nR�ۺP�(z�z�)&lt;�_���W-JHW�%���&gt;U��ײ�k�8톬$����㿗,2�5�3�A�@���P�������p}�����g��:�&lt;�	e����!&lt;������`߱�o�;���~v��&quot;�w��)���~6�|3��p��{�9໌�;Z�M����s�ߣA����p��{�,��2�}G
+���|��L��� ��7���w����|G�o���ݹe���@_�u���W�7�[��nf� �i��d�|�	ڀ&gt;��������������~�`����KA�A�o�~�m�7H?L�����,7X�,����@��i�m1P�������v� m��G��	��p�v�-m]�֯���j��c��L�,[�f�k�o\���u�l�3�_�&gt;���o��ᙡ�$�X�_&lt;�muW�g��9��9�y�\���~2p�;\�p���QZ��p����[ױ�N��Cr+�n�َ�^�����=g�&#39;*���j�T��g���9`��!��B����4)L�o{F�&lt;=#�x���p���������sDA�c����f��s~�&gt;�d���&amp;�矰S�_�q�4os�sn�9Hy`3���N��y����&amp;��[C�_#)#�O~��w~%�_ȝ��B�]���`9�C�3��^�e��]T�RF�����~�WPa!w&gt;w��],�}`9Yl���ߒ�-����e��;��n}��?�|�P�j@��`���S��R�C�}��\h;��A~�����x��}xX�{ݝ�aB��Au&gt;}��W��{��&lt;�	G�PyX&amp;T�TȘ�V�v�L)�{:N@&gt;�������0.ڴ_���{���5�w������&lt;�~����|�&lt;�#O�׏^?~�^x������#�;���\��|��[���Ck~B���{�n5�[e���PK&lt;���A  xz  PK  |A�\��n��   �             $    model-info.pbPK  |A�\&lt;���A  xz            $�   model.tflitePK      u   �B    </code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Parameter</th>
+		<td><pre><code>cache-control</code></pre></td>
+	</tr>
+	
+	<tr>
+		<th scope="row">Evidence</th>
+		<td><pre><code>public, max-age=86400</code></pre></td>
+	</tr>
+	<tr>
+		<th scope="row">Solution</th>
+		<td> 
+<p>For secure content, ensure the cache-control HTTP header is set with &quot;no-cache, no-store, must-revalidate&quot;. If an asset should be cached consider setting the directives &quot;public, max-age, immutable&quot;.</p>
+ </td>
+	</tr>
+</table>
+
+											</details></li>
+									</ol>
+								</li>
+								
+							</ol>
+						</li>
+						
+						
+						
+						
+						
+					</ol>
+				</li>
+				  
+			</ol>
+		</section>
+
+		<section id="appendix" class="appendix">
+			<h2>Appendix</h2>
+
+			<section id="alert-types" class="alert-types">
+				<h3>Alert Types</h3>
+				<p class="alert-types-intro">This section contains additional information on the types of alerts in the report.</p>
+				<ol>
+					<li
+						id="alert-type-0">
+						<h4>Content Security Policy (CSP) Header Not Set</h4>
+						<table class="alert-types-table">
+							<tr>
+								<th scope="row">Source</th>
+								<td>
+									
+									   <span>raised by a passive scanner</span> <span>(<a
+										href="https://www.zaproxy.org/docs/alerts/10038/">Content Security Policy (CSP) Header Not Set</a>)
+									</span>   
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">CWE ID</th>
+								<td><a
+									href="https://cwe.mitre.org/data/definitions/693.html">693</a></td>
+							</tr>
+							<tr>
+								<th scope="row">WASC ID</th>
+								<td>15</td>
+							</tr>
+							<tr>
+								<th scope="row">Reference</th>
+								<td>
+									<ol>
+										<li><a
+											href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP">https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP</a></li>
+										<li><a
+											href="https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html">https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html</a></li>
+										<li><a
+											href="https://www.w3.org/TR/CSP/">https://www.w3.org/TR/CSP/</a></li>
+										<li><a
+											href="https://w3c.github.io/webappsec-csp/">https://w3c.github.io/webappsec-csp/</a></li>
+										<li><a
+											href="https://web.dev/articles/csp">https://web.dev/articles/csp</a></li>
+										<li><a
+											href="https://caniuse.com/#feat=contentsecuritypolicy">https://caniuse.com/#feat=contentsecuritypolicy</a></li>
+										<li><a
+											href="https://content-security-policy.com/">https://content-security-policy.com/</a></li>
+									</ol>
+								</td>
+							</tr>
+						</table>
+					</li>
+					<li
+						id="alert-type-1">
+						<h4>Missing Anti-clickjacking Header</h4>
+						<table class="alert-types-table">
+							<tr>
+								<th scope="row">Source</th>
+								<td>
+									
+									   <span>raised by a passive scanner</span> <span>(<a
+										href="https://www.zaproxy.org/docs/alerts/10020/">Anti-clickjacking Header</a>)
+									</span>   
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">CWE ID</th>
+								<td><a
+									href="https://cwe.mitre.org/data/definitions/1021.html">1021</a></td>
+							</tr>
+							<tr>
+								<th scope="row">WASC ID</th>
+								<td>15</td>
+							</tr>
+							<tr>
+								<th scope="row">Reference</th>
+								<td>
+									<ol>
+										<li><a
+											href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/X-Frame-Options">https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/X-Frame-Options</a></li>
+									</ol>
+								</td>
+							</tr>
+						</table>
+					</li>
+					<li
+						id="alert-type-2">
+						<h4>Strict-Transport-Security Header Not Set</h4>
+						<table class="alert-types-table">
+							<tr>
+								<th scope="row">Source</th>
+								<td>
+									
+									   <span>raised by a passive scanner</span> <span>(<a
+										href="https://www.zaproxy.org/docs/alerts/10035/">Strict-Transport-Security Header</a>)
+									</span>   
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">CWE ID</th>
+								<td><a
+									href="https://cwe.mitre.org/data/definitions/319.html">319</a></td>
+							</tr>
+							<tr>
+								<th scope="row">WASC ID</th>
+								<td>15</td>
+							</tr>
+							<tr>
+								<th scope="row">Reference</th>
+								<td>
+									<ol>
+										<li><a
+											href="https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html">https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html</a></li>
+										<li><a
+											href="https://owasp.org/www-community/Security_Headers">https://owasp.org/www-community/Security_Headers</a></li>
+										<li><a
+											href="https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security">https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security</a></li>
+										<li><a
+											href="https://caniuse.com/stricttransportsecurity">https://caniuse.com/stricttransportsecurity</a></li>
+										<li><a
+											href="https://datatracker.ietf.org/doc/html/rfc6797">https://datatracker.ietf.org/doc/html/rfc6797</a></li>
+									</ol>
+								</td>
+							</tr>
+						</table>
+					</li>
+					<li
+						id="alert-type-3">
+						<h4>X-Content-Type-Options Header Missing</h4>
+						<table class="alert-types-table">
+							<tr>
+								<th scope="row">Source</th>
+								<td>
+									
+									   <span>raised by a passive scanner</span> <span>(<a
+										href="https://www.zaproxy.org/docs/alerts/10021/">X-Content-Type-Options Header Missing</a>)
+									</span>   
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">CWE ID</th>
+								<td><a
+									href="https://cwe.mitre.org/data/definitions/693.html">693</a></td>
+							</tr>
+							<tr>
+								<th scope="row">WASC ID</th>
+								<td>15</td>
+							</tr>
+							<tr>
+								<th scope="row">Reference</th>
+								<td>
+									<ol>
+										<li><a
+											href="https://learn.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/compatibility/gg622941(v=vs.85)">https://learn.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/compatibility/gg622941(v=vs.85)</a></li>
+										<li><a
+											href="https://owasp.org/www-community/Security_Headers">https://owasp.org/www-community/Security_Headers</a></li>
+									</ol>
+								</td>
+							</tr>
+						</table>
+					</li>
+					<li
+						id="alert-type-4">
+						<h4>时间戳泄漏 - Unix</h4>
+						<table class="alert-types-table">
+							<tr>
+								<th scope="row">Source</th>
+								<td>
+									
+									   <span>raised by a passive scanner</span> <span>(<a
+										href="https://www.zaproxy.org/docs/alerts/10096/">时间戳泄漏</a>)
+									</span>   
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">CWE ID</th>
+								<td><a
+									href="https://cwe.mitre.org/data/definitions/497.html">497</a></td>
+							</tr>
+							<tr>
+								<th scope="row">WASC ID</th>
+								<td>13</td>
+							</tr>
+							<tr>
+								<th scope="row">Reference</th>
+								<td>
+									<ol>
+										<li><a
+											href="https://cwe.mitre.org/data/definitions/200.html">https://cwe.mitre.org/data/definitions/200.html</a></li>
+									</ol>
+								</td>
+							</tr>
+						</table>
+					</li>
+					<li
+						id="alert-type-5">
+						<h4>Re-examine Cache-control Directives</h4>
+						<table class="alert-types-table">
+							<tr>
+								<th scope="row">Source</th>
+								<td>
+									
+									   <span>raised by a passive scanner</span> <span>(<a
+										href="https://www.zaproxy.org/docs/alerts/10015/">Re-examine Cache-control Directives</a>)
+									</span>   
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">CWE ID</th>
+								<td><a
+									href="https://cwe.mitre.org/data/definitions/525.html">525</a></td>
+							</tr>
+							<tr>
+								<th scope="row">WASC ID</th>
+								<td>13</td>
+							</tr>
+							<tr>
+								<th scope="row">Reference</th>
+								<td>
+									<ol>
+										<li><a
+											href="https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html#web-content-caching">https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html#web-content-caching</a></li>
+										<li><a
+											href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Cache-Control">https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Cache-Control</a></li>
+										<li><a
+											href="https://grayduck.mn/2021/09/13/cache-control-recommendations/">https://grayduck.mn/2021/09/13/cache-control-recommendations/</a></li>
+									</ol>
+								</td>
+							</tr>
+						</table>
+					</li>
+				</ol>
+			</section>
+		</section>
+		 
+	</main>
+</body>
+</html>
+
+
+
